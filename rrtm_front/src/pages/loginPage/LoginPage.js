@@ -21,7 +21,10 @@ function LoginPage() {
         // Esegui la logica di autenticazione qui (puoi implementare la tua logica di autenticazione, ad esempio, chiamando un'API)
         if (username === "admin" && password === "password") {
             // Esegui il login
-            login(username, finny);
+            login(username, finny, true);
+            navigate("/");
+        } else if (username === "finny" && password === "rrtm") {
+            login(username, finny, false);
             navigate("/");
         } else {
             setError("Credenziali non valide. Riprova.");

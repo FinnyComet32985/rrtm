@@ -11,5 +11,6 @@
     position: absolute;
     top: 13vh;
     gap: 2vh;
-    padding-left: 10vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
 }

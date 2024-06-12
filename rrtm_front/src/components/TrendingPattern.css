@@ -1,15 +1,37 @@
-.trendingPattern{
-    width: 35vh;
-    height: 50vh;
-    border-radius: 5vh;
-    background-color: #232f3e;
+.trendingPattern {
+    padding: 1em;
+    border-radius: 2em;
+    background-color: #131921;
     color: white;
     z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+    width: auto;
+    max-width: 90vw; /* Optional: Limit the width for larger screens */
+  }
+  
+  .sommarioTrending {
+    padding: 2em;
+    border-radius: 2em;
+    background-color: #232F3E;
+    color: white;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+    width: calc(100% - 1vh); /* Adjust width based on parent container */
+  }
+
+
+
+.sommarioTrending > p {
+    margin: 0; /* Rimuovi margini se necessario */
 }
-.titoloTrendingPattern{
+
+.titoloTrendingPattern {
     position: relative;
     font-size: 1.4rem;
 }

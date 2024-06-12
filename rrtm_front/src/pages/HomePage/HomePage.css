@@ -1,0 +1,15 @@
+.homepage {
+    position: absolute;
+    height: 120%;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: -5;
+}
+
+.trendingDiv {
+    display: flex;
+    position: absolute;
+    top: 13vh;
+    gap: 2vh;
+    padding-left: 10vh;
+}

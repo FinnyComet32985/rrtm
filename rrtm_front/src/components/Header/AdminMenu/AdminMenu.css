@@ -1,0 +1,193 @@
+/* immagine profilo */
+.adminProfile {
+    position: relative;
+    display: inline-block;
+}
+.userImage {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    cursor: pointer;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-65%);
+    right: 2vh;
+}
+.userImage:hover {
+    box-shadow: 2px 2px 2px rgba(227, 230, 230, 0.8);
+    transition: 0.3s;
+}
+
+/* profile menu */
+#profileMenuAd {
+    position: absolute;
+    top: calc(100% - 35px); 
+    right: 1.4vh;
+    height: 60vh;
+    min-height: 494px; 
+    width: 380px;
+    background-color: #ffffff;
+    border-radius: 22.5px;
+    z-index: -1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transform-origin: top right; 
+    transform: scale(0);
+    display: flex;
+    justify-content:baseline;
+    align-items:center;
+    flex-direction: column;
+    gap: 5%;
+    
+}
+#profileMenuAd.open {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+.username {
+    color: #646666;
+    position: relative;
+    
+    top: -0.3%;
+}
+
+/* bottone logout */
+#logout {
+    height: 45.6px;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: #da373c;
+    border: 2.5px solid #da373c;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    
+}
+#logout:hover {
+    background-color: #da373c;
+    color: white;
+    transition: 0.2;
+}
+.logoutIcon {
+    width: 24px; 
+    height: 24px; 
+}
+
+/* bottone preferenzeNotifiche */
+#modificaPKB {
+    height: 45.6px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: #646666;
+    stroke: #646666;
+    border: 2.5px solid #646666;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#modificaPKB:hover {
+    background-color: #646666;
+    color: white;
+    stroke: white;
+    transition: 0.2;
+}
+.modificaPKBIcon {
+    width: 24px; 
+    height: 24px; 
+}
+
+/* bottone segnalazioneVulnerabilità */
+#visioneVulnerabilita {
+    height: 45.6px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: #646666;
+    border: 2.5px solid #646666;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#visioneVulnerabilita:hover {
+    background-color: #646666;
+    color: white;
+    transition: 0.2;
+}
+.weaknessIcon {
+    width: 24px; 
+    height: 24px; 
+}
+
+/* bottone inserimentoFeedback */
+#visioneFeedback {
+    height: 45.6px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: #646666;
+    border: 2.5px solid #646666;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#visioneFeedback:hover {
+    background-color: #646666;
+    color: white;
+    transition: 0.2;
+}
+.feedbackIcon {
+    width: 24px; 
+    height: 24px; 
+}
+
+hr {
+    color: #646666;
+    background-color: #646666;
+    height: 0.2vh;
+    width: 85%;
+    border-radius: 10px;
+}
+
+/* Stile per l'overlay */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #646666; /* Colore desiderato */
+    opacity: 0;
+    
+    transition: opacity 0.5s ease, visibility 0.5s ease; /* Effetto di dissolvenza */
+    pointer-events: none; /* Non intercetta eventi del mouse */
+    z-index: -2; /* Assicurati che sia sopra gli altri elementi */
+}
+
+#overlay.open {
+    opacity: 0.5;
+    visibility: visible;
+    pointer-events: all;
+
+}

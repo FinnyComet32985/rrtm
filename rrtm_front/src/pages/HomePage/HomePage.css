@@ -13,4 +13,10 @@
     gap: 2vh;
     padding-left: 1vh;
     padding-right: 1vh;
+
+}
+.togglePatterns {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }

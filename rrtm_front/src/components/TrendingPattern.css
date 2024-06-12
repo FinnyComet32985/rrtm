@@ -1,0 +1,15 @@
+.trendingPattern{
+    width: 35vh;
+    height: 50vh;
+    border-radius: 5vh;
+    background-color: #232f3e;
+    color: white;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.titoloTrendingPattern{
+    position: relative;
+    font-size: 1.4rem;
+}

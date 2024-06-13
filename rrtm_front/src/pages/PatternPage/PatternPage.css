@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 20vh;
 }
 .pattern {
     position: relative;
@@ -39,7 +40,6 @@
 }
 .StrategieAssociate {
     position: relative;
-    top: 10vh;
     width: 70vh;
     background-color: #444;
     color: white;
@@ -82,6 +82,56 @@
 }
 
 .stratAssocMap {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2vh;
+    justify-content: center;
+}
+/* vulnerabilita associate */ 
+.VulnerabilitaAssociate {
+    position: relative;
+    width: 70vh;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.VulnerabilitaAssociate.closed {
+    max-height: 25px;
+    opacity: 0.8;
+}
+
+.VulnerabilitaAssociate.open {
+    max-height: var(--max-height-vuln); /* Altezza massima dinamica */
+    opacity: 1;
+}
+
+.VulnerabilitaAssociate h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.vulnerabilita-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.VulnerabilitaAssociate.open .vulnerabilita-details {
+    opacity: 1;
+}
+
+.vulnAssocMap {
     display: flex;
     flex-wrap: nowrap;
     gap: 2vh;

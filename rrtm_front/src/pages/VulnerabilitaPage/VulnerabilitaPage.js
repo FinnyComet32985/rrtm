@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header/Header";
+import "./VulnerabilitaPage.css"
+
 function VulnerabilitaPage() {
     let { vulnerabilitaId } = useParams();
     const navigate = useNavigate();
@@ -15,7 +17,7 @@ function VulnerabilitaPage() {
         return <div>Error: {error.message}</div>;
     }
     return (
-        <div>
+        <div className="VulnerabilitaPage">
             <Header />
             {data && 
                 <h3>{data.titolo}</h3>

@@ -1,7 +1,7 @@
 import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "../../components/Header/Header";
 import "./PatternPage.css";
 
@@ -10,6 +10,7 @@ function PatternPage() {
     const navigate = useNavigate();
     const [strategieExpanded, setStrategieExpanded] = useState(false);
     const [vulnerabilitaExpanded, setVulnerabilitaExpanded] = useState(false);
+    const [maxHeightVuln, setMaxHeightVuln] = useState(null);
 
     const { data, loading, error } = useFetch(
         `http://localhost:1337/api/findPattern/${patternId}`
@@ -19,7 +20,7 @@ function PatternPage() {
         navigate(`/StrategiaPage/${strategiaId}`); // Passa l'ID come parte dell'URL
     };
     const handleClickVulnerabilita = (vulnerabilitaId) => {
-        navigate(`/VulnerabilitaPage/${vulnerabilitaId}`); // Passa l'ID come parte dell'URL
+        navigate(`/StrategiaPage/${vulnerabilitaId}`); // Passa l'ID come parte dell'URL
     };
 
     const {
@@ -32,7 +33,19 @@ function PatternPage() {
         loading: loading3,
         error: error3,
     } = useFetch(`http://localhost:1337/api/findVulnPatt/${patternId}`);
+    
+    
+    const initialMount = useRef(true);
 
+    useEffect(() => {
+        // Calcolo dell'altezza massima per le vulnerabilità solo alla prima apertura
+        if (vulnerabilitaExpanded && data3 && initialMount.current) {
+            const maxHeightCalcVuln = `${(data3.length*9.36)+7.6}vh`;
+            setMaxHeightVuln(maxHeightCalcVuln);
+            initialMount.current = false; // Imposta il primo montaggio a false dopo il calcolo iniziale
+        }
+    }, [vulnerabilitaExpanded, data3]);
+    
     const handleToggleStrategie = () => {
         setStrategieExpanded(!strategieExpanded);
     };
@@ -116,6 +129,7 @@ function PatternPage() {
                 className={`VulnerabilitaAssociate ${
                     vulnerabilitaExpanded ? "open" : "closed"
                 }`}
+                style={{ "--max-height-vuln": maxHeightVuln }}
                 onClick={handleToggleVulnerabilita}
             >
                 <h3>vulnerabilità Associate</h3>

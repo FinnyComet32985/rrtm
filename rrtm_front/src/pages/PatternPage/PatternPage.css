@@ -1,9 +1,89 @@
+.PatternPage {
+    position: relative;
+    top: 15vh;
+    height: 190vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 .pattern {
     position: relative;
-    top: 8vh;
-
+    top: 0;
+    width: 80%;
+    padding-bottom: 5vh;
+    background-color: #131921;
+    border-radius: 2vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2vh;
 }
-.strategieAssociatePattern {
+/* sommario Div */
+.PatternDivs {
+    background-color: #232f3e;
     position: relative;
-    top: 8vh;
+    width: 80%;
+    border-radius: 2vh;
+}
+.PatternDivs > * {
+    padding-left: 2vh;
+}
+/* titolo Pattern */
+.titoloPattern {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.StrategieAssociate {
+    position: relative;
+    top: 10vh;
+    width: 70vh;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.StrategieAssociate.closed {
+    max-height: 25px; /* Altezza solo del titolo */
+    opacity: 0.8;
+}
+
+.StrategieAssociate.open {
+    max-height: 15vh; /* Altezza massima del contenuto espanso */
+    opacity: 1;
+}
+.StrategieAssociate h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.strategie-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.StrategieAssociate.open .strategie-details {
+    opacity: 1;
+}
+
+.stratAssocMap {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2vh;
+    justify-content: center;
 }

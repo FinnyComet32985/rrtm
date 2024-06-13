@@ -95,7 +95,7 @@ class InterfacciaRicerca {
     }
     public static async showStrategie(): Promise<Strategia[]> {
         return new Promise(async (resolve, reject) => {
-            const query = "SELECT Id FROM strategia";
+            const query = "SELECT Id FROM strategia WHERE stato='pubblicata'";
             connection.query(
                 query,
                 async (err: mysql.MysqlError | null, results: any) => {

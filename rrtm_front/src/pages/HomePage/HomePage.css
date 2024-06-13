@@ -8,6 +8,7 @@
 
 .trendingDiv {
     display: flex;
+    flex-wrap: wrap;
     position: absolute;
     top: 13vh;
     gap: 2vh;
@@ -15,8 +16,13 @@
     padding-right: 1vh;
 
 }
-.togglePatterns {
-    position: absolute;
+.showPatterns {
+    position: relative;
     top: 50%;
+    left: 50%;
+}
+.hidePatterns {
+    position: relative;
+    top: 80%;
     left: 50%;
 }

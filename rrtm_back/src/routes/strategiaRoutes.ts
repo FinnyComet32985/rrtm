@@ -13,6 +13,15 @@ router.get("/showStrategie", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get("/showAllStrategie", async (req: Request, res: Response) => {
+    try {
+        const patterns = await InterfacciaRicerca.showStrategie();
+        res.json(patterns);
+    } catch (error) {
+        console.error("Error fetching patterns:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 router.get("/findStrategia/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); // Converti l'ID in un numero
     if (isNaN(id)) {

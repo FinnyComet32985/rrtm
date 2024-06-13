@@ -37,7 +37,7 @@ function HomePage() {
                     ))}
             </div>
             {data.length > 3 && (
-                <button className="togglePatterns" onClick={handleTogglePatterns}>
+                <button className={showAllPatterns ? "hidePatterns" : "showPatterns"} onClick={handleTogglePatterns}>
                     {showAllPatterns ? "Nascondi pattern" : "Visualizza tutti i pattern"}
                 </button>
             )}

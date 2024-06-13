@@ -90,7 +90,6 @@ class InterfacciaRicerca {
         idPattern: number
     ): Promise<ArticoloGDPR[]> {
         let filtro = new FiltroApplicato(idPattern, "articolo-pattern");
-        console.log(idPattern);
         await Pattern.updateFiltro(filtro, "articolo-pattern");
         const articoloIds = filtro.filtroPattern.getArticoli();
         return new Promise(async (resolve, reject) => {

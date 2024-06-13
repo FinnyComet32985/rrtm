@@ -11,7 +11,12 @@ function VulnerabilitaPage() {
         `http://localhost:1337/api/findVulnerabilita/${vulnerabilitaId}`
     );
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Header></Header>
+                <div>Loading...</div>;
+            </div>
+        );
     }
     if (error) {
         return <div>Error: {error.message}</div>;

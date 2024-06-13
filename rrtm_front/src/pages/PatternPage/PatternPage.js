@@ -20,7 +20,7 @@ function PatternPage() {
         navigate(`/StrategiaPage/${strategiaId}`); // Passa l'ID come parte dell'URL
     };
     const handleClickVulnerabilita = (vulnerabilitaId) => {
-        navigate(`/StrategiaPage/${vulnerabilitaId}`); // Passa l'ID come parte dell'URL
+        navigate(`/VulnerabilitaPage/${vulnerabilitaId}`); // Passa l'ID come parte dell'URL
     };
 
     const {
@@ -55,7 +55,12 @@ function PatternPage() {
     };
 
     if (loading || loading2 || loading3) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Header></Header>
+                <div>Loading...</div>;
+            </div>
+        );
     }
 
     if (error) {

@@ -40,6 +40,7 @@
 }
 .StrategieAssociate {
     position: relative;
+    top: -15vh;
     width: 70vh;
     background-color: #444;
     color: white;
@@ -91,6 +92,7 @@
 .VulnerabilitaAssociate {
     position: relative;
     width: 70vh;
+    top: -15vh;
     background-color: #444;
     color: white;
     padding: 10px;

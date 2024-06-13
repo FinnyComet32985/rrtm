@@ -25,7 +25,12 @@ function StrategiaPage() {
         navigate(`/patternPage/${patternId}`)
     }
     if (loading || loading2) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Header></Header>
+                <div>Loading...</div>;
+            </div>
+        );
     }
     if (error) {
         return <div>Error: {error.message}</div>;

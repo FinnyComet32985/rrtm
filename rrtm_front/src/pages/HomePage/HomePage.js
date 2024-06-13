@@ -15,7 +15,12 @@ function HomePage() {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Header></Header>
+                <div>Loading...</div>;
+            </div>
+        );
     }
 
     if (error) {
@@ -27,18 +32,27 @@ function HomePage() {
             <Header />
             <div className="trendingDiv">
                 {data &&
-                    data.slice(0, showAllPatterns ? data.length : 3).map((pattern) => (
-                        <TrendingPattern
-                            key={pattern.Id}
-                            id={pattern.Id}
-                            titolo={pattern.titolo}
-                            sommario={pattern.sommario}
-                        />
-                    ))}
+                    data
+                        .slice(0, showAllPatterns ? data.length : 3)
+                        .map((pattern) => (
+                            <TrendingPattern
+                                key={pattern.Id}
+                                id={pattern.Id}
+                                titolo={pattern.titolo}
+                                sommario={pattern.sommario}
+                            />
+                        ))}
             </div>
             {data.length > 3 && (
-                <button className={showAllPatterns ? "hidePatterns" : "showPatterns"} onClick={handleTogglePatterns}>
-                    {showAllPatterns ? "Nascondi pattern" : "Visualizza tutti i pattern"}
+                <button
+                    className={
+                        showAllPatterns ? "hidePatterns" : "showPatterns"
+                    }
+                    onClick={handleTogglePatterns}
+                >
+                    {showAllPatterns
+                        ? "Nascondi pattern"
+                        : "Visualizza tutti i pattern"}
                 </button>
             )}
         </div>

@@ -1,7 +1,6 @@
 import * as mysql from "mysql";
 import connection from "../index.ts";
 import FiltroApplicato from "./SistemaDiRicerca/FiltroApplicato.ts";
-import Vulnerabilita from "./Vulnerabilita.ts";
 
 class Pattern {
     private Id: number;
@@ -13,6 +12,7 @@ class Pattern {
     private esempio: string;
     private strategie: number[];
     private vulnerabilita: number[];
+    private articoli: number[];
     constructor(
         Id: number,
         titolo?: string,
@@ -22,7 +22,8 @@ class Pattern {
         soluzione?: string,
         esempio?: string,
         strategie?: number[],
-        vulnerabilita?: number[]
+        vulnerabilita?: number[],
+        articoli?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -64,6 +65,11 @@ class Pattern {
             this.vulnerabilita = vulnerabilita;
         } else {
             this.vulnerabilita = [];
+        }
+        if (articoli !== undefined) {
+            this.articoli = articoli;
+        } else {
+            this.articoli = [];
         }
     }
     // get Pattern by ID
@@ -108,6 +114,9 @@ class Pattern {
     }
     getVulnerabilita() {
         return this.vulnerabilita;
+    }
+    getArticoli() {
+        return this.articoli;
     }
 
     // setters
@@ -175,6 +184,27 @@ class Pattern {
             );
         });
     }
+    public setArticoli() {
+        const query =
+            "SELECT articoloId FROM ArticoloPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.articoli = results.map(
+                            (row: any) => row.articoloId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
 
     static async updateFiltro(
         filtro: FiltroApplicato,
@@ -205,6 +235,9 @@ class Pattern {
                         }
                         if (tipo === "vulnerabilita-pattern") {
                             await filtro.filtroPattern.setVulnerabilita();
+                        }
+                        if (tipo === "articolo-pattern") {
+                            await filtro.filtroPattern.setArticoli();
                         }
                         resolve();
                     } else {

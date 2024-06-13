@@ -1,4 +1,5 @@
 // src/pkb/SistemaDiRicerca/FiltroApplicato.ts
+import ArticoloGDPR from "../ArticoloGDPR";
 import Pattern from "../Pattern";
 import Strategia from "../Strategia";
 import Vulnerabilita from "../Vulnerabilita";
@@ -7,6 +8,7 @@ class FiltroApplicato {
     filtroPattern: Pattern;
     filtroStrategia: Strategia;
     filtroVulnerabilita: Vulnerabilita;
+    filtroArticolo: ArticoloGDPR;
     tipoRicerca: string;
 
     constructor(id: number, tipoRicerca: string, nome?: string) {
@@ -14,7 +16,8 @@ class FiltroApplicato {
         if (
             tipoRicerca === "pattern" ||
             tipoRicerca === "strategia-pattern" ||
-            tipoRicerca === "vulnerabilita-pattern"
+            tipoRicerca === "vulnerabilita-pattern" ||
+            tipoRicerca === "articolo-pattern"
         ) {
             this.filtroPattern = new Pattern(id);
         } else {
@@ -32,6 +35,11 @@ class FiltroApplicato {
             this.filtroVulnerabilita = new Vulnerabilita(id);
         } else {
             this.filtroVulnerabilita = new Vulnerabilita(0);
+        }
+        if (tipoRicerca === "articolo" || "articolo-pattern") {
+            this.filtroArticolo = new ArticoloGDPR(id);
+        } else {
+            this.filtroArticolo = new ArticoloGDPR(0);
         }
     }
 }

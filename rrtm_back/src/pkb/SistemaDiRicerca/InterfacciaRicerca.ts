@@ -5,6 +5,7 @@ import Strategia from "../Strategia.ts";
 import * as mysql from "mysql";
 import connection from "../../index.ts";
 import Vulnerabilita from "../Vulnerabilita.ts";
+import ArticoloGDPR from "../ArticoloGDPR.ts";
 
 class InterfacciaRicerca {
     // Pattern
@@ -80,6 +81,29 @@ class InterfacciaRicerca {
                 );
                 const vulnerabilita = await Promise.all(promises);
                 resolve(vulnerabilita);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findArtPatt(
+        idPattern: number
+    ): Promise<ArticoloGDPR[]> {
+        let filtro = new FiltroApplicato(idPattern, "articolo-pattern");
+        console.log(idPattern);
+        await Pattern.updateFiltro(filtro, "articolo-pattern");
+        const articoloIds = filtro.filtroPattern.getArticoli();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(articoloIds) || articoloIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = articoloIds.map((id: number) =>
+                    ArticoloGDPR.getArticoloDB(id)
+                );
+                const articoli = await Promise.all(promises);
+                resolve(articoli);
             } catch (err) {
                 reject(err);
             }
@@ -186,6 +210,62 @@ class InterfacciaRicerca {
         );
         await Vulnerabilita.updateFiltro(filtro, "pattern-vulnerabilita");
         const patternIds = filtro.filtroVulnerabilita.getPatterns();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(patternIds) || patternIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = patternIds.map((id: number) =>
+                    Pattern.getPatternDB(id)
+                );
+                const patterns = await Promise.all(promises);
+                resolve(patterns);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // Articolo
+    public static async findArticolo(Id: number) {
+        let filtroArticolo = new FiltroApplicato(Id, "articolo");
+        await ArticoloGDPR.updateFiltro(filtroArticolo, "articolo");
+        return filtroArticolo.filtroArticolo.getArticolobyFiltro(
+            filtroArticolo
+        );
+    }
+    public static async showArticoli(): Promise<ArticoloGDPR[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM articoloGDPR";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const articoloIds = results.map(
+                                (row: any) => row.Id
+                            );
+                            const promises = articoloIds.map((id: number) =>
+                                ArticoloGDPR.getArticoloDB(id)
+                            );
+                            const articoli = await Promise.all(promises);
+                            resolve(articoli);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No articoli found"));
+                    }
+                }
+            );
+        });
+    }
+    public static async findPattArt(idArticolo: number): Promise<Pattern[]> {
+        let filtro = new FiltroApplicato(idArticolo, "pattern-articolo");
+        await ArticoloGDPR.updateFiltro(filtro, "pattern-articolo");
+        const patternIds = filtro.filtroArticolo.getPatterns();
         return new Promise(async (resolve, reject) => {
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);

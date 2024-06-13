@@ -4,6 +4,8 @@ import cors from "cors";
 import patternRoutes from "./routes/patternRoutes";
 import strategiaRoutes from "./routes/strategiaRoutes";
 import vulnerabilitaRoutes from "./routes/vulnerabilitaRoutes";
+import articoloRoutes from "./routes/articoloRoutes";
+
 const dbConfig = {
     host: "localhost",
     user: "rrtm",
@@ -39,6 +41,7 @@ function avviaServer(connection: mysql.Connection) {
     app.use("/api", patternRoutes);
     app.use("/api", strategiaRoutes);
     app.use("/api", vulnerabilitaRoutes);
+    app.use("/api", articoloRoutes);
     app.listen(PORT, () => {
         console.log(`Server in ascolto sulla porta ${PORT}`);
     });

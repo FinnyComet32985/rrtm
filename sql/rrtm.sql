@@ -22,7 +22,7 @@ CREATE TABLE ArticoloPattern(articoloId int not null, patternId int not null , p
 DROP TABLE IF EXISTS ArticoloStrategia;
 CREATE TABLE ArticoloStrategia(articoloId int not null, strategiaId int not null , primary key (articoloId, strategiaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (strategiaId) REFERENCES strategia(Id));
 DROP TABLE IF EXISTS ArticoloVulnerabilita;
-CREATE TABLE ArticoloStrategia(articoloId int not null, vulnerabilitaId int not null , primary key (articoloId, vulnerabilitaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (vulnerabilitaId) REFERENCES vulnerabilita(Id));
+CREATE TABLE ArticoloVulnerabilita(articoloId int not null, vulnerabilitaId int not null , primary key (articoloId, vulnerabilitaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (vulnerabilitaId) REFERENCES vulnerabilita(Id));
 
 
 /* inserimento pattern */

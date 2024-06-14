@@ -9,13 +9,16 @@ class Vulnerabilita {
     private stato: string;
 
     private pattern: number[];
+    private articoli: number[];
+
     // costruttore
     public constructor(
         Id: number,
         titolo?: string,
         stato?: string,
         cwe?: number,
-        pattern?: number[]
+        pattern?: number[],
+        articoli?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -37,6 +40,11 @@ class Vulnerabilita {
             this.pattern = pattern;
         } else {
             this.pattern = [];
+        }
+        if (articoli !== undefined) {
+            this.articoli = articoli;
+        } else {
+            this.articoli = [];
         }
     }
     // get Vulnerabilita by ID
@@ -66,6 +74,9 @@ class Vulnerabilita {
     getPatterns() {
         return this.pattern;
     }
+    getArticoli() {
+        return this.articoli;
+    }
 
     // seters
     setId(Id: number) {
@@ -92,6 +103,27 @@ class Vulnerabilita {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         this.pattern = results.map((row: any) => row.patternId);
+                        resolve();
+                    } else {
+                        reject(new Error("nessun risultato"));
+                    }
+                }
+            );
+        });
+    }
+    public setArticoli() {
+        const query =
+            "SELECT articoloId FROM ArticoloVulnerabilita WHERE vulnerabilitaId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.articoli = results.map(
+                            (row: any) => row.articoloId
+                        );
                         resolve();
                     } else {
                         reject(new Error("nessun risultato"));
@@ -129,6 +161,9 @@ class Vulnerabilita {
                         );
                         if (tipo === "pattern-vulnerabilita") {
                             await filtro.filtroVulnerabilita.setPatterns();
+                        }
+                        if (tipo === "articolo-vulnerabilita") {
+                            await filtro.filtroVulnerabilita.setArticoli();
                         }
                         resolve();
                     } else {

@@ -250,6 +250,31 @@ class InterfacciaRicerca {
             }
         });
     }
+    public static async findArtVuln(
+        idVulnerabilita: number
+    ): Promise<ArticoloGDPR[]> {
+        let filtro = new FiltroApplicato(
+            idVulnerabilita,
+            "pattern-vulnerabilita"
+        );
+        await Vulnerabilita.updateFiltro(filtro, "articolo-vulnerabilita");
+        const articoliIds = filtro.filtroVulnerabilita.getArticoli();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(articoliIds) || articoliIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = articoliIds.map((id: number) =>
+                    ArticoloGDPR.getArticoloDB(id)
+                );
+                const articoli = await Promise.all(promises);
+                resolve(articoli);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
 
     // Articolo
     public static async findArticolo(Id: number) {
@@ -321,6 +346,31 @@ class InterfacciaRicerca {
                 );
                 const strategie = await Promise.all(promises);
                 resolve(strategie);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findVulnArt(
+        idArticolo: number
+    ): Promise<Vulnerabilita[]> {
+        let filtro = new FiltroApplicato(idArticolo, "vulnerabilita-articolo");
+        await ArticoloGDPR.updateFiltro(filtro, "vulnerabilita-articolo");
+        const vulnerabilitaIds = filtro.filtroArticolo.getVulnerabilita();
+        return new Promise(async (resolve, reject) => {
+            if (
+                !Array.isArray(vulnerabilitaIds) ||
+                vulnerabilitaIds.length === 0
+            ) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = vulnerabilitaIds.map((id: number) =>
+                    Vulnerabilita.getVulnerabilitaDB(id)
+                );
+                const vulnerabilita = await Promise.all(promises);
+                resolve(vulnerabilita);
             } catch (err) {
                 reject(err);
             }

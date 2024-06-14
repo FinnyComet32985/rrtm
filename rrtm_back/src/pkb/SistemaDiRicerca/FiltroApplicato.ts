@@ -32,12 +32,21 @@ class FiltroApplicato {
         } else {
             this.filtroStrategia = new Strategia(0);
         }
-        if (tipoRicerca === "vulnerabilita" || "vulnerabilita-pattern") {
+        if (
+            tipoRicerca === "vulnerabilita" ||
+            tipoRicerca === "pattern-vulnerabilita" ||
+            tipoRicerca === "articolo-vulnerabilita"
+        ) {
             this.filtroVulnerabilita = new Vulnerabilita(id);
         } else {
             this.filtroVulnerabilita = new Vulnerabilita(0);
         }
-        if (tipoRicerca === "articolo" || "articolo-pattern") {
+        if (
+            tipoRicerca === "articolo" ||
+            tipoRicerca === "pattern-articolo" ||
+            tipoRicerca === "strategia-articolo" ||
+            tipoRicerca === "vulnerabilita-articolo"
+        ) {
             this.filtroArticolo = new ArticoloGDPR(id);
         } else {
             this.filtroArticolo = new ArticoloGDPR(0);

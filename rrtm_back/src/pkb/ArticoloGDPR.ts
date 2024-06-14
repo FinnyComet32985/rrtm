@@ -8,12 +8,14 @@ class ArticoloGDPR {
 
     private pattern: number[];
     private strategie: number[];
+    private vulnerabilita: number[];
 
     constructor(
         Id: number,
         titolo?: string,
         pattern?: number[],
-        strategie?: number[]
+        strategie?: number[],
+        vulnerabilita?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -30,6 +32,11 @@ class ArticoloGDPR {
             this.strategie = strategie;
         } else {
             this.strategie = [];
+        }
+        if (vulnerabilita !== undefined) {
+            this.vulnerabilita = vulnerabilita;
+        } else {
+            this.vulnerabilita = [];
         }
     }
 
@@ -53,6 +60,9 @@ class ArticoloGDPR {
     }
     getStrategie() {
         return this.strategie;
+    }
+    getVulnerabilita() {
+        return this.vulnerabilita;
     }
     // setters
     setId(Id: number) {
@@ -102,7 +112,27 @@ class ArticoloGDPR {
             );
         });
     }
-
+    setVulnerabilita() {
+        const query =
+            "SELECT vulnerabilitaId FROM ArticoloVulnerabilita WHERE articoloId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.vulnerabilita = results.map(
+                            (row: any) => row.vulnerabilitaId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("Articolo not found"));
+                    }
+                }
+            );
+        });
+    }
     // update filtro
     static async updateFiltro(
         filtro: FiltroApplicato,
@@ -126,6 +156,9 @@ class ArticoloGDPR {
                         }
                         if (tipo === "strategia-articolo") {
                             await filtro.filtroArticolo.setStrategie();
+                        }
+                        if (tipo === "vulnerabilita-articolo") {
+                            await filtro.filtroArticolo.setVulnerabilita();
                         }
                         resolve();
                     } else {

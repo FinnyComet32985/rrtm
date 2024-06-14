@@ -33,19 +33,18 @@ function PatternPage() {
         loading: loading3,
         error: error3,
     } = useFetch(`http://localhost:1337/api/findVulnPatt/${patternId}`);
-    
-    
+
     const initialMount = useRef(true);
 
     useEffect(() => {
         // Calcolo dell'altezza massima per le vulnerabilità solo alla prima apertura
         if (vulnerabilitaExpanded && data3 && initialMount.current) {
-            const maxHeightCalcVuln = `${(data3.length*9.36)+7.6}vh`;
+            const maxHeightCalcVuln = `${data3.length * 9.36 + 7.6}vh`;
             setMaxHeightVuln(maxHeightCalcVuln);
             initialMount.current = false; // Imposta il primo montaggio a false dopo il calcolo iniziale
         }
     }, [vulnerabilitaExpanded, data3]);
-    
+
     const handleToggleStrategie = () => {
         setStrategieExpanded(!strategieExpanded);
     };
@@ -77,82 +76,92 @@ function PatternPage() {
     return (
         <div className="PatternPage">
             <Header />
-            {data && (
-                <div className="pattern">
-                    <div className="titoloPattern">
-                        <h3 key={data.Id}>{data.titolo}</h3>
+            <div className="container">
+                {data && (
+                    <div className="pattern">
+                        <div className="titoloPattern">
+                            <h3 key={data.Id}>{data.titolo}</h3>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>sommario:</h3>
+                            <p key={data.Id}>{data.sommario}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>contesto:</h3>
+                            <p key={data.Id}>{data.contesto}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>problema:</h3>
+                            <p key={data.Id}>{data.problema}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>soluzione:</h3>
+                            <p key={data.Id}>{data.soluzione}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>esempio:</h3>
+                            <p key={data.Id}>{data.esempio}</p>
+                        </div>
                     </div>
-                    <div className="PatternDivs">
-                        <h3>sommario:</h3>
-                        <p key={data.Id}>{data.sommario}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>contesto:</h3>
-                        <p key={data.Id}>{data.contesto}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>problema:</h3>
-                        <p key={data.Id}>{data.problema}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>soluzione:</h3>
-                        <p key={data.Id}>{data.soluzione}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>esempio:</h3>
-                        <p key={data.Id}>{data.esempio}</p>
+                )}
+
+                {/* Strategie Associate */}
+                <div
+                    className={`StrategieAssociate ${
+                        strategieExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleStrategie}
+                >
+                    <h3>strategie Associate</h3>
+                    <div className="stratAssocMap">
+                        {data2 &&
+                            data2.map((strategia) => (
+                                <div
+                                    className="strategie-details"
+                                    key={strategia.Id}
+                                >
+                                    <h4
+                                        onClick={() =>
+                                            handleClickStrategia(strategia.Id)
+                                        }
+                                    >
+                                        {strategia.nome}
+                                    </h4>
+                                </div>
+                            ))}
                     </div>
                 </div>
-            )}
-            
-            {/* Strategie Associate */}
-            <div
-                className={`StrategieAssociate ${
-                    strategieExpanded ? "open" : "closed"
-                }`}
-                onClick={handleToggleStrategie}
-            >
-                <h3>strategie Associate</h3>
-                <div className="stratAssocMap">
-                    {data2 &&
-                        data2.map((strategia) => (
-                            <div className="strategie-details" key={strategia.Id}>
+
+                {/* Vulnerabilità Associate */}
+                <div
+                    className={`VulnerabilitaAssociate ${
+                        vulnerabilitaExpanded ? "open" : "closed"
+                    }`}
+                    style={{ "--max-height-vuln": maxHeightVuln }}
+                    onClick={handleToggleVulnerabilita}
+                >
+                    <h3>vulnerabilità Associate</h3>
+                    {data3 &&
+                        data3.map((vulnerabilita) => (
+                            <div
+                                className="vulnerabilita-details"
+                                key={vulnerabilita.Id}
+                            >
                                 <h4
                                     onClick={() =>
-                                        handleClickStrategia(strategia.Id)
+                                        handleClickVulnerabilita(
+                                            vulnerabilita.Id
+                                        )
                                     }
                                 >
-                                    {strategia.nome}
+                                    {vulnerabilita.titolo}
                                 </h4>
                             </div>
                         ))}
                 </div>
-            </div>
-
-            {/* Vulnerabilità Associate */}
-            <div
-                className={`VulnerabilitaAssociate ${
-                    vulnerabilitaExpanded ? "open" : "closed"
-                }`}
-                style={{ "--max-height-vuln": maxHeightVuln }}
-                onClick={handleToggleVulnerabilita}
-            >
-                <h3>vulnerabilità Associate</h3>
-                {data3 && data3.map((vulnerabilita) => (
-                    <div className="vulnerabilita-details" key={vulnerabilita.Id}>
-                    <h4
-                        onClick={() =>
-                            handleClickVulnerabilita(vulnerabilita.Id)
-                        }
-                    >
-                        {vulnerabilita.titolo}
-                    </h4>
-                </div>
-                ))}
             </div>
         </div>
     );
 }
 
 export default PatternPage;
-

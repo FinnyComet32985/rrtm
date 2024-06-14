@@ -163,6 +163,28 @@ class InterfacciaRicerca {
             }
         });
     }
+    public static async findArtStrat(
+        idStrategia: number
+    ): Promise<ArticoloGDPR[]> {
+        let filtro = new FiltroApplicato(idStrategia, "articolo-strategia");
+        await Strategia.updateFiltro(filtro, "articolo-strategia");
+        const articoloIds = filtro.filtroStrategia.getArticoli();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(articoloIds) || articoloIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = articoloIds.map((id: number) =>
+                    ArticoloGDPR.getArticoloDB(id)
+                );
+                const articoli = await Promise.all(promises);
+                resolve(articoli);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
 
     // Vulnerabilita
     public static async findVulnerabilita(Id: number) {
@@ -279,6 +301,26 @@ class InterfacciaRicerca {
                 );
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findStratArt(idArticolo: number): Promise<Strategia[]> {
+        let filtro = new FiltroApplicato(idArticolo, "strategia-articolo");
+        await ArticoloGDPR.updateFiltro(filtro, "strategia-articolo");
+        const strategiaIds = filtro.filtroArticolo.getStrategie();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(strategiaIds) || strategiaIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = strategiaIds.map((id: number) =>
+                    Strategia.getStrategiaDB(id)
+                );
+                const strategie = await Promise.all(promises);
+                resolve(strategie);
             } catch (err) {
                 reject(err);
             }

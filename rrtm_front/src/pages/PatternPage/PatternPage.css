@@ -1,17 +1,9 @@
-.PatternPage {
-    position: relative;
-    top: 15vh;
-    height: 190vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20vh;
-}
+
 .pattern {
     position: relative;
     top: 0;
     width: 80%;
+    padding: 10px;
     padding-bottom: 5vh;
     background-color: #131921;
     border-radius: 2vh;
@@ -40,8 +32,7 @@
 }
 .StrategieAssociate {
     position: relative;
-    top: -15vh;
-    width: 70vh;
+    width: 80%;
     background-color: #444;
     color: white;
     padding: 10px;
@@ -92,7 +83,6 @@
 .VulnerabilitaAssociate {
     position: relative;
     width: 70vh;
-    top: -15vh;
     background-color: #444;
     color: white;
     padding: 10px;

@@ -25,7 +25,8 @@ class FiltroApplicato {
         }
         if (
             tipoRicerca === "strategia" ||
-            tipoRicerca === "pattern-strategia"
+            tipoRicerca === "pattern-strategia" ||
+            tipoRicerca === "articolo-strategia"
         ) {
             this.filtroStrategia = new Strategia(id);
         } else {

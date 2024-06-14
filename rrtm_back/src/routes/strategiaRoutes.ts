@@ -48,4 +48,17 @@ router.get("/findPattStrat/:id", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get("/findArtStrat/:id", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id); // Converti l'ID in un numero
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid ID" });
+    }
+    try {
+        const articoli = await InterfacciaRicerca.findArtStrat(id);
+        res.json(articoli);
+    } catch (error) {
+        console.error("Error fetching patterns:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router; // Export the router

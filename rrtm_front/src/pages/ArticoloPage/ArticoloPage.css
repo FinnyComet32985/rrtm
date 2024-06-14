@@ -81,3 +81,54 @@
     padding: 10px;
     border-radius: 8px;
 }
+
+/* strategie associate */ 
+.StrategieAssociateArticolo {
+    position: relative;
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.StrategieAssociateArticolo.closed {
+    max-height: 25px; /* Altezza solo del titolo */
+    opacity: 0.8;
+}
+
+.StrategieAssociateArticolo.open {
+    max-height: 15vh; /* Altezza massima del contenuto espanso */
+    opacity: 1;
+}
+.StrategieAssociateArticolo h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.strategie-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.StrategieAssociateArticolo.open .strategie-details {
+    opacity: 1;
+}
+
+.stratAssocMap {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2vh;
+    justify-content: center;
+}

@@ -7,8 +7,14 @@ class ArticoloGDPR {
     private titolo: string;
 
     private pattern: number[];
+    private strategie: number[];
 
-    constructor(Id: number, titolo?: string, pattern?: number[]) {
+    constructor(
+        Id: number,
+        titolo?: string,
+        pattern?: number[],
+        strategie?: number[]
+    ) {
         this.Id = Id;
         if (titolo !== undefined) {
             this.titolo = titolo;
@@ -19,6 +25,11 @@ class ArticoloGDPR {
             this.pattern = pattern;
         } else {
             this.pattern = [];
+        }
+        if (strategie !== undefined) {
+            this.strategie = strategie;
+        } else {
+            this.strategie = [];
         }
     }
 
@@ -40,6 +51,9 @@ class ArticoloGDPR {
     getPatterns() {
         return this.pattern;
     }
+    getStrategie() {
+        return this.strategie;
+    }
     // setters
     setId(Id: number) {
         this.Id = Id;
@@ -59,6 +73,27 @@ class ArticoloGDPR {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         this.pattern = results.map((row: any) => row.patternId);
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
+    setStrategie() {
+        const query =
+            "SELECT strategiaId FROM ArticoloStrategia WHERE articoloId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.strategie = results.map(
+                            (row: any) => row.strategiaId
+                        );
                         resolve();
                     } else {
                         reject(new Error("Pattern not found"));
@@ -88,6 +123,9 @@ class ArticoloGDPR {
                         filtro.filtroArticolo.setTitolo(articoloData.titolo);
                         if (tipo === "pattern-articolo") {
                             await filtro.filtroArticolo.setPattern();
+                        }
+                        if (tipo === "strategia-articolo") {
+                            await filtro.filtroArticolo.setStrategie();
                         }
                         resolve();
                     } else {

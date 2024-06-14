@@ -7,8 +7,14 @@ class Strategia {
     private nome: string;
 
     private pattern: number[];
+    private articoli: number[];
 
-    constructor(Id: number, nome?: string, pattern?: number[]) {
+    constructor(
+        Id: number,
+        nome?: string,
+        pattern?: number[],
+        articoli?: number[]
+    ) {
         this.Id = Id;
         if (nome !== undefined) {
             this.nome = nome;
@@ -19,6 +25,11 @@ class Strategia {
             this.pattern = pattern;
         } else {
             this.pattern = [];
+        }
+        if (articoli !== undefined) {
+            this.articoli = articoli;
+        } else {
+            this.articoli = [];
         }
     }
 
@@ -39,6 +50,9 @@ class Strategia {
     }
     getPatterns() {
         return this.pattern;
+    }
+    getArticoli() {
+        return this.articoli;
     }
     // setters
     setId(Id: number) {
@@ -67,6 +81,27 @@ class Strategia {
             );
         });
     }
+    setArticoli() {
+        const query =
+            "SELECT articoloId FROM ArticoloStrategia WHERE strategiaId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.articoli = results.map(
+                            (row: any) => row.articoloId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("articolo not found"));
+                    }
+                }
+            );
+        });
+    }
 
     // update filtro
     static async updateFiltro(
@@ -88,6 +123,9 @@ class Strategia {
                         filtro.filtroStrategia.setNome(strategiaData.nome);
                         if (tipo === "pattern-strategia") {
                             await filtro.filtroStrategia.setPattern();
+                        }
+                        if (tipo === "articolo-strategia") {
+                            await filtro.filtroStrategia.setArticoli();
                         }
                         resolve();
                     } else {

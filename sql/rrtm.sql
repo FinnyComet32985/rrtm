@@ -21,6 +21,8 @@ DROP TABLE IF EXISTS ArticoloPattern;
 CREATE TABLE ArticoloPattern(articoloId int not null, patternId int not null , primary key (articoloId, patternId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 DROP TABLE IF EXISTS ArticoloStrategia;
 CREATE TABLE ArticoloStrategia(articoloId int not null, strategiaId int not null , primary key (articoloId, strategiaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (strategiaId) REFERENCES strategia(Id));
+DROP TABLE IF EXISTS ArticoloVulnerabilita;
+CREATE TABLE ArticoloStrategia(articoloId int not null, vulnerabilitaId int not null , primary key (articoloId, vulnerabilitaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (vulnerabilitaId) REFERENCES vulnerabilita(Id));
 
 
 /* inserimento pattern */
@@ -72,6 +74,8 @@ INSERT INTO ArticoloStrategia VALUES(32, 3);
 INSERT INTO ArticoloStrategia VALUES(32, 4);
 INSERT INTO ArticoloStrategia VALUES(32, 7);
 
+/* inserimento ArticoloVulnerabilita */
+INSERT INTO ArticoloVulnerabilita VALUES(32, 1);
 
 
 

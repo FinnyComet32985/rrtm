@@ -6,7 +6,7 @@ USE rrtm;
 DROP TABLE IF EXISTS pattern;
 CREATE TABLE pattern( Id int not null primary key, titolo varchar(100), sommario text, contesto text, problema text, soluzione text, esempio text);
 DROP TABLE IF EXISTS strategia;
-CREATE TABLE strategia( Id int not null primary key, nome varchar(100));
+CREATE TABLE strategia( Id int not null primary key, nome varchar(100) );
 DROP TABLE IF EXISTS vulnerabilita;
 CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300));
 DROP TABLE IF EXISTS articoloGDPR;

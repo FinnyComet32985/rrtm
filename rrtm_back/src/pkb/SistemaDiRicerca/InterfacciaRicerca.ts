@@ -118,7 +118,7 @@ class InterfacciaRicerca {
     }
     public static async showStrategie(): Promise<Strategia[]> {
         return new Promise(async (resolve, reject) => {
-            const query = "SELECT Id FROM strategia WHERE stato='pubblicata'";
+            const query = "SELECT Id FROM strategia";
             connection.query(
                 query,
                 async (err: mysql.MysqlError | null, results: any) => {
@@ -172,9 +172,12 @@ class InterfacciaRicerca {
             filtroVulnerabilita
         );
     }
-    public static async showVulnerabilita(): Promise<Vulnerabilita[]> {
+    public static async showVulnerabilitaPubblicate(): Promise<
+        Vulnerabilita[]
+    > {
         return new Promise(async (resolve, reject) => {
-            const query = "SELECT Id FROM Vulnerabilita";
+            const query =
+                "SELECT Id FROM Vulnerabilita WHERE stato='Pubblicata'";
             connection.query(
                 query,
                 async (err: mysql.MysqlError | null, results: any) => {

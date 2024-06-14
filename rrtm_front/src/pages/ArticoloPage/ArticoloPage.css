@@ -1,0 +1,83 @@
+.container {
+    position: absolute;
+    top: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 97.3%;
+    padding: 20px;
+    gap: 5vh;
+}
+
+.articolo {
+    position: relative;
+    top: 0;
+    width: 80%;
+    padding-bottom: 5vh;
+    background-color: #131921;
+    border-radius: 2vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2vh;
+}
+/* sommario Div */
+.articoloDiv {
+    background-color: #232f3e;
+    position: relative;
+    width: 80%;
+    border-radius: 2vh;
+}
+.articoloDiv > * {
+    padding-left: 2vh;
+}
+/* titolo Pattern */
+.titoloArticolo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.PatternAssociati {
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.PatternAssociati.closed {
+    max-height: 25px; /* Altezza solo del titolo */
+    opacity: 0.8;
+}
+
+.PatternAssociati.open {
+    max-height: 500px; /* Altezza massima del contenuto espanso */
+    opacity: 1;
+}
+
+.PatternAssociati h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.pattern-details {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.PatternAssociati.open .pattern-details {
+    opacity: 1;
+}
+
+.pattern-details div {
+    margin-top: 10px;
+    background-color: #555;
+    padding: 10px;
+    border-radius: 8px;
+}

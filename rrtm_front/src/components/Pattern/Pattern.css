@@ -1,0 +1,43 @@
+.trendingPattern {
+    padding: 1em;
+    border-radius: 2em;
+    background-color: #3f526d;
+    color: white;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+    width: auto;
+    max-width: 65vh;
+  }
+  
+  .sommarioTrending {
+    padding: 2em;
+    border-radius: 2em;
+    background-color: #6b8bb9;
+    color: white;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+    width: calc(100% - 1vh); /* Adjust width based on parent container */
+  }
+
+
+
+.sommarioTrending > p {
+    margin: 0; /* Rimuovi margini se necessario */
+}
+
+.titoloTrendingPattern {
+    position: relative;
+    font-size: 1.4rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}

@@ -1,23 +1,24 @@
-import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import "./StrategiaPage.css";
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import Header from "../../components/Header/Header";
+import "./ArticoloPage.css";
 
-function StrategiaPage() {
-    let { strategiaId } = useParams();
+function ArticoloPage() {
+    let { articoloId } = useParams();
+    const navigate = useNavigate();
     const [isPatternExpanded, setIsPatternExpanded] = useState(false);
 
     const { data, loading, error } = useFetch(
-        `http://localhost:1337/api/findStrategia/${strategiaId}`
+        `http://localhost:1337/api/findArticolo/${articoloId}`
     );
+    console.log(data);
     const {
         data: data2,
         loading: loading2,
         error: error2,
-    } = useFetch(`http://localhost:1337/api/findPattStrat/${strategiaId}`);
-    const navigate = useNavigate();
+    } = useFetch(`http://localhost:1337/api/findPattArt/${articoloId}`);
     const handlePatternToggle = () => {
         setIsPatternExpanded(!isPatternExpanded);
     };
@@ -38,12 +39,20 @@ function StrategiaPage() {
     if (error2) {
         return <div>Error: {error2.message}</div>;
     }
-
     return (
         <div>
             <Header></Header>
             <div className="container">
-                <div className="Strategia">{data && <h3>{data.nome}</h3>}</div>
+            {data && (
+                <div className="articolo">
+                    <div className="titoloArticolo">
+                        <h3 key={data.Id}>{data.titolo}</h3>
+                    </div>
+                    <div className="articoloDiv">
+                        <h3>Articolo n°: {data.Id}</h3>
+                    </div>
+                </div>
+            )}
                 <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
@@ -64,6 +73,8 @@ function StrategiaPage() {
             </div>
         </div>
     );
+    
 }
 
-export default StrategiaPage;
+export default ArticoloPage;
+

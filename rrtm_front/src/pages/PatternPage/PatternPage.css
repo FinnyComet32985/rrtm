@@ -30,6 +30,46 @@
     justify-content: center;
     width: 100%;
 }
+
+
+
+/* loading*/ 
+/* Loading spinner styles */
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.spinner .dot1,
+.spinner .dot2 {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    background-color: #6b8bb9;
+    border-radius: 50%;
+    display: inline-block;
+    animation: dotBounce 1.5s infinite ease-in-out;
+}
+
+.spinner .dot2 {
+    animation-delay: -0.75s;
+}
+
+@keyframes dotBounce {
+    0%, 100% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+/* strategie associate */
 .StrategieAssociate {
     position: relative;
     width: 80%;
@@ -82,7 +122,7 @@
 /* vulnerabilita associate */ 
 .VulnerabilitaAssociate {
     position: relative;
-    width: 70vh;
+    width: 80%;
     background-color: #444;
     color: white;
     padding: 10px;
@@ -107,6 +147,7 @@
     text-align: center;
 }
 
+
 .vulnerabilita-details {
     position: relative;
     opacity: 0;
@@ -116,6 +157,13 @@
     border-radius: 8px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.vulnerabilita-details > p {
+    width: 100%;
+    display: flex;
     justify-content: center;
 }
 

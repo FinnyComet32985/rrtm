@@ -39,7 +39,7 @@ function PatternPage() {
     useEffect(() => {
         // Calcolo dell'altezza massima per le vulnerabilità solo alla prima apertura
         if (vulnerabilitaExpanded && data3 && initialMount.current) {
-            const maxHeightCalcVuln = `${data3.length * 9.36 + 7.6}vh`;
+            const maxHeightCalcVuln = `${data3.length * 14.52 + 7.6}vh`;
             setMaxHeightVuln(maxHeightCalcVuln);
             initialMount.current = false; // Imposta il primo montaggio a false dopo il calcolo iniziale
         }
@@ -57,7 +57,10 @@ function PatternPage() {
         return (
             <div>
                 <Header></Header>
-                <div>Loading...</div>;
+                <div className="spinner">
+                    <div className="dot1"></div>
+                    <div className="dot2"></div>
+                </div>
             </div>
         );
     }
@@ -156,6 +159,7 @@ function PatternPage() {
                                 >
                                     {vulnerabilita.titolo}
                                 </h4>
+                                <p>CWE: {vulnerabilita.cwe}</p>
                             </div>
                         ))}
                 </div>

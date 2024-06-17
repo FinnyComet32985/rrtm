@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS vulnerabilita;
 CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300));
 DROP TABLE IF EXISTS articoloGDPR;
 CREATE TABLE articoloGDPR( Id int not null primary key, titolo varchar(500));
+DROP TABLE IF EXISTS principioPbD;
+CREATE TABLE principioPbD( Id int not null primary key, nome varchar(500));
 
 /* creazione tabelle relazioni */
 DROP TABLE IF EXISTS StrategiaPattern;
@@ -23,6 +25,10 @@ DROP TABLE IF EXISTS ArticoloStrategia;
 CREATE TABLE ArticoloStrategia(articoloId int not null, strategiaId int not null , primary key (articoloId, strategiaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (strategiaId) REFERENCES strategia(Id));
 DROP TABLE IF EXISTS ArticoloVulnerabilita;
 CREATE TABLE ArticoloVulnerabilita(articoloId int not null, vulnerabilitaId int not null , primary key (articoloId, vulnerabilitaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (vulnerabilitaId) REFERENCES vulnerabilita(Id));
+DROP TABLE IF EXISTS PbdStrategia;
+CREATE TABLE PbdStrategia(PbdId int not null, strategiaId int not null , primary key (PbdId, strategiaId), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id), FOREIGN KEY (strategiaId) REFERENCES strategia(Id));
+DROP TABLE IF EXISTS PbdPattern;
+CREATE TABLE PbdPattern(PbdId int not null, patternId int not null , primary key (PbdId, patternId), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 
 
 /* inserimento pattern */
@@ -50,6 +56,12 @@ INSERT INTO vulnerabilita VALUES(4, 269, "Improper Privilege Management", "pubbl
 /* inserimento articoli */
 INSERT INTO articoloGDPR VALUES(32, "Security of processing");
 
+/* inseriemnte principiPbD */
+INSERT INTO principioPbD VALUES(1, "Privacy as the default setting");
+INSERT INTO principioPbD VALUES(2, "Privacy Embedded into Design");
+INSERT INTO principioPbD VALUES(3, "Visibility and Transparency");
+INSERT INTO principioPbD VALUES(4, "Proactive not Reactive");
+
 /* inserimento StrategiaPattern */
 INSERT INTO StrategiaPattern VALUES(1, 1);
 INSERT INTO StrategiaPattern VALUES(1, 2);
@@ -76,6 +88,21 @@ INSERT INTO ArticoloStrategia VALUES(32, 7);
 
 /* inserimento ArticoloVulnerabilita */
 INSERT INTO ArticoloVulnerabilita VALUES(32, 1);
+
+/* insermento PbDStrategia */
+INSERT INTO PbDStrategia VALUES(1, 1);
+INSERT INTO PbDStrategia VALUES(2, 1);
+INSERT INTO PbDStrategia VALUES(3, 1);
+INSERT INTO PbDStrategia VALUES(4, 1);
+INSERT INTO PbDStrategia VALUES(1, 2);
+
+/* inserimento PbDPattern */ 
+INSERT INTO PbDPattern VALUES(1, 1);
+INSERT INTO PbDPattern VALUES(2, 1);
+INSERT INTO PbDPattern VALUES(3, 1);
+INSERT INTO PbDPattern VALUES(4, 1);
+
+
 
 
 

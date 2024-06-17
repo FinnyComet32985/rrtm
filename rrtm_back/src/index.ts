@@ -5,6 +5,7 @@ import patternRoutes from "./routes/patternRoutes";
 import strategiaRoutes from "./routes/strategiaRoutes";
 import vulnerabilitaRoutes from "./routes/vulnerabilitaRoutes";
 import articoloRoutes from "./routes/articoloRoutes";
+import PbDRoutes from "./routes/PbDRoutes";
 
 const dbConfig = {
     host: "localhost",
@@ -42,6 +43,7 @@ function avviaServer(connection: mysql.Connection) {
     app.use("/api", strategiaRoutes);
     app.use("/api", vulnerabilitaRoutes);
     app.use("/api", articoloRoutes);
+    app.use("/api", PbDRoutes);
     app.listen(PORT, () => {
         console.log(`Server in ascolto sulla porta ${PORT}`);
     });

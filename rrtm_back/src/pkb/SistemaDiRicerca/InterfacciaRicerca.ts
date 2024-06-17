@@ -6,6 +6,7 @@ import * as mysql from "mysql";
 import connection from "../../index.ts";
 import Vulnerabilita from "../Vulnerabilita.ts";
 import ArticoloGDPR from "../ArticoloGDPR.ts";
+import PrincipioPbD from "../PrincipioPbD.ts";
 
 class InterfacciaRicerca {
     // Pattern
@@ -108,6 +109,28 @@ class InterfacciaRicerca {
             }
         });
     }
+    public static async findPbDPatt(
+        idPattern: number
+    ): Promise<PrincipioPbD[]> {
+        let filtro = new FiltroApplicato(idPattern, "PbD-pattern");
+        await Pattern.updateFiltro(filtro, "PbD-pattern");
+        const principioIds = filtro.filtroPattern.getPbD();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(principioIds) || principioIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = principioIds.map((id: number) =>
+                    PrincipioPbD.getPbDDB(id)
+                );
+                const PbD = await Promise.all(promises);
+                resolve(PbD);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
     // Strategia
     public static async findStrategia(Id: number) {
         let filtroStrategia = new FiltroApplicato(Id, "strategia");
@@ -180,6 +203,28 @@ class InterfacciaRicerca {
                 );
                 const articoli = await Promise.all(promises);
                 resolve(articoli);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findPbDStrat(
+        idStrategia: number
+    ): Promise<PrincipioPbD[]> {
+        let filtro = new FiltroApplicato(idStrategia, "PbD-strategia");
+        await Strategia.updateFiltro(filtro, "PbD-strategia");
+        const PbDIds = filtro.filtroStrategia.getPbD();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(PbDIds) || PbDIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = PbDIds.map((id: number) =>
+                    PrincipioPbD.getPbDDB(id)
+                );
+                const PbD = await Promise.all(promises);
+                resolve(PbD);
             } catch (err) {
                 reject(err);
             }
@@ -371,6 +416,78 @@ class InterfacciaRicerca {
                 );
                 const vulnerabilita = await Promise.all(promises);
                 resolve(vulnerabilita);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // PbD
+    public static async findPbD(Id: number) {
+        let filtroPbD = new FiltroApplicato(Id, "PbD");
+        await PrincipioPbD.updateFiltro(filtroPbD, "PbD");
+        return filtroPbD.filtroPbD.getPbDbyFiltro(filtroPbD);
+    }
+    public static async showPbD(): Promise<PrincipioPbD[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM principioPbD";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const PbDIds = results.map((row: any) => row.Id);
+                            const promises = PbDIds.map((id: number) =>
+                                PrincipioPbD.getPbDDB(id)
+                            );
+                            const principi = await Promise.all(promises);
+                            resolve(principi);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No principi found"));
+                    }
+                }
+            );
+        });
+    }
+    public static async findPattPbD(idPbD: number): Promise<Pattern[]> {
+        let filtro = new FiltroApplicato(idPbD, "pattern-PbD");
+        await PrincipioPbD.updateFiltro(filtro, "pattern-PbD");
+        const patternIds = filtro.filtroPbD.getPattern();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(patternIds) || patternIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = patternIds.map((id: number) =>
+                    Pattern.getPatternDB(id)
+                );
+                const patterns = await Promise.all(promises);
+                resolve(patterns);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findStratPbD(idPbD: number): Promise<Strategia[]> {
+        let filtro = new FiltroApplicato(idPbD, "strategia-PbD");
+        await PrincipioPbD.updateFiltro(filtro, "strategia-PbD");
+        const strategiaIds = filtro.filtroPbD.getStrategie();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(strategiaIds) || strategiaIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = strategiaIds.map((id: number) =>
+                    Strategia.getStrategiaDB(id)
+                );
+                const strategie = await Promise.all(promises);
+                resolve(strategie);
             } catch (err) {
                 reject(err);
             }

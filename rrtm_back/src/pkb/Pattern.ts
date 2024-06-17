@@ -13,6 +13,7 @@ class Pattern {
     private strategie: number[];
     private vulnerabilita: number[];
     private articoli: number[];
+    private principiPbD: number[];
     constructor(
         Id: number,
         titolo?: string,
@@ -23,7 +24,8 @@ class Pattern {
         esempio?: string,
         strategie?: number[],
         vulnerabilita?: number[],
-        articoli?: number[]
+        articoli?: number[],
+        principiPbD?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -71,6 +73,11 @@ class Pattern {
         } else {
             this.articoli = [];
         }
+        if (principiPbD !== undefined) {
+            this.principiPbD = principiPbD;
+        } else {
+            this.principiPbD = [];
+        }
     }
     // get Pattern by ID
     getPatternbyFiltro(filtro: FiltroApplicato) {
@@ -117,6 +124,9 @@ class Pattern {
     }
     getArticoli() {
         return this.articoli;
+    }
+    getPbD() {
+        return this.principiPbD;
     }
 
     // setters
@@ -205,6 +215,24 @@ class Pattern {
             );
         });
     }
+    public setPbD() {
+        const query = "SELECT PbDId FROM PbDPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.principiPbD = results.map((row: any) => row.PbDId);
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
 
     static async updateFiltro(
         filtro: FiltroApplicato,
@@ -238,6 +266,9 @@ class Pattern {
                         }
                         if (tipo === "articolo-pattern") {
                             await filtro.filtroPattern.setArticoli();
+                        }
+                        if (tipo === "PbD-pattern") {
+                            await filtro.filtroPattern.setPbD();
                         }
                         resolve();
                     } else {

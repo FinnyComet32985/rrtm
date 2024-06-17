@@ -3,12 +3,14 @@ import ArticoloGDPR from "../ArticoloGDPR";
 import Pattern from "../Pattern";
 import Strategia from "../Strategia";
 import Vulnerabilita from "../Vulnerabilita";
+import PrincipioPbD from "../PrincipioPbD";
 
 class FiltroApplicato {
     filtroPattern: Pattern;
     filtroStrategia: Strategia;
     filtroVulnerabilita: Vulnerabilita;
     filtroArticolo: ArticoloGDPR;
+    filtroPbD: PrincipioPbD;
     tipoRicerca: string;
 
     constructor(id: number, tipoRicerca: string, nome?: string) {
@@ -17,7 +19,8 @@ class FiltroApplicato {
             tipoRicerca === "pattern" ||
             tipoRicerca === "strategia-pattern" ||
             tipoRicerca === "vulnerabilita-pattern" ||
-            tipoRicerca === "articolo-pattern"
+            tipoRicerca === "articolo-pattern" ||
+            tipoRicerca === "PbD-pattern"
         ) {
             this.filtroPattern = new Pattern(id);
         } else {
@@ -26,7 +29,8 @@ class FiltroApplicato {
         if (
             tipoRicerca === "strategia" ||
             tipoRicerca === "pattern-strategia" ||
-            tipoRicerca === "articolo-strategia"
+            tipoRicerca === "articolo-strategia" ||
+            tipoRicerca === "PbD-strategia"
         ) {
             this.filtroStrategia = new Strategia(id);
         } else {
@@ -50,6 +54,15 @@ class FiltroApplicato {
             this.filtroArticolo = new ArticoloGDPR(id);
         } else {
             this.filtroArticolo = new ArticoloGDPR(0);
+        }
+        if (
+            tipoRicerca === "PbD" ||
+            tipoRicerca === "pattern-PbD" ||
+            tipoRicerca === "strategia-PbD"
+        ) {
+            this.filtroPbD = new PrincipioPbD(id);
+        } else {
+            this.filtroPbD = new PrincipioPbD(0);
         }
     }
 }

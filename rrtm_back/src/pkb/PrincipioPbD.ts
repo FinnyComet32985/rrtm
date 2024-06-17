@@ -2,20 +2,18 @@ import * as mysql from "mysql";
 import connection from "../index.ts";
 import FiltroApplicato from "./SistemaDiRicerca/FiltroApplicato.ts";
 
-class Strategia {
+class PrincipioPbD {
     private Id: number;
     private nome: string;
 
     private pattern: number[];
-    private articoli: number[];
-    private principiPbD: number[];
+    private strategie: number[];
 
-    constructor(
+    public constructor(
         Id: number,
         nome?: string,
         pattern?: number[],
-        articoli?: number[],
-        principiPbD?: number[]
+        strategie?: number[]
     ) {
         this.Id = Id;
         if (nome !== undefined) {
@@ -28,25 +26,19 @@ class Strategia {
         } else {
             this.pattern = [];
         }
-        if (articoli !== undefined) {
-            this.articoli = articoli;
+        if (strategie !== undefined) {
+            this.strategie = strategie;
         } else {
-            this.articoli = [];
-        }
-        if (principiPbD !== undefined) {
-            this.principiPbD = principiPbD;
-        } else {
-            this.principiPbD = [];
+            this.strategie = [];
         }
     }
-
-    // get Strategia by Filtro
-    getStrategiabyFiltro(filtro: FiltroApplicato) {
-        const retStrategia = new Strategia(
-            filtro.filtroStrategia.getId(),
-            filtro.filtroStrategia.getNome()
+    // get Principio by filtro
+    getPbDbyFiltro(filtro: FiltroApplicato) {
+        const retPrincipio = new PrincipioPbD(
+            filtro.filtroPbD.getId(),
+            filtro.filtroPbD.getNome()
         );
-        return retStrategia;
+        return retPrincipio;
     }
     // getters
     getId() {
@@ -55,14 +47,11 @@ class Strategia {
     getNome() {
         return this.nome;
     }
-    getPatterns() {
+    getPattern() {
         return this.pattern;
     }
-    getArticoli() {
-        return this.articoli;
-    }
-    getPbD() {
-        return this.principiPbD;
+    getStrategie() {
+        return this.strategie;
     }
     // setters
     setId(Id: number) {
@@ -73,8 +62,7 @@ class Strategia {
     }
     // set relazioni
     setPattern() {
-        const query =
-            "SELECT patternId FROM StrategiaPattern WHERE strategiaId = ?";
+        const query = "SELECT patternId FROM PbDPattern WHERE PbDId = ?";
         return new Promise<void>((resolve, reject) => {
             connection.query(
                 query,
@@ -91,9 +79,8 @@ class Strategia {
             );
         });
     }
-    setArticoli() {
-        const query =
-            "SELECT articoloId FROM ArticoloStrategia WHERE strategiaId = ?";
+    setStrategie() {
+        const query = "SELECT strategiaId FROM PbDStrategia WHERE PbDId = ?";
         return new Promise<void>((resolve, reject) => {
             connection.query(
                 query,
@@ -101,43 +88,24 @@ class Strategia {
                 (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
-                        this.articoli = results.map(
-                            (row: any) => row.articoloId
+                        this.strategie = results.map(
+                            (row: any) => row.strategiaId
                         );
                         resolve();
                     } else {
-                        reject(new Error("articolo not found"));
+                        reject(new Error("Pattern not found"));
                     }
                 }
             );
         });
     }
-    setPbD() {
-        const query = "SELECT PbDId FROM PbdStrategia WHERE strategiaId = ?";
-        return new Promise<void>((resolve, reject) => {
-            connection.query(
-                query,
-                [this.Id],
-                (err: mysql.MysqlError | null, results: any) => {
-                    if (err) return reject(err);
-                    if (results.length > 0) {
-                        this.principiPbD = results.map((row: any) => row.PbDId);
-                        resolve();
-                    } else {
-                        reject(new Error("articolo not found"));
-                    }
-                }
-            );
-        });
-    }
-
     // update filtro
     static async updateFiltro(
         filtro: FiltroApplicato,
         tipo: string
     ): Promise<void> {
-        let Id = filtro.filtroStrategia.getId();
-        const query = "SELECT * FROM strategia WHERE id = ?";
+        let Id = filtro.filtroPbD.getId();
+        const query = "SELECT * FROM principioPbD WHERE id = ?";
 
         return new Promise<void>((resolve, reject) => {
             connection.query(
@@ -146,17 +114,14 @@ class Strategia {
                 async (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
-                        const strategiaData = results[0];
-                        filtro.filtroStrategia.setId(strategiaData.Id);
-                        filtro.filtroStrategia.setNome(strategiaData.nome);
-                        if (tipo === "pattern-strategia") {
-                            await filtro.filtroStrategia.setPattern();
+                        const PbDData = results[0];
+                        filtro.filtroPbD.setId(PbDData.Id);
+                        filtro.filtroPbD.setNome(PbDData.nome);
+                        if (tipo === "pattern-PbD") {
+                            await filtro.filtroPbD.setPattern();
                         }
-                        if (tipo === "articolo-strategia") {
-                            await filtro.filtroStrategia.setArticoli();
-                        }
-                        if (tipo === "PbD-strategia") {
-                            await filtro.filtroStrategia.setPbD();
+                        if (tipo === "strategia-PbD") {
+                            await filtro.filtroPbD.setStrategie();
                         }
                         resolve();
                     } else {
@@ -166,11 +131,10 @@ class Strategia {
             );
         });
     }
-
     // get dal database
-    public static async getStrategiaDB(id: number): Promise<Strategia> {
+    public static async getPbDDB(id: number): Promise<PrincipioPbD> {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM strategia WHERE id=?";
+            const query = "SELECT * FROM principioPbD WHERE id=?";
             connection.query(
                 query,
                 [id],
@@ -179,11 +143,11 @@ class Strategia {
                         return reject(err);
                     }
                     if (results.length > 0) {
-                        const strategiaRicercata = new Strategia(
+                        const PbDRicercato = new PrincipioPbD(
                             results[0].Id,
                             results[0].nome
                         );
-                        resolve(strategiaRicercata);
+                        resolve(PbDRicercato);
                     } else {
                         reject(new Error(`Strategia not found for id: ${id}`));
                     }
@@ -192,4 +156,5 @@ class Strategia {
         });
     }
 }
-export default Strategia;
+
+export default PrincipioPbD;

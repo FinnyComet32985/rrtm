@@ -11,6 +11,8 @@ function PatternPage() {
     const [strategieExpanded, setStrategieExpanded] = useState(false);
     const [vulnerabilitaExpanded, setVulnerabilitaExpanded] = useState(false);
     const [PbDExpanded, setPbDExpanded] = useState(false);
+    const [ISOExpanded, setISOExpanded] = useState(false);
+    const [MVCExpanded, setMVCExpanded] = useState(false);
     const [maxHeightVuln, setMaxHeightVuln] = useState(null);
 
     const { data, loading, error } = useFetch(
@@ -25,6 +27,12 @@ function PatternPage() {
     };
     const handleClickPbD = (PbDId) => {
         navigate(`/PbDPage/${PbDId}`); // Passa l'ID come parte dell'URL
+    };
+    const handleClickISO = (ISOId) => {
+        navigate(`/ISOPage/${ISOId}`); // Passa l'ID come parte dell'URL
+    };
+    const handleClickMVC = (MVCId) => {
+        navigate(`/MVCPage/${MVCId}`); // Passa l'ID come parte dell'URL
     };
 
     const {
@@ -42,6 +50,16 @@ function PatternPage() {
         loading: loading4,
         error: error4,
     } = useFetch(`http://localhost:1337/api/findPbDPatt/${patternId}`);
+    const {
+        data: data5,
+        loading: loading5,
+        error: error5,
+    } = useFetch(`http://localhost:1337/api/findISOPatt/${patternId}`);
+    const {
+        data: data6,
+        loading: loading6,
+        error: error6,
+    } = useFetch(`http://localhost:1337/api/findMVCPatt/${patternId}`);
     const initialMount = useRef(true);
 
     useEffect(() => {
@@ -65,7 +83,14 @@ function PatternPage() {
         setPbDExpanded(!PbDExpanded);
     };
 
-    if (loading || loading2 || loading3 || loading4) {
+    const handleToggleISO = () => {
+        setISOExpanded(!ISOExpanded);
+    };
+    const handleToggleMVC = () => {
+        setMVCExpanded(!MVCExpanded);
+    };
+
+    if (loading || loading2 || loading3 || loading4 || loading5 || loading6) {
         return (
             <div>
                 <Header></Header>
@@ -88,7 +113,13 @@ function PatternPage() {
         return <div>Error3: {error3.message}</div>;
     }
     if (error4) {
-        return <div>Error3: {error3.message}</div>;
+        return <div>Error4: {error4.message}</div>;
+    }
+    if (error5) {
+        return <div>Error5: {error5.message}</div>;
+    }
+    if (error6) {
+        return <div>Error6: {error6.message}</div>;
     }
     return (
         <div className="PatternPage">
@@ -185,21 +216,53 @@ function PatternPage() {
                     }`}
                     onClick={handleTogglePbD}
                 >
-                    <h3>Principi PbD associati</h3>
+                    <h3>Principi PbD Associati</h3>
                     <div className="PbDAssocMap">
                         {data4 &&
                             data4.map((PbD) => (
-                                <div
-                                    className="PbD-details"
-                                    key={PbD.Id}
-                                >
-                                    <h4
-                                        onClick={() =>
-                                            handleClickPbD(PbD.Id)
-                                        }
-                                    >
+                                <div className="PbD-details" key={PbD.Id}>
+                                    <h4 onClick={() => handleClickPbD(PbD.Id)}>
                                         {PbD.nome}
                                     </h4>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* PbD Associate */}
+                <div
+                    className={`MVCAssociati ${
+                        MVCExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleMVC}
+                >
+                    <h3>MVC Associati</h3>
+                    <div className="MVCAssocMap">
+                        {data6 &&
+                            data6.map((MVC) => (
+                                <div className="MVC-details" key={MVC.Id}>
+                                    <h4 onClick={() => handleClickMVC(MVC.Id)}>
+                                        {MVC.nome}
+                                    </h4>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* ISO Associate */}
+                <div
+                    className={`ISOAssociati ${
+                        ISOExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleISO}
+                >
+                    <h3>Fasi ISO Associate</h3>
+                    <div className="ISOAssocMap">
+                        {data5 &&
+                            data5.map((ISO) => (
+                                <div className="ISO-details" key={ISO.Id}>
+                                    <div onClick={() => handleClickISO(ISO.Id)}>
+                                        <h4>{ISO.Id}</h4>     
+                                        <h4>{ISO.nome}</h4>
+                                    </div>
                                 </div>
                             ))}
                     </div>

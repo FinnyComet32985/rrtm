@@ -6,6 +6,8 @@ import Strategia from "../../components/Strategia/Strategia";
 import Vulnerabilita from "../../components/Vulnerabilita/Vulnerabilita";
 import Articolo from "../../components/Articolo/Articolo";
 import PbD from "../../components/PbD/PbD";
+import MVC from "../../components/MVC/MVC";
+import ISO from "../../components/ISO/ISO";
 import "./HomePage.css";
 
 function HomePage() {
@@ -32,10 +34,21 @@ function HomePage() {
         loading: loading5,
         error: error5,
     } = useFetch("http://localhost:1337/api/showPbD");
+    const {
+        data: data6,
+        loading: loading6,
+        error: error6,
+    } = useFetch("http://localhost:1337/api/showMVC");
+    const {
+        data: data7,
+        loading: loading7,
+        error: error7,
+    } = useFetch("http://localhost:1337/api/showISO");
     const [showAllPatterns, setShowAllPatterns] = useState(false);
     const [showAllVulnerabilita, setShowAllVulnerabilita] = useState(false);
     const [showAllArticoli, setShowAllArticoli] = useState(false);
     const [showAllPbD, setShowAllPbD] = useState(false);
+    const [showAllISO, setShowAllISO] = useState(false);
     const handleTogglePatterns = () => {
         setShowAllPatterns(!showAllPatterns);
     };
@@ -48,7 +61,10 @@ function HomePage() {
     const handleTogglePbD = () => {
         setShowAllPbD(!showAllPbD);
     };
-    if (loading || loading2 || loading3 || loading4 || loading5) {
+    const handleToggleISO = () => {
+        setShowAllISO(!showAllISO);
+    };
+    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7) {
         return (
             <div>
                 <Header></Header>
@@ -73,7 +89,13 @@ function HomePage() {
         return <div>Error4: {error4.message}</div>;
     }
     if (error5) {
-        return <div>Error4: {error4.message}</div>;
+        return <div>Error5: {error5.message}</div>;
+    }
+    if (error6) {
+        return <div>Error6: {error6.message}</div>;
+    }
+    if (error7) {
+        return <div>Error7: {error7.message}</div>;
     }
 
     return (
@@ -184,6 +206,41 @@ function HomePage() {
                             {showAllPbD
                                 ? "Nascondi i principi PbD"
                                 : "Visualizza tutti i principi PbD"}
+                        </button>
+                    </div>
+                )}
+            </div>
+            {/* MVC */}
+            <div className="trendingDivMVC">
+                <h1 className="AllMVCTitle">MVC</h1>
+                {data6 &&
+                    data6.map((mvc) => (
+                        <MVC
+                            key={mvc.Id}
+                            id={mvc.Id}
+                            nome={mvc.nome}
+                        />
+                    ))}
+            </div>
+            {/* ISO */}
+            <div className="trendingDivISO">
+                <h1 className="AllISOTitle">Fasi ISO</h1>
+                {data7 &&
+                    data7
+                        .slice(0, showAllISO ? data7.length : 3)
+                        .map((iso) => (
+                            <ISO
+                                key={iso.Id}
+                                id={iso.Id}
+                                nome={iso.nome}
+                            />
+                        ))}
+                {data7.length > 3 && (
+                    <div className="buttonDivISO">
+                        <button onClick={handleToggleISO}>
+                            {showAllISO
+                                ? "Nascondi le fasi ISO"
+                                : "Visualizza tutte le fasi ISO"}
                         </button>
                     </div>
                 )}

@@ -115,7 +115,7 @@ function StrategiaPage() {
                     }`}
                     onClick={handleTogglePbD}
                 >
-                    <h3>Principi PbD essociati</h3>
+                    <h3>Principi PbD associati</h3>
                     <div className="PbDAssocMap">
                         {data4 &&
                             data4.map((PbD) => (

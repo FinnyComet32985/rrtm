@@ -78,4 +78,30 @@ router.get("/findPbDPatt/:id", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get("/findMVCPatt/:id", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id); // Converti l'ID in un numero
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid ID" });
+    }
+    try {
+        const MVC = await InterfacciaRicerca.findMVCPatt(id);
+        res.json(MVC);
+    } catch (error) {
+        console.error("Error fetching patterns:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+router.get("/findISOPatt/:id", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id); // Converti l'ID in un numero
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid ID" });
+    }
+    try {
+        const ISO = await InterfacciaRicerca.findISOPatt(id);
+        res.json(ISO);
+    } catch (error) {
+        console.error("Error fetching patterns:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router; // Export the router

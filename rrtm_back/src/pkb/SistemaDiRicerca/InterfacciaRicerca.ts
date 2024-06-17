@@ -7,6 +7,8 @@ import connection from "../../index.ts";
 import Vulnerabilita from "../Vulnerabilita.ts";
 import ArticoloGDPR from "../ArticoloGDPR.ts";
 import PrincipioPbD from "../PrincipioPbD.ts";
+import CollocazioneMVC from "../CollocazioneMVC.ts";
+import FaseISO from "../FaseISO.ts";
 
 class InterfacciaRicerca {
     // Pattern
@@ -126,6 +128,48 @@ class InterfacciaRicerca {
                 );
                 const PbD = await Promise.all(promises);
                 resolve(PbD);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findMVCPatt(
+        idPattern: number
+    ): Promise<CollocazioneMVC[]> {
+        let filtro = new FiltroApplicato(idPattern, "MVC-pattern");
+        await Pattern.updateFiltro(filtro, "MVC-pattern");
+        const mvcIds = filtro.filtroPattern.getMVC();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(mvcIds) || mvcIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = mvcIds.map((id: number) =>
+                    CollocazioneMVC.getMVCDB(id)
+                );
+                const MVC = await Promise.all(promises);
+                resolve(MVC);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findISOPatt(idPattern: number): Promise<FaseISO[]> {
+        let filtro = new FiltroApplicato(idPattern, "ISO-pattern");
+        await Pattern.updateFiltro(filtro, "ISO-pattern");
+        const isoIds = filtro.filtroPattern.getISO();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(isoIds) || isoIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = isoIds.map((id: number) =>
+                    FaseISO.getISODB(id)
+                );
+                const ISO = await Promise.all(promises);
+                resolve(ISO);
             } catch (err) {
                 reject(err);
             }
@@ -488,6 +532,150 @@ class InterfacciaRicerca {
                 );
                 const strategie = await Promise.all(promises);
                 resolve(strategie);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // MVC
+    public static async findMVC(Id: number) {
+        let filtroMVC = new FiltroApplicato(Id, "MVC");
+        await CollocazioneMVC.updateFiltro(filtroMVC, "MVC");
+        return filtroMVC.filtroMVC.getMVCbyFiltro(filtroMVC);
+    }
+    public static async showMVC(): Promise<CollocazioneMVC[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM collocazioneMVC";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const MVCIds = results.map((row: any) => row.Id);
+                            const promises = MVCIds.map((id: number) =>
+                                CollocazioneMVC.getMVCDB(id)
+                            );
+                            const MVC = await Promise.all(promises);
+                            resolve(MVC);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No principi found"));
+                    }
+                }
+            );
+        });
+    }
+    public static async findPattMVC(idMVC: number): Promise<Pattern[]> {
+        let filtro = new FiltroApplicato(idMVC, "pattern-MVC");
+        await CollocazioneMVC.updateFiltro(filtro, "pattern-MVC");
+        const MVCIds = filtro.filtroMVC.getPattern();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(MVCIds) || MVCIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = MVCIds.map((id: number) =>
+                    Pattern.getPatternDB(id)
+                );
+                const patterns = await Promise.all(promises);
+                resolve(patterns);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findISOMVC(idMVC: number): Promise<FaseISO[]> {
+        let filtro = new FiltroApplicato(idMVC, "ISO-MVC");
+        await CollocazioneMVC.updateFiltro(filtro, "ISO-MVC");
+        const MVCIds = filtro.filtroMVC.getISO();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(MVCIds) || MVCIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = MVCIds.map((id: number) =>
+                    FaseISO.getISODB(id)
+                );
+                const iso = await Promise.all(promises);
+                resolve(iso);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // ISO
+    public static async findISO(Id: number) {
+        let filtroISO = new FiltroApplicato(Id, "ISO");
+        await FaseISO.updateFiltro(filtroISO, "ISO");
+        return filtroISO.filtroISO.getISObyFiltro(filtroISO);
+    }
+    public static async showISO(): Promise<FaseISO[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM faseIso";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const ISOIds = results.map((row: any) => row.Id);
+                            const promises = ISOIds.map((id: number) =>
+                                FaseISO.getISODB(id)
+                            );
+                            const ISO = await Promise.all(promises);
+                            resolve(ISO);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No principi found"));
+                    }
+                }
+            );
+        });
+    }
+    public static async findPattISO(idISO: number): Promise<Pattern[]> {
+        let filtro = new FiltroApplicato(idISO, "pattern-ISO");
+        await FaseISO.updateFiltro(filtro, "pattern-ISO");
+        const ISOIds = filtro.filtroISO.getPattern();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(ISOIds) || ISOIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = ISOIds.map((id: number) =>
+                    Pattern.getPatternDB(id)
+                );
+                const patterns = await Promise.all(promises);
+                resolve(patterns);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findMVCISO(idISO: number): Promise<CollocazioneMVC[]> {
+        let filtro = new FiltroApplicato(idISO, "MVC-ISO");
+        await FaseISO.updateFiltro(filtro, "MVC-ISO");
+        const ISOIds = filtro.filtroISO.getMVC();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(ISOIds) || ISOIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = ISOIds.map((id: number) =>
+                    CollocazioneMVC.getMVCDB(id)
+                );
+                const mvc = await Promise.all(promises);
+                resolve(mvc);
             } catch (err) {
                 reject(err);
             }

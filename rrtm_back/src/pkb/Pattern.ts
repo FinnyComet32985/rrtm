@@ -14,6 +14,8 @@ class Pattern {
     private vulnerabilita: number[];
     private articoli: number[];
     private principiPbD: number[];
+    private collocazioneMVC: number[];
+    private faseISO: number[];
     constructor(
         Id: number,
         titolo?: string,
@@ -25,7 +27,9 @@ class Pattern {
         strategie?: number[],
         vulnerabilita?: number[],
         articoli?: number[],
-        principiPbD?: number[]
+        principiPbD?: number[],
+        collocazioneMVC?: number[],
+        faseISO?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -78,6 +82,16 @@ class Pattern {
         } else {
             this.principiPbD = [];
         }
+        if (collocazioneMVC !== undefined) {
+            this.collocazioneMVC = collocazioneMVC;
+        } else {
+            this.collocazioneMVC = [];
+        }
+        if (faseISO !== undefined) {
+            this.faseISO = faseISO;
+        } else {
+            this.faseISO = [];
+        }
     }
     // get Pattern by ID
     getPatternbyFiltro(filtro: FiltroApplicato) {
@@ -127,6 +141,12 @@ class Pattern {
     }
     getPbD() {
         return this.principiPbD;
+    }
+    getMVC() {
+        return this.collocazioneMVC;
+    }
+    getISO() {
+        return this.faseISO;
     }
 
     // setters
@@ -233,6 +253,44 @@ class Pattern {
             );
         });
     }
+    public setMVC() {
+        const query = "SELECT MvcId FROM MvcPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.collocazioneMVC = results.map(
+                            (row: any) => row.MvcId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
+    public setISO() {
+        const query = "SELECT IsoId FROM IsoPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.faseISO = results.map((row: any) => row.IsoId);
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
 
     static async updateFiltro(
         filtro: FiltroApplicato,
@@ -269,6 +327,12 @@ class Pattern {
                         }
                         if (tipo === "PbD-pattern") {
                             await filtro.filtroPattern.setPbD();
+                        }
+                        if (tipo === "MVC-pattern") {
+                            await filtro.filtroPattern.setMVC();
+                        }
+                        if (tipo === "ISO-pattern") {
+                            await filtro.filtroPattern.setISO();
                         }
                         resolve();
                     } else {

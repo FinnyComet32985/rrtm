@@ -16,7 +16,7 @@ CREATE TABLE principioPbD( Id int not null primary key, nome varchar(500));
 DROP TABLE IF EXISTS collocazioneMVC;
 CREATE TABLE collocazioneMVC( Id int not null primary key, nome varchar(500));
 DROP TABLE IF EXISTS faseIso;
-CREATE TABLE faseIso( Id float not null primary key, nome varchar(500));
+CREATE TABLE faseIso( Id decimal(10,2) not null primary key, nome varchar(500));
 
 
 /* creazione tabelle relazioni */
@@ -34,12 +34,12 @@ DROP TABLE IF EXISTS PbdStrategia;
 CREATE TABLE PbdStrategia(PbdId int not null, strategiaId int not null , primary key (PbdId, strategiaId), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id), FOREIGN KEY (strategiaId) REFERENCES strategia(Id));
 DROP TABLE IF EXISTS PbdPattern;
 CREATE TABLE PbdPattern(PbdId int not null, patternId int not null , primary key (PbdId, patternId), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
-DROP TABLE IF EXISTS PbdPattern;
+DROP TABLE IF EXISTS MvcPattern;
 CREATE TABLE MvcPattern(MvcId int not null, patternId int not null , primary key (MvcId, patternId), FOREIGN KEY (MvcId) REFERENCES collocazioneMVC(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 DROP TABLE IF EXISTS IsoMvc;
-CREATE TABLE IsoMvc(IsoId float not null, MvcId int not null , primary key (IsoId, MvcId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (MvcId) REFERENCES collocazioneMVC(Id));
+CREATE TABLE IsoMvc(IsoId decimal(10,2) not null, MvcId int not null , primary key (IsoId, MvcId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (MvcId) REFERENCES collocazioneMVC(Id));
 DROP TABLE IF EXISTS IsoPattern;
-CREATE TABLE IsoPattern(IsoId float not null, patternId int not null , primary key (IsoId, patternId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
+CREATE TABLE IsoPattern(IsoId decimal(10,2) not null, patternId int not null , primary key (IsoId, patternId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 
 
 /* inserimento pattern */
@@ -75,11 +75,11 @@ INSERT INTO principioPbD VALUES(4, "Proactive not Reactive");
 
 /* Inserimento MVC */ 
 INSERT INTO collocazioneMVC VALUES(1, "Model");
-INSERT INTO collocazioneMVC VALUES(1, "View");
-INSERT INTO collocazioneMVC VALUES(1, "Controller");
+INSERT INTO collocazioneMVC VALUES(2, "View");
+INSERT INTO collocazioneMVC VALUES(3, "Controller");
 
 /* Inserimento ISO */ 
-INSERT INTO faseIso VALUES(7.4, "Producing design solutions")
+INSERT INTO faseIso VALUES(7.4, "Producing design solutions");
 
 /* Inserimento relazioni */
 /* inserimento StrategiaPattern */
@@ -135,9 +135,9 @@ INSERT INTO PbDPattern VALUES(3, 1);
 INSERT INTO PbDPattern VALUES(4, 1);
 
 /* inserimento IsoPattern */
-INSERT INTO IsoPattern VALUES(1, 1);
-INSERT INTO IsoPattern VALUES(1, 2);
-INSERT INTO IsoPattern VALUES(1, 3);
+INSERT INTO IsoPattern VALUES(7.4, 1);
+INSERT INTO IsoPattern VALUES(7.4, 2);
+INSERT INTO IsoPattern VALUES(7.4, 3);
 
 
 

@@ -5,6 +5,7 @@ import Pattern from "../../components/Pattern/Pattern";
 import Strategia from "../../components/Strategia/Strategia";
 import Vulnerabilita from "../../components/Vulnerabilita/Vulnerabilita";
 import Articolo from "../../components/Articolo/Articolo";
+import PbD from "../../components/PbD/PbD";
 import "./HomePage.css";
 
 function HomePage() {
@@ -26,9 +27,15 @@ function HomePage() {
         loading: loading4,
         error: error4,
     } = useFetch("http://localhost:1337/api/showArticoli");
+    const {
+        data: data5,
+        loading: loading5,
+        error: error5,
+    } = useFetch("http://localhost:1337/api/showPbD");
     const [showAllPatterns, setShowAllPatterns] = useState(false);
     const [showAllVulnerabilita, setShowAllVulnerabilita] = useState(false);
     const [showAllArticoli, setShowAllArticoli] = useState(false);
+    const [showAllPbD, setShowAllPbD] = useState(false);
     const handleTogglePatterns = () => {
         setShowAllPatterns(!showAllPatterns);
     };
@@ -38,7 +45,10 @@ function HomePage() {
     const handleToggleArticoli = () => {
         setShowAllArticoli(!showAllArticoli);
     };
-    if (loading || loading2 || loading3 || loading4) {
+    const handleTogglePbD = () => {
+        setShowAllPbD(!showAllPbD);
+    };
+    if (loading || loading2 || loading3 || loading4 || loading5) {
         return (
             <div>
                 <Header></Header>
@@ -60,6 +70,9 @@ function HomePage() {
         return <div>Error3: {error3.message}</div>;
     }
     if (error4) {
+        return <div>Error4: {error4.message}</div>;
+    }
+    if (error5) {
         return <div>Error4: {error4.message}</div>;
     }
 
@@ -147,6 +160,30 @@ function HomePage() {
                             {showAllArticoli
                                 ? "Nascondi articoli"
                                 : "Visualizza tutti gli articoli"}
+                        </button>
+                    </div>
+                )}
+            </div>
+            
+            {/* PbD */}
+            <div className="trendingDivPbD">
+                <h1 className="AllPbDTitle">Principi PbD</h1>
+                {data5 &&
+                    data5
+                        .slice(0, showAllPbD ? data5.length : 3)
+                        .map((pbd) => (
+                            <PbD
+                                key={pbd.Id}
+                                id={pbd.Id}
+                                nome={pbd.nome}
+                            />
+                        ))}
+                {data5.length > 3 && (
+                    <div className="buttonDivPbD">
+                        <button onClick={handleTogglePbD}>
+                            {showAllPbD
+                                ? "Nascondi i principi PbD"
+                                : "Visualizza tutti i principi PbD"}
                         </button>
                     </div>
                 )}

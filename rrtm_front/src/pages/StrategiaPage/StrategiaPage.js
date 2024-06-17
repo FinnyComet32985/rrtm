@@ -9,6 +9,7 @@ function StrategiaPage() {
     let { strategiaId } = useParams();
     const [isPatternExpanded, setIsPatternExpanded] = useState(false);
     const [isArticoliExpanded, setIsArticoloExpanded] = useState(false);
+    const [PbDExpanded, setPbDExpanded] = useState(false);
 
     const { data, loading, error } = useFetch(
         `http://localhost:1337/api/findStrategia/${strategiaId}`
@@ -21,7 +22,9 @@ function StrategiaPage() {
     const { data: data3, loading: loading3, error: error3 } = useFetch(
         `http://localhost:1337/api/findArtStrat/${strategiaId}`
     );
-
+    const { data: data4, loading: loading4, error: error4 } = useFetch(
+        `http://localhost:1337/api/findPbDStrat/${strategiaId}`
+    );
 
     const navigate = useNavigate();
 
@@ -31,13 +34,19 @@ function StrategiaPage() {
     const handleArticoliToggle = () => {
         setIsArticoloExpanded(!isArticoliExpanded);
     };
+    const handleTogglePbD = () => {
+        setPbDExpanded(!PbDExpanded);
+    };
     const handlePatternClick = (patternId) => {
         navigate(`/patternPage/${patternId}`)
     }
     const handleArticoloClick = (articoloId) => {
         navigate(`/articoloPage/${articoloId}`)
     }
-    if (loading || loading2 || loading3) {
+    const handleClickPbD = (PbDId) => {
+        navigate(`/PbDPage/${PbDId}`)
+    }
+    if (loading || loading2 || loading3 || loading4) {
         return (
             <div>
                 <Header></Header>
@@ -55,6 +64,9 @@ function StrategiaPage() {
         return <div>Error2: {error2.message}</div>;
     }
     if (error3) {
+        return <div>Error3: {error3.message}</div>
+    }
+    if (error4) {
         return <div>Error3: {error3.message}</div>
     }
     return (
@@ -92,6 +104,32 @@ function StrategiaPage() {
                                 <div key={articolo.Id} onClick={() => handleArticoloClick(articolo.Id)}>
                                     <h4>{articolo.titolo}</h4>
                                     <p>Articolo N°: {articolo.Id}</p>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* PbD Associate */}
+                <div
+                    className={`PbDAssociati ${
+                        PbDExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleTogglePbD}
+                >
+                    <h3>Principi PbD essociati</h3>
+                    <div className="PbDAssocMap">
+                        {data4 &&
+                            data4.map((PbD) => (
+                                <div
+                                    className="PbD-details"
+                                    key={PbD.Id}
+                                >
+                                    <h4
+                                        onClick={() =>
+                                            handleClickPbD(PbD.Id)
+                                        }
+                                    >
+                                        {PbD.nome}
+                                    </h4>
                                 </div>
                             ))}
                     </div>

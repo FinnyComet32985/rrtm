@@ -10,6 +10,7 @@ function PatternPage() {
     const navigate = useNavigate();
     const [strategieExpanded, setStrategieExpanded] = useState(false);
     const [vulnerabilitaExpanded, setVulnerabilitaExpanded] = useState(false);
+    const [PbDExpanded, setPbDExpanded] = useState(false);
     const [maxHeightVuln, setMaxHeightVuln] = useState(null);
 
     const { data, loading, error } = useFetch(
@@ -22,6 +23,9 @@ function PatternPage() {
     const handleClickVulnerabilita = (vulnerabilitaId) => {
         navigate(`/VulnerabilitaPage/${vulnerabilitaId}`); // Passa l'ID come parte dell'URL
     };
+    const handleClickPbD = (PbDId) => {
+        navigate(`/PbDPage/${PbDId}`); // Passa l'ID come parte dell'URL
+    };
 
     const {
         data: data2,
@@ -33,7 +37,11 @@ function PatternPage() {
         loading: loading3,
         error: error3,
     } = useFetch(`http://localhost:1337/api/findVulnPatt/${patternId}`);
-
+    const {
+        data: data4,
+        loading: loading4,
+        error: error4,
+    } = useFetch(`http://localhost:1337/api/findPbDPatt/${patternId}`);
     const initialMount = useRef(true);
 
     useEffect(() => {
@@ -53,7 +61,11 @@ function PatternPage() {
         setVulnerabilitaExpanded(!vulnerabilitaExpanded);
     };
 
-    if (loading || loading2 || loading3) {
+    const handleTogglePbD = () => {
+        setPbDExpanded(!PbDExpanded);
+    };
+
+    if (loading || loading2 || loading3 || loading4) {
         return (
             <div>
                 <Header></Header>
@@ -75,7 +87,9 @@ function PatternPage() {
     if (error3) {
         return <div>Error3: {error3.message}</div>;
     }
-
+    if (error4) {
+        return <div>Error3: {error3.message}</div>;
+    }
     return (
         <div className="PatternPage">
             <Header />
@@ -162,6 +176,33 @@ function PatternPage() {
                                 <p>CWE: {vulnerabilita.cwe}</p>
                             </div>
                         ))}
+                </div>
+
+                {/* PbD Associate */}
+                <div
+                    className={`PbDAssociati ${
+                        PbDExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleTogglePbD}
+                >
+                    <h3>Principi PbD associati</h3>
+                    <div className="PbDAssocMap">
+                        {data4 &&
+                            data4.map((PbD) => (
+                                <div
+                                    className="PbD-details"
+                                    key={PbD.Id}
+                                >
+                                    <h4
+                                        onClick={() =>
+                                            handleClickPbD(PbD.Id)
+                                        }
+                                    >
+                                        {PbD.nome}
+                                    </h4>
+                                </div>
+                            ))}
+                    </div>
                 </div>
             </div>
         </div>

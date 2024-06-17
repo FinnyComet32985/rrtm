@@ -177,3 +177,57 @@
     gap: 2vh;
     justify-content: center;
 }
+
+/* PbD */
+.PbDAssociati {
+    position: relative;
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.PbDAssociati.closed {
+    max-height: 25px;
+    opacity: 0.8;
+}
+
+.PbDAssociati.open {
+    max-height: var(--max-height-vuln); /* Altezza massima dinamica */
+    opacity: 1;
+}
+
+.PbDAssociati h3 {
+    margin: 0;
+    text-align: center;
+}
+
+
+.PbD-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.PbDAssociati.open .PbD-details {
+    opacity: 1;
+}
+
+.PbDAssocMap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh;
+    justify-content: center;
+    flex-direction: column;
+}

@@ -6,6 +6,8 @@ import PatternPage from './pages/PatternPage/PatternPage';
 import StrategiaPage from './pages/StrategiaPage/StrategiaPage';
 import VulnerabilitaPage from './pages/VulnerabilitaPage/VulnerabilitaPage';
 import ArticoloPage from './pages/ArticoloPage/ArticoloPage';
+import PbDPage from "./pages/PbDPage/PbDPage";
+
 function App() {
   return (
     <Router>
@@ -16,6 +18,7 @@ function App() {
         <Route path='/StrategiaPage/:strategiaId' element={<StrategiaPage/>}/>
         <Route path='/VulnerabilitaPage/:vulnerabilitaId' element={<VulnerabilitaPage/>}/>
         <Route path='/ArticoloPage/:articoloId' element={<ArticoloPage/>}/>
+        <Route path='/PbDPage/:PbDId' element={<PbDPage/>}/>
       </Routes>
     </Router>
   );

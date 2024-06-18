@@ -129,7 +129,7 @@
 }
 .buttonDivVulnerabilita > button {
     height: 45.6px;
-    width: 20%;
+    width: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -240,7 +240,7 @@
 }
 .buttonDivPbD > button {
     height: 45.6px;
-    width: 20%;
+    width: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -338,6 +338,62 @@
     transition: 0.3s;
 }
 .buttonDivISO > button:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
+}
+
+/* OWASP */ 
+.trendingDivOWASP {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+
+}
+.AllOWASPTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.buttonDivOWASP {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    top: 2vh;
+}
+.buttonDivOWASP > button {
+    height: 45.6px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: white;
+    background-color: #3f526d;
+    border: 2.5px solid #6b8bb9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonDivOWASP > button:hover {
     background-color: #6b8bb9;
     color: white;
     transition: 0.2;

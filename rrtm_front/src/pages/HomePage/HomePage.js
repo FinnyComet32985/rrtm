@@ -8,6 +8,8 @@ import Articolo from "../../components/Articolo/Articolo";
 import PbD from "../../components/PbD/PbD";
 import MVC from "../../components/MVC/MVC";
 import ISO from "../../components/ISO/ISO";
+import OWASP from "../../components/OWASP/OWASP";
+
 import "./HomePage.css";
 
 function HomePage() {
@@ -44,11 +46,18 @@ function HomePage() {
         loading: loading7,
         error: error7,
     } = useFetch("http://localhost:1337/api/showISO");
+    const {
+        data: data8,
+        loading: loading8,
+        error: error8,
+    } = useFetch("http://localhost:1337/api/showOWASP");
     const [showAllPatterns, setShowAllPatterns] = useState(false);
     const [showAllVulnerabilita, setShowAllVulnerabilita] = useState(false);
     const [showAllArticoli, setShowAllArticoli] = useState(false);
     const [showAllPbD, setShowAllPbD] = useState(false);
     const [showAllISO, setShowAllISO] = useState(false);
+    const [showAllOWASP, setShowAllOWASP] = useState(false);
+
     const handleTogglePatterns = () => {
         setShowAllPatterns(!showAllPatterns);
     };
@@ -64,7 +73,10 @@ function HomePage() {
     const handleToggleISO = () => {
         setShowAllISO(!showAllISO);
     };
-    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7) {
+    const handleToggleOWASP = () => {
+        setShowAllOWASP(!showAllOWASP);
+    };
+    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7 || loading8 ) {
         return (
             <div>
                 <Header></Header>
@@ -95,6 +107,9 @@ function HomePage() {
         return <div>Error6: {error6.message}</div>;
     }
     if (error7) {
+        return <div>Error7: {error7.message}</div>;
+    }
+    if (error8) {
         return <div>Error7: {error7.message}</div>;
     }
 
@@ -210,6 +225,7 @@ function HomePage() {
                     </div>
                 )}
             </div>
+
             {/* MVC */}
             <div className="trendingDivMVC">
                 <h1 className="AllMVCTitle">MVC</h1>
@@ -222,6 +238,7 @@ function HomePage() {
                         />
                     ))}
             </div>
+
             {/* ISO */}
             <div className="trendingDivISO">
                 <h1 className="AllISOTitle">Fasi ISO</h1>
@@ -241,6 +258,30 @@ function HomePage() {
                             {showAllISO
                                 ? "Nascondi le fasi ISO"
                                 : "Visualizza tutte le fasi ISO"}
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* OWASP */}
+            <div className="trendingDivOWASP">
+                <h1 className="AllOWASPTitle">Categorie OWASP</h1>
+                {data8 &&
+                    data8
+                        .slice(0, showAllOWASP ? data8.length : 3)
+                        .map((owasp) => (
+                            <OWASP
+                                key={owasp.Id}
+                                id={owasp.Id}
+                                nome={owasp.nome}
+                            />
+                        ))}
+                {data8.length > 3 && (
+                    <div className="buttonDivOWASP">
+                        <button onClick={handleToggleOWASP}>
+                            {showAllOWASP
+                                ? "Nascondi le categorie OWASP"
+                                : "Visualizza tutte le categorie OWASP"}
                         </button>
                     </div>
                 )}

@@ -28,7 +28,7 @@
     cursor: pointer;
     z-index: 2;
     top: 50%;
-    transform: translateY(-65%);
+    transform: translateY(-55%);
     right: 2vh;
 }
 .defaultImage:hover {

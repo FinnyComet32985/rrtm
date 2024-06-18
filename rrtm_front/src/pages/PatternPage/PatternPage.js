@@ -14,6 +14,7 @@ function PatternPage() {
     const [ISOExpanded, setISOExpanded] = useState(false);
     const [MVCExpanded, setMVCExpanded] = useState(false);
     const [isArticoliExpanded, setIsArticoloExpanded] = useState(false);
+    const [OWASPExpanded, setOWASPExpanded] = useState(false);
     const [maxHeightVuln, setMaxHeightVuln] = useState(null);
 
     const { data, loading, error } = useFetch(
@@ -38,6 +39,9 @@ function PatternPage() {
     const handleArticoloClick = (articoloId) => {
         navigate(`/articoloPage/${articoloId}`)
     }
+    const handleClickOWASP = (OWASPId) => {
+        navigate(`/OWASPPage/${OWASPId}`); // Passa l'ID come parte dell'URL
+    };
     const {
         data: data2,
         loading: loading2,
@@ -68,6 +72,11 @@ function PatternPage() {
         loading: loading7,
         error: error7,
     } = useFetch(`http://localhost:1337/api/findArtPatt/${patternId}`);
+    const {
+        data: data8,
+        loading: loading8,
+        error: error8,
+    } = useFetch(`http://localhost:1337/api/findOWASPPatt/${patternId}`);
     const initialMount = useRef(true);
 
     useEffect(() => {
@@ -100,7 +109,10 @@ function PatternPage() {
     const handleArticoliToggle = () => {
         setIsArticoloExpanded(!isArticoliExpanded);
     };
-    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7) {
+    const handleToggleOWASP = () => {
+        setOWASPExpanded(!OWASPExpanded);
+    };
+    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7 || loading8 ) {
         return (
             <div>
                 <Header></Header>
@@ -132,6 +144,9 @@ function PatternPage() {
         return <div>Error6: {error6.message}</div>;
     }
     if (error7) {
+        return <div>Error7: {error7.message}</div>;
+    }
+    if (error8) {
         return <div>Error7: {error7.message}</div>;
     }
     return (
@@ -280,6 +295,7 @@ function PatternPage() {
                             ))}
                     </div>
                 </div>
+                {/* Articoli Associati */}
                 <div
                     className={`ArticoliAssociati ${
                         isArticoliExpanded ? "open" : "closed"
@@ -293,6 +309,25 @@ function PatternPage() {
                                 <div key={articolo.Id} onClick={() => handleArticoloClick(articolo.Id)}>
                                     <h4>{articolo.titolo}</h4>
                                     <p>Articolo N°: {articolo.Id}</p>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* OWASP Associate */}
+                <div
+                    className={`OWASPAssociate ${
+                        OWASPExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleOWASP}
+                >
+                    <h3>Categorie OWASP Associate</h3>
+                    <div className="OWASPAssocMap">
+                        {data8 &&
+                            data8.map((OWASP) => (
+                                <div className="OWASP-details" key={OWASP.Id}>
+                                    <h4 onClick={() => handleClickOWASP(OWASP.Id)}>
+                                        {OWASP.nome}
+                                    </h4>
                                 </div>
                             ))}
                     </div>

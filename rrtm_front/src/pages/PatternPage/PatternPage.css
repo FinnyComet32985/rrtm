@@ -284,3 +284,56 @@
     justify-content: center;
     flex-direction: column;
 }
+/* OWASP */
+.OWASPAssociate {
+    position: relative;
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.OWASPAssociate.closed {
+    max-height: 25px;
+    opacity: 0.8;
+}
+
+.OWASPAssociate.open {
+    
+    opacity: 1;
+}
+
+.OWASPAssociate h3 {
+    margin: 0;
+    text-align: center;
+}
+
+
+.OWASP-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.OWASPAssociate.open .OWASP-details {
+    opacity: 1;
+}
+
+.OWASPAssocMap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh;
+    justify-content: center;
+    flex-direction: column;
+}

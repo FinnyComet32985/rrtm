@@ -9,6 +9,7 @@ import ArticoloGDPR from "../ArticoloGDPR.ts";
 import PrincipioPbD from "../PrincipioPbD.ts";
 import CollocazioneMVC from "../CollocazioneMVC.ts";
 import FaseISO from "../FaseISO.ts";
+import CategoriaOWASP from "../CategoriaOWASP.ts";
 
 class InterfacciaRicerca {
     // Pattern
@@ -170,6 +171,28 @@ class InterfacciaRicerca {
                 );
                 const ISO = await Promise.all(promises);
                 resolve(ISO);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findOWASPPatt(
+        idPattern: number
+    ): Promise<CategoriaOWASP[]> {
+        let filtro = new FiltroApplicato(idPattern, "OWASP-pattern");
+        await Pattern.updateFiltro(filtro, "OWASP-pattern");
+        const owaspIds = filtro.filtroPattern.getOWASP();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(owaspIds) || owaspIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = owaspIds.map((id: number) =>
+                    CategoriaOWASP.getOWASPDB(id)
+                );
+                const OWASP = await Promise.all(promises);
+                resolve(OWASP);
             } catch (err) {
                 reject(err);
             }
@@ -716,6 +739,58 @@ class InterfacciaRicerca {
                 );
                 const pbd = await Promise.all(promises);
                 resolve(pbd);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // OWASP
+    public static async findOWASP(Id: number) {
+        let filtroOWASP = new FiltroApplicato(Id, "OWASP");
+        await CategoriaOWASP.updateFiltro(filtroOWASP, "OWASP");
+        return filtroOWASP.filtroOWASP.getOWASPbyFiltro(filtroOWASP);
+    }
+    public static async showOWASP(): Promise<CategoriaOWASP[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM categoriaOWASP";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const OWASPIds = results.map((row: any) => row.Id);
+                            const promises = OWASPIds.map((id: number) =>
+                                CategoriaOWASP.getOWASPDB(id)
+                            );
+                            const OWASP = await Promise.all(promises);
+                            resolve(OWASP);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No principi found"));
+                    }
+                }
+            );
+        });
+    }
+    public static async findPattOWASP(idOWASP: number): Promise<Pattern[]> {
+        let filtro = new FiltroApplicato(idOWASP, "pattern-OWASP");
+        await CategoriaOWASP.updateFiltro(filtro, "pattern-OWASP");
+        const OWASPIds = filtro.filtroOWASP.getPattern();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(OWASPIds) || OWASPIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = OWASPIds.map((id: number) =>
+                    Pattern.getPatternDB(id)
+                );
+                const patterns = await Promise.all(promises);
+                resolve(patterns);
             } catch (err) {
                 reject(err);
             }

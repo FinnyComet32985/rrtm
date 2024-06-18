@@ -16,6 +16,7 @@ class Pattern {
     private principiPbD: number[];
     private collocazioneMVC: number[];
     private faseISO: number[];
+    private categoriaOWASP: number[];
     constructor(
         Id: number,
         titolo?: string,
@@ -29,7 +30,8 @@ class Pattern {
         articoli?: number[],
         principiPbD?: number[],
         collocazioneMVC?: number[],
-        faseISO?: number[]
+        faseISO?: number[],
+        categoriaOWASP?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -92,6 +94,11 @@ class Pattern {
         } else {
             this.faseISO = [];
         }
+        if (categoriaOWASP !== undefined) {
+            this.categoriaOWASP = categoriaOWASP;
+        } else {
+            this.categoriaOWASP = [];
+        }
     }
     // get Pattern by ID
     getPatternbyFiltro(filtro: FiltroApplicato) {
@@ -147,6 +154,9 @@ class Pattern {
     }
     getISO() {
         return this.faseISO;
+    }
+    getOWASP() {
+        return this.categoriaOWASP;
     }
 
     // setters
@@ -291,6 +301,26 @@ class Pattern {
             );
         });
     }
+    public setOWASP() {
+        const query = "SELECT OwaspId FROM OwaspPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.categoriaOWASP = results.map(
+                            (row: any) => row.OwaspId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
 
     static async updateFiltro(
         filtro: FiltroApplicato,
@@ -333,6 +363,9 @@ class Pattern {
                         }
                         if (tipo === "ISO-pattern") {
                             await filtro.filtroPattern.setISO();
+                        }
+                        if (tipo === "OWASP-pattern") {
+                            await filtro.filtroPattern.setOWASP();
                         }
                         resolve();
                     } else {

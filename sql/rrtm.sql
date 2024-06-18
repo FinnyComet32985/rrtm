@@ -17,7 +17,8 @@ DROP TABLE IF EXISTS collocazioneMVC;
 CREATE TABLE collocazioneMVC( Id int not null primary key, nome varchar(500));
 DROP TABLE IF EXISTS faseIso;
 CREATE TABLE faseIso( Id decimal(10,2) not null primary key, nome varchar(500));
-
+DROP TABLE IF EXISTS categoriaOWASP;
+CREATE TABLE categoriaOWASP( Id int not null primary key, nome varchar(500));
 
 /* creazione tabelle relazioni */
 DROP TABLE IF EXISTS StrategiaPattern;
@@ -42,6 +43,8 @@ DROP TABLE IF EXISTS IsoPattern;
 CREATE TABLE IsoPattern(IsoId decimal(10,2) not null, patternId int not null , primary key (IsoId, patternId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 DROP TABLE IF EXISTS PbdIso;
 CREATE TABLE PbdIso(PbdId int not null, IsoId decimal(10,2) not null , primary key (PbdId, IsoId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id));
+DROP TABLE IF EXISTS OwaspPattern;
+CREATE TABLE OwaspPattern(OwaspId int not null, patternId int not null , primary key (OwaspId, patternId), FOREIGN KEY (OwaspId) REFERENCES categoriaOWASP(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 
 
 /* inserimento pattern */
@@ -82,6 +85,12 @@ INSERT INTO collocazioneMVC VALUES(3, "Controller");
 
 /* Inserimento ISO */ 
 INSERT INTO faseIso VALUES(7.4, "Producing design solutions");
+
+/* Inserimento OWASP */ 
+INSERT INTO categoriaOWASP VALUES(5, "Security Misconfiguration");
+INSERT INTO categoriaOWASP VALUES(7, "Identification and Authentication Failures");
+
+
 
 /* Inserimento relazioni */
 /* inserimento StrategiaPattern */
@@ -147,5 +156,8 @@ INSERT INTO PbdIso VALUES(2, 7.4);
 INSERT INTO PbdIso VALUES(3, 7.4);
 INSERT INTO PbdIso VALUES(4, 7.4);
 
+/* inserimento OwaspPattern */ 
+INSERT INTO OwaspPattern VALUES(5, 1);
+INSERT INTO OwaspPattern VALUES(7, 1);
 
 

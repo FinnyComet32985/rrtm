@@ -91,6 +91,7 @@ function StrategiaPage() {
                             ))}
                     </div>
                 </div>
+                {/* Articoli Associati */}
                 <div
                     className={`ArticoliAssociati ${
                         isArticoliExpanded ? "open" : "closed"

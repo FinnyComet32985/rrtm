@@ -122,7 +122,7 @@ function ArticoloPage() {
                 </div>
                 {/* Strategie Associate */}
                 <div
-                    className={`StrategieAssociateArticolo ${
+                    className={`StrategieAssociate ${
                         isStrategiaExpanded ? "open" : "closed"
                     }`}
                     onClick={handleStrategieToggle}

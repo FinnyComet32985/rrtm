@@ -13,6 +13,7 @@ function PatternPage() {
     const [PbDExpanded, setPbDExpanded] = useState(false);
     const [ISOExpanded, setISOExpanded] = useState(false);
     const [MVCExpanded, setMVCExpanded] = useState(false);
+    const [isArticoliExpanded, setIsArticoloExpanded] = useState(false);
     const [maxHeightVuln, setMaxHeightVuln] = useState(null);
 
     const { data, loading, error } = useFetch(
@@ -34,7 +35,9 @@ function PatternPage() {
     const handleClickMVC = (MVCId) => {
         navigate(`/MVCPage/${MVCId}`); // Passa l'ID come parte dell'URL
     };
-
+    const handleArticoloClick = (articoloId) => {
+        navigate(`/articoloPage/${articoloId}`)
+    }
     const {
         data: data2,
         loading: loading2,
@@ -60,6 +63,11 @@ function PatternPage() {
         loading: loading6,
         error: error6,
     } = useFetch(`http://localhost:1337/api/findMVCPatt/${patternId}`);
+    const {
+        data: data7,
+        loading: loading7,
+        error: error7,
+    } = useFetch(`http://localhost:1337/api/findArtPatt/${patternId}`);
     const initialMount = useRef(true);
 
     useEffect(() => {
@@ -89,8 +97,10 @@ function PatternPage() {
     const handleToggleMVC = () => {
         setMVCExpanded(!MVCExpanded);
     };
-
-    if (loading || loading2 || loading3 || loading4 || loading5 || loading6) {
+    const handleArticoliToggle = () => {
+        setIsArticoloExpanded(!isArticoliExpanded);
+    };
+    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7) {
         return (
             <div>
                 <Header></Header>
@@ -120,6 +130,9 @@ function PatternPage() {
     }
     if (error6) {
         return <div>Error6: {error6.message}</div>;
+    }
+    if (error7) {
+        return <div>Error7: {error7.message}</div>;
     }
     return (
         <div className="PatternPage">
@@ -263,6 +276,23 @@ function PatternPage() {
                                         <h4>{ISO.Id}</h4>     
                                         <h4>{ISO.nome}</h4>
                                     </div>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                <div
+                    className={`ArticoliAssociati ${
+                        isArticoliExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleArticoliToggle}
+                >
+                    <h3>Articoli Associati</h3>
+                    <div className="articoli-details">
+                        {data7 &&
+                            data7.map((articolo) => (
+                                <div key={articolo.Id} onClick={() => handleArticoloClick(articolo.Id)}>
+                                    <h4>{articolo.titolo}</h4>
+                                    <p>Articolo N°: {articolo.Id}</p>
                                 </div>
                             ))}
                     </div>

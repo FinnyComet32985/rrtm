@@ -537,6 +537,26 @@ class InterfacciaRicerca {
             }
         });
     }
+    public static async findISOPbD(idPbD: number): Promise<FaseISO[]> {
+        let filtro = new FiltroApplicato(idPbD, "ISO-PbD");
+        await PrincipioPbD.updateFiltro(filtro, "ISO-PbD");
+        const isoIds = filtro.filtroPbD.getISO();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(isoIds) || isoIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = isoIds.map((id: number) =>
+                    FaseISO.getISODB(id)
+                );
+                const iso = await Promise.all(promises);
+                resolve(iso);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
 
     // MVC
     public static async findMVC(Id: number) {
@@ -676,6 +696,26 @@ class InterfacciaRicerca {
                 );
                 const mvc = await Promise.all(promises);
                 resolve(mvc);
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    public static async findPbDISO(idISO: number): Promise<PrincipioPbD[]> {
+        let filtro = new FiltroApplicato(idISO, "PbD-ISO");
+        await FaseISO.updateFiltro(filtro, "PbD-ISO");
+        const pbdIds = filtro.filtroISO.getPbD();
+        return new Promise(async (resolve, reject) => {
+            if (!Array.isArray(pbdIds) || pbdIds.length === 0) {
+                return resolve([]);
+            }
+
+            try {
+                const promises = pbdIds.map((id: number) =>
+                    PrincipioPbD.getPbDDB(id)
+                );
+                const pbd = await Promise.all(promises);
+                resolve(pbd);
             } catch (err) {
                 reject(err);
             }

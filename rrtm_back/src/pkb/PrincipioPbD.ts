@@ -8,12 +8,14 @@ class PrincipioPbD {
 
     private pattern: number[];
     private strategie: number[];
+    private ISO: number[];
 
     public constructor(
         Id: number,
         nome?: string,
         pattern?: number[],
-        strategie?: number[]
+        strategie?: number[],
+        ISO?: number[]
     ) {
         this.Id = Id;
         if (nome !== undefined) {
@@ -30,6 +32,11 @@ class PrincipioPbD {
             this.strategie = strategie;
         } else {
             this.strategie = [];
+        }
+        if (ISO !== undefined) {
+            this.ISO = ISO;
+        } else {
+            this.ISO = [];
         }
     }
     // get Principio by filtro
@@ -52,6 +59,9 @@ class PrincipioPbD {
     }
     getStrategie() {
         return this.strategie;
+    }
+    getISO() {
+        return this.ISO;
     }
     // setters
     setId(Id: number) {
@@ -99,6 +109,24 @@ class PrincipioPbD {
             );
         });
     }
+    setISO() {
+        const query = "SELECT IsoId FROM PbdIso WHERE PbdId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.ISO = results.map((row: any) => row.IsoId);
+                        resolve();
+                    } else {
+                        reject(new Error("Iso not found"));
+                    }
+                }
+            );
+        });
+    }
     // update filtro
     static async updateFiltro(
         filtro: FiltroApplicato,
@@ -123,9 +151,12 @@ class PrincipioPbD {
                         if (tipo === "strategia-PbD") {
                             await filtro.filtroPbD.setStrategie();
                         }
+                        if (tipo === "ISO-PbD") {
+                            await filtro.filtroPbD.setISO();
+                        }
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        reject(new Error("PbD not found"));
                     }
                 }
             );

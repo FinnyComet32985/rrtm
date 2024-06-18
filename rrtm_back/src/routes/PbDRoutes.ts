@@ -52,4 +52,17 @@ router.get("/findStratPbD/:id", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get("/findISOPbD/:id", async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id); // Converti l'ID in un numero
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid ID" });
+    }
+    try {
+        const iso = await InterfacciaRicerca.findISOPbD(id);
+        res.json(iso);
+    } catch (error) {
+        console.error("Error fetching pbd:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router; // Export the router

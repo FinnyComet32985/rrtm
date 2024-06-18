@@ -228,7 +228,7 @@ function PatternPage() {
                             ))}
                     </div>
                 </div>
-                {/* PbD Associate */}
+                {/* MVC Associati */}
                 <div
                     className={`MVCAssociati ${
                         MVCExpanded ? "open" : "closed"

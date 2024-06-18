@@ -8,8 +8,15 @@ class FaseISO {
 
     private pattern: number[];
     private MVC: number[];
+    private PbD: number[];
     // Costruttore
-    constructor(Id: number, nome?: string, pattern?: number[], MVC?: number[]) {
+    constructor(
+        Id: number,
+        nome?: string,
+        pattern?: number[],
+        MVC?: number[],
+        PbD?: number[]
+    ) {
         this.Id = Id;
         if (nome !== undefined) {
             this.nome = nome;
@@ -25,6 +32,11 @@ class FaseISO {
             this.MVC = MVC;
         } else {
             this.MVC = [];
+        }
+        if (PbD !== undefined) {
+            this.PbD = PbD;
+        } else {
+            this.PbD = [];
         }
     }
 
@@ -48,6 +60,9 @@ class FaseISO {
     }
     getMVC() {
         return this.MVC;
+    }
+    getPbD() {
+        return this.PbD;
     }
     // setters
     setId(Id: number) {
@@ -93,6 +108,24 @@ class FaseISO {
             );
         });
     }
+    setPbD() {
+        const query = "SELECT PbDId FROM PbdIso WHERE IsoId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.PbD = results.map((row: any) => row.PbDId);
+                        resolve();
+                    } else {
+                        reject(new Error("PbD not found"));
+                    }
+                }
+            );
+        });
+    }
 
     // update filtro
     static async updateFiltro(
@@ -118,9 +151,12 @@ class FaseISO {
                         if (tipo === "MVC-ISO") {
                             await filtro.filtroISO.setMVC();
                         }
+                        if (tipo === "PbD-ISO") {
+                            await filtro.filtroISO.setPbD();
+                        }
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        reject(new Error("ISO not found"));
                     }
                 }
             );

@@ -40,6 +40,8 @@ DROP TABLE IF EXISTS IsoMvc;
 CREATE TABLE IsoMvc(IsoId decimal(10,2) not null, MvcId int not null , primary key (IsoId, MvcId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (MvcId) REFERENCES collocazioneMVC(Id));
 DROP TABLE IF EXISTS IsoPattern;
 CREATE TABLE IsoPattern(IsoId decimal(10,2) not null, patternId int not null , primary key (IsoId, patternId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
+DROP TABLE IF EXISTS PbdIso;
+CREATE TABLE PbdIso(PbdId int not null, IsoId decimal(10,2) not null , primary key (PbdId, IsoId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id));
 
 
 /* inserimento pattern */
@@ -139,6 +141,11 @@ INSERT INTO IsoPattern VALUES(7.4, 1);
 INSERT INTO IsoPattern VALUES(7.4, 2);
 INSERT INTO IsoPattern VALUES(7.4, 3);
 
+/* inserimento PbdIso */
+INSERT INTO PbdIso VALUES(1, 7.4);
+INSERT INTO PbdIso VALUES(2, 7.4);
+INSERT INTO PbdIso VALUES(3, 7.4);
+INSERT INTO PbdIso VALUES(4, 7.4);
 
 
 

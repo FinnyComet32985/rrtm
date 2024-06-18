@@ -64,7 +64,8 @@ class FiltroApplicato {
         if (
             tipoRicerca === "PbD" ||
             tipoRicerca === "pattern-PbD" ||
-            tipoRicerca === "strategia-PbD"
+            tipoRicerca === "strategia-PbD" ||
+            tipoRicerca === "ISO-PbD"
         ) {
             this.filtroPbD = new PrincipioPbD(id);
         } else {
@@ -82,7 +83,8 @@ class FiltroApplicato {
         if (
             tipoRicerca === "ISO" ||
             tipoRicerca === "pattern-ISO" ||
-            tipoRicerca === "MVC-ISO"
+            tipoRicerca === "MVC-ISO" ||
+            tipoRicerca === "PbD-ISO"
         ) {
             this.filtroISO = new FaseISO(id);
         } else {

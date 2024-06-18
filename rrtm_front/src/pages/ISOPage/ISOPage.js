@@ -9,6 +9,7 @@ function ISOPage() {
     let { ISOId } = useParams();
     const [isPatternExpanded, setIsPatternExpanded] = useState(false);
     const [MVCExpanded, setMVCExpanded] = useState(false);
+    const [PbDExpanded, setPbDExpanded] = useState(false);
     const { data, loading, error } = useFetch(
         `http://localhost:1337/api/findISO/${ISOId}`
     );
@@ -22,7 +23,11 @@ function ISOPage() {
         loading: loading3,
         error: error3,
     } = useFetch(`http://localhost:1337/api/findMVCISO/${ISOId}`);
-
+    const {
+        data: data4,
+        loading: loading4,
+        error: error4,
+    } = useFetch(`http://localhost:1337/api/findPbDISO/${ISOId}`);
     const navigate = useNavigate();
 
     const handlePatternToggle = () => {
@@ -31,13 +36,19 @@ function ISOPage() {
     const handleToggleMVC = () => {
         setMVCExpanded(!MVCExpanded);
     };
+    const handleTogglePbD = () => {
+        setPbDExpanded(!PbDExpanded);
+    };
     const handlePatternClick = (patternId) => {
         navigate(`/patternPage/${patternId}`);
     };
     const handleClickMVC = (mvcId) => {
         navigate(`/MVCPage/${mvcId}`);
     };
-    if (loading || loading2 || loading3) {
+    const handleClickPbD = (pbdId) => {
+        navigate(`/PbDPage/${pbdId}`);
+    };
+    if (loading || loading2 || loading3 || loading4) {
         return (
             <div>
                 <Header></Header>
@@ -56,6 +67,9 @@ function ISOPage() {
     }
     if (error3) {
         return <div>Error3: {error3.message}</div>;
+    }
+    if (error4) {
+        return <div>Error4: {error4.message}</div>;
     }
     return (
         <div>
@@ -100,6 +114,25 @@ function ISOPage() {
                                 <div className="MVC-details" key={mvc.Id}>
                                     <h4 onClick={() => handleClickMVC(mvc.Id)}>
                                         {mvc.nome}
+                                    </h4>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* PbD Associate */}
+                <div
+                    className={`PbDAssociati ${
+                        PbDExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleTogglePbD}
+                >
+                    <h3>Principi PbD Associati</h3>
+                    <div className="PbDAssocMap">
+                        {data4 &&
+                            data4.map((PbD) => (
+                                <div className="PbD-details" key={PbD.Id}>
+                                    <h4 onClick={() => handleClickPbD(PbD.Id)}>
+                                        {PbD.nome}
                                     </h4>
                                 </div>
                             ))}

@@ -10,7 +10,7 @@ function PbDPage() {
     const navigate = useNavigate();
     const [isPatternExpanded, setIsPatternExpanded] = useState(false);
     const [isStrategiaExpanded, setIsStrategiaExpanded] = useState(false);
-
+    const [isISOExpanded, setIsISOExpanded] = useState(false);
     const { data, loading, error } = useFetch(
         `http://localhost:1337/api/findPbD/${PbDId}`
     );
@@ -25,11 +25,20 @@ function PbDPage() {
         error: error3,
     } = useFetch(`http://localhost:1337/api/findStratPbD/${PbDId}`);
 
+    const {
+        data: data4,
+        loading: loading4,
+        error: error4,
+    } = useFetch(`http://localhost:1337/api/findISOPbD/${PbDId}`);
+
     const handlePatternToggle = () => {
         setIsPatternExpanded(!isPatternExpanded);
     };
     const handleStrategieToggle = () => {
         setIsStrategiaExpanded(!isStrategiaExpanded);
+    };
+    const handleISOToggle = () => {
+        setIsISOExpanded(!isISOExpanded);
     };
 
     const handlePatternClick = (patternId) => {
@@ -38,8 +47,10 @@ function PbDPage() {
     const handleStrategiaClick = (strategiaId) => {
         navigate(`/StrategiaPage/${strategiaId}`)
     }
-
-    if (loading || loading2 || loading3) {
+    const handleISOClick = (ISOId) => {
+        navigate(`/ISOPage/${ISOId}`)
+    }
+    if (loading || loading2 || loading3 || loading4) {
         return (
             <div>
                 <Header></Header>
@@ -58,6 +69,9 @@ function PbDPage() {
     }
     if (error3) {
         return <div>Error3: {error3.message}</div>;
+    }
+    if (error4) {
+        return <div>Error4: {error4.message}</div>;
     }
     return (
         <div>
@@ -88,7 +102,7 @@ function PbDPage() {
                 </div>
                 {/* Strategie Associate */}
                 <div
-                    className={`StrategieAssociateArticolo ${
+                    className={`StrategieAssociate ${
                         isStrategiaExpanded ? "open" : "closed"
                     }`}
                     onClick={handleStrategieToggle}
@@ -108,6 +122,29 @@ function PbDPage() {
                                     >
                                         {strategia.nome}
                                     </h4>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* ISO */}
+                <div
+                    className={`ISOAssociate ${
+                        isISOExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleISOToggle}
+                >
+                    <h3>Fasi ISO Associate</h3>
+                    <div className="ISO-details">
+                        {data4 &&
+                            data4.map((iso) => (
+                                <div
+                                    key={iso.Id}
+                                    onClick={() =>
+                                        handleISOClick(iso.Id)
+                                    }
+                                >
+                                    <h4>{iso.Id}</h4>
+                                    <h4>{iso.nome}</h4>
                                 </div>
                             ))}
                     </div>

@@ -1,5 +1,7 @@
 import ModificaPKB from "./ModificaPKB";
-
+import Feedback from "./SistemaSegnalazione/Feedback";
+import connection from "..";
+import * as mysql from "mysql";
 class InterfacciaModifica {
     // Pattern
     public static async modificaPattern(
@@ -157,6 +159,35 @@ class InterfacciaModifica {
     public static async eliminaVulnerabilita(Id: number) {
         let modificaPKB = new ModificaPKB(Id);
         return modificaPKB.deleteVulnerabilita();
+    }
+
+    // feedback
+    public static async showFeedback(): Promise<Feedback[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM Feedback";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const feedbackIds = results.map(
+                                (row: any) => row.Id
+                            );
+                            const promises = feedbackIds.map((id: number) =>
+                                Feedback.getFeedbackDB(id)
+                            );
+                            const feedback = await Promise.all(promises);
+                            resolve(feedback);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No feedback found"));
+                    }
+                }
+            );
+        });
     }
 }
 export default InterfacciaModifica;

@@ -19,6 +19,10 @@ DROP TABLE IF EXISTS faseIso;
 CREATE TABLE faseIso( Id decimal(10,2) not null primary key, nome varchar(500));
 DROP TABLE IF EXISTS categoriaOWASP;
 CREATE TABLE categoriaOWASP( Id int not null primary key, nome varchar(500));
+DROP TABLE IF EXISTS feedback;
+CREATE TABLE feedback( Id int not null primary key, titolo varchar(500), descrizione text, usernameUt varchar(500));
+
+
 
 /* creazione tabelle relazioni */
 DROP TABLE IF EXISTS StrategiaPattern;

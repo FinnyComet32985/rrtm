@@ -15,7 +15,7 @@ router.post("/segnalaVulnerabilita", async (req, res) => {
 
 router.get("/findVulnSegnUt/:Ut", async (req, res) => {
     try {
-        const result = await InterfacciaSegnalazione.findVulnSegnalateUS(
+        const result = await InterfacciaSegnalazione.findVulnSegnalateUt(
             req.params.Ut
         );
         res.json(result);
@@ -23,5 +23,16 @@ router.get("/findVulnSegnUt/:Ut", async (req, res) => {
         console.error("Error fetching vulnerabilita:", error);
         res.status(500).json({ error: "Internal server error" });
     }
+});
+
+router.post("/inserisciFeedback", async (req, res) => {
+    const { Id, titolo, descrizione, usernameUt } = req.body;
+    const result = await InterfacciaSegnalazione.inserisciFeedback(
+        Id,
+        titolo,
+        descrizione,
+        usernameUt
+    );
+    res.json(result);
 });
 export default router;

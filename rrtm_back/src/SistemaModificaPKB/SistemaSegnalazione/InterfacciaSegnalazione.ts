@@ -1,6 +1,7 @@
 import connection from "../../index";
 import * as mysql from "mysql";
 import VulnerabilitaSegnalata from "./VulnerabilitaSegnalata";
+import Feedback from "./Feedback";
 
 class InterfacciaSegnalazione {
     public static async segnalaVulnerabilita(
@@ -11,7 +12,7 @@ class InterfacciaSegnalazione {
         const vulnSegn = new VulnerabilitaSegnalata(Id, titolo, 0, usernameUt);
         return vulnSegn.insertVulnerabilitaDB();
     }
-    public static async findVulnSegnalateUS(
+    public static async findVulnSegnalateUt(
         usernameUt: string
     ): Promise<VulnerabilitaSegnalata[]> {
         return new Promise(async (resolve, reject) => {
@@ -43,6 +44,16 @@ class InterfacciaSegnalazione {
                 }
             );
         });
+    }
+
+    public static async inserisciFeedback(
+        Id: number,
+        titolo: string,
+        descrizione: string,
+        usenameUt: string
+    ) {
+        const fed = new Feedback(Id, titolo, descrizione, usenameUt);
+        fed.insertFeedbackDB();
     }
 }
 export default InterfacciaSegnalazione;

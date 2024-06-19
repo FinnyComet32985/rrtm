@@ -160,4 +160,15 @@ router.delete("/eliminaVulnerabilita/:Id", async (req, res) => {
     const result = await InterfacciaModifica.eliminaVulnerabilita(parseInt(Id));
     res.json(result);
 });
+
+//Feedback
+router.get("/showFeedback", async (req, res) => {
+    try {
+        const feedback = await InterfacciaModifica.showFeedback();
+        res.json(feedback);
+    } catch (error) {
+        console.error("Error fetching feedback:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router;

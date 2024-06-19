@@ -405,6 +405,134 @@ class Pattern {
         });
     }
 
+    public async updatePatternDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            let query = "UPDATE pattern SET ";
+            const fields: string[] = [];
+            const values: any[] = [];
+
+            if (this.titolo !== "") {
+                fields.push("titolo = ?");
+                values.push(this.titolo);
+            }
+            if (this.sommario !== "") {
+                fields.push("sommario = ?");
+                values.push(this.sommario);
+            }
+            if (this.contesto !== "") {
+                fields.push("contesto = ?");
+                values.push(this.contesto);
+            }
+            if (this.problema !== "") {
+                fields.push("problema = ?");
+                values.push(this.problema);
+            }
+            if (this.soluzione !== "") {
+                fields.push("soluzione = ?");
+                values.push(this.soluzione);
+            }
+            if (this.esempio !== "") {
+                fields.push("esempio = ?");
+                values.push(this.esempio);
+            }
+
+            if (fields.length === 0) {
+                return resolve(false); // No fields to update
+            }
+
+            query += fields.join(", ") + " WHERE id = ?";
+            values.push(this.Id);
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
+                }
+            );
+        });
+    }
+
+    public async insertPatternDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            let query = "INSERT INTO pattern (";
+            const fields: string[] = ["id"];
+            const values: any[] = [this.Id];
+            const placeholders: string[] = ["?"];
+
+            if (this.titolo !== "") {
+                fields.push("titolo");
+                values.push(this.titolo);
+                placeholders.push("?");
+            }
+            if (this.sommario !== "") {
+                fields.push("sommario");
+                values.push(this.sommario);
+                placeholders.push("?");
+            }
+            if (this.contesto !== "") {
+                fields.push("contesto");
+                values.push(this.contesto);
+                placeholders.push("?");
+            }
+            if (this.problema !== "") {
+                fields.push("problema");
+                values.push(this.problema);
+                placeholders.push("?");
+            }
+            if (this.soluzione !== "") {
+                fields.push("soluzione");
+                values.push(this.soluzione);
+                placeholders.push("?");
+            }
+            if (this.esempio !== "") {
+                fields.push("esempio");
+                values.push(this.esempio);
+                placeholders.push("?");
+            }
+
+            if (fields.length === 1) {
+                return reject(new Error("No fields to insert")); // No fields to insert
+            }
+
+            query +=
+                fields.join(", ") +
+                ") VALUES (" +
+                placeholders.join(", ") +
+                ")";
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0); // Returns true if the row was inserted successfully
+                }
+            );
+        });
+    }
+
+    public async deletePatternDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const query = "DELETE FROM pattern WHERE id = ?";
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
+                }
+            );
+        });
+    }
+
     static getIdByTitolo(titolo: string): Promise<number> {
         return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM pattern WHERE titolo = ?";

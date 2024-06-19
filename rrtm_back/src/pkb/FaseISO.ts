@@ -187,6 +187,87 @@ class FaseISO {
             );
         });
     }
+
+    public async updateISODB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            let query = "UPDATE faseISO SET ";
+            const fields: string[] = [];
+            const values: any[] = [];
+
+            if (this.nome !== "") {
+                fields.push("nome = ?");
+                values.push(this.nome);
+            }
+            if (fields.length === 0) {
+                return resolve(false); // No fields to update
+            }
+
+            query += fields.join(", ") + " WHERE id = ?";
+            values.push(this.Id);
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
+                }
+            );
+        });
+    }
+
+    public async insertISODB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            let query = "INSERT INTO faseISO (";
+            const fields: string[] = ["id"];
+            const values: any[] = [this.Id];
+            const placeholders: string[] = ["?"];
+
+            if (this.nome !== "") {
+                fields.push("nome");
+                values.push(this.nome);
+                placeholders.push("?");
+            }
+            if (fields.length === 1) {
+                return reject(new Error("No fields to insert")); // No fields to insert
+            }
+
+            query +=
+                fields.join(", ") +
+                ") VALUES (" +
+                placeholders.join(", ") +
+                ")";
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0); // Returns true if the row was inserted successfully
+                }
+            );
+        });
+    }
+
+    public async deleteISODB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const query = "DELETE FROM faseISO WHERE id = ?";
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
+                }
+            );
+        });
+    }
 }
 
 export default FaseISO;

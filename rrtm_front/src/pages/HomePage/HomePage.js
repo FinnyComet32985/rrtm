@@ -25,7 +25,7 @@ function HomePage() {
         data: data3,
         loading: loading3,
         error: error3,
-    } = useFetch("http://localhost:1337/api/showVulnerabilitaPubblicate");
+    } = useFetch("http://localhost:1337/api/showVulnerabilitaInserite");
     const {
         data: data4,
         loading: loading4,

@@ -10,6 +10,7 @@ import MVCRoutes from "./routes/MVCRoutes";
 import ISORoutes from "./routes/ISORoutes";
 import OWASPRoutes from "./routes/OWASPRoutes";
 import aggiornamentoPKBRoutes from "./routes/aggiornamentoPKBRoutes";
+import segnalazioneRoutes from "./routes/segnalazioneRoutes";
 
 const dbConfig = {
     host: "localhost",
@@ -52,6 +53,7 @@ function avviaServer(connection: mysql.Connection) {
     app.use("/api", ISORoutes);
     app.use("/api", OWASPRoutes);
     app.use("/api", aggiornamentoPKBRoutes);
+    app.use("/api", segnalazioneRoutes);
     app.listen(PORT, () => {
         console.log(`Server in ascolto sulla porta ${PORT}`);
     });

@@ -157,5 +157,26 @@ class ModificaPKB {
     public async deleteStrategia(): Promise<boolean> {
         return InterfacciaModificaPKB.deleteStrategia(this.Id);
     }
+
+    // Vulnerabilita
+    public async modifyVulnerabilita(): Promise<boolean> {
+        return InterfacciaModificaPKB.updateVulnerabilita(
+            this.Id,
+            this.titolo,
+            this.cwe,
+            this.statoVul
+        );
+    }
+    public async insertVulnerabilita(): Promise<boolean> {
+        return InterfacciaModificaPKB.insertVulnerabilita(
+            this.Id,
+            this.titolo,
+            this.cwe,
+            this.statoVul
+        );
+    }
+    public async deleteVulnerabilita(): Promise<boolean> {
+        return InterfacciaModificaPKB.deleteVulnerabilita(this.Id);
+    }
 }
 export default ModificaPKB;

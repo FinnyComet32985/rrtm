@@ -8,7 +8,7 @@ CREATE TABLE pattern( Id int not null primary key, titolo varchar(100), sommario
 DROP TABLE IF EXISTS strategia;
 CREATE TABLE strategia( Id int not null primary key, nome varchar(100) );
 DROP TABLE IF EXISTS vulnerabilita;
-CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300));
+CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300), tipo varchar(300), usernameUt varchar(300));
 DROP TABLE IF EXISTS articoloGDPR;
 CREATE TABLE articoloGDPR( Id int not null primary key, titolo varchar(500));
 DROP TABLE IF EXISTS principioPbD;
@@ -63,10 +63,10 @@ INSERT INTO strategia VALUES(6, "Enforce");
 INSERT INTO strategia VALUES(7, "Separate");
 
 /* inserimento vulnerabilita */
-INSERT INTO vulnerabilita VALUES(1, 306, "Missing Authentication for Critical Function", "pubblicata");
-INSERT INTO vulnerabilita VALUES(2, 798, "Use of Hard-coded Credentials", "pubblicata");
-INSERT INTO vulnerabilita VALUES(3, 287, "Improper Authentication", "pubblicata");
-INSERT INTO vulnerabilita VALUES(4, 269, "Improper Privilege Management", "pubblicata");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(1, 306, "Missing Authentication for Critical Function", "pubblicata", "inserita");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(2, 798, "Use of Hard-coded Credentials", "pubblicata", "inserita");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(3, 287, "Improper Authentication", "pubblicata", "inserita");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(4, 269, "Improper Privilege Management", "pubblicata", "inserita");
 
 
 /* inserimento articoli */

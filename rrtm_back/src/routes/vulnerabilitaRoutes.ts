@@ -5,11 +5,11 @@ const router = express.Router();
 
 // Define the API route to get patterns
 router.get(
-    "/showVulnerabilitaPubblicate",
+    "/showVulnerabilitaInserite",
     async (req: Request, res: Response) => {
         try {
             const vulnerabilita =
-                await InterfacciaRicerca.showVulnerabilitaPubblicate();
+                await InterfacciaRicerca.showVulnerabilitaInserite();
             res.json(vulnerabilita);
         } catch (error) {
             console.error("Error fetching patterns:", error);

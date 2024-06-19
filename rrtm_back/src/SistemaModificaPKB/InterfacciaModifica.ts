@@ -113,5 +113,50 @@ class InterfacciaModifica {
         let modificaPKB = new ModificaPKB(Id);
         return modificaPKB.deleteStrategia();
     }
+    // Vulnerabilita
+    public static async modificaVulnerabilita(
+        Id: number,
+        titolo?: string,
+        cwe?: number,
+        stato?: string
+    ) {
+        let modificaPKB = new ModificaPKB(
+            Id,
+            titolo,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            cwe,
+            stato
+        );
+        return modificaPKB.modifyVulnerabilita();
+    }
+    public static async inserisciVulnerabilita(
+        Id: number,
+        titolo?: string,
+        cwe?: number,
+        stato?: string
+    ) {
+        let modificaPKB = new ModificaPKB(
+            Id,
+            titolo,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            cwe,
+            stato
+        );
+        return modificaPKB.insertVulnerabilita();
+    }
+    public static async eliminaVulnerabilita(Id: number) {
+        let modificaPKB = new ModificaPKB(Id);
+        return modificaPKB.deleteVulnerabilita();
+    }
 }
 export default InterfacciaModifica;

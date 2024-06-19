@@ -131,4 +131,33 @@ router.delete("/eliminaStrategia/:Id", async (req, res) => {
     const result = await InterfacciaModifica.eliminaStrategia(parseInt(Id));
     res.json(result);
 });
+
+// vulnerabilita
+router.post("/modificaVulnerabilita", async (req, res) => {
+    const { Id, titolo, cwe, stato } = req.body;
+    const result = await InterfacciaModifica.modificaVulnerabilita(
+        Id,
+        titolo,
+        cwe,
+        stato
+    );
+    res.json(result);
+});
+
+router.post("/inserisciVulnerabilita", async (req, res) => {
+    const { Id, titolo, cwe, stato } = req.body;
+    const result = await InterfacciaModifica.inserisciVulnerabilita(
+        Id,
+        titolo,
+        cwe,
+        stato
+    );
+    res.json(result);
+});
+
+router.delete("/eliminaVulnerabilita/:Id", async (req, res) => {
+    const { Id } = req.params;
+    const result = await InterfacciaModifica.eliminaVulnerabilita(parseInt(Id));
+    res.json(result);
+});
 export default router;

@@ -117,7 +117,7 @@ class InterfacciaModificaPKB {
         const Eliminato = new PrincipioPbD(Id);
         return Eliminato.deletePbDDB();
     }
-    // principio PbD
+    // Strategia
     public static async updateStrategia(
         Id: number,
         nome: string
@@ -135,6 +135,29 @@ class InterfacciaModificaPKB {
     public static async deleteStrategia(Id: number): Promise<boolean> {
         const Eliminato = new Strategia(Id);
         return Eliminato.deleteStrategiaDB();
+    }
+    // Vulnerabilita
+    public static async updateVulnerabilita(
+        Id: number,
+        titolo: string,
+        cwe: number,
+        statoVul: string
+    ): Promise<boolean> {
+        const Modificato = new Vulnerabilita(Id, titolo, statoVul, cwe);
+        return Modificato.updateVulnerabilitaDB();
+    }
+    public static async insertVulnerabilita(
+        Id: number,
+        titolo: string,
+        cwe: number,
+        statoVul: string
+    ): Promise<boolean> {
+        const Inserito = new Vulnerabilita(Id, titolo, statoVul, cwe);
+        return Inserito.insertVulnerabilitaDB();
+    }
+    public static async deleteVulnerabilita(Id: number): Promise<boolean> {
+        const artEliminato = new Vulnerabilita(Id);
+        return artEliminato.deleteVulnerabilitaDB();
     }
 }
 export default InterfacciaModificaPKB;

@@ -177,4 +177,18 @@ router.get("/showFeedback", verificaTokenAmm, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+//VulnerabilitaSegnalate
+router.get(
+    "/showVulnerabilitaSegnalate",
+    verificaTokenAmm,
+    async (req, res) => {
+        try {
+            const vuln = await InterfacciaModifica.showVulnerabilitaSegnalate();
+            res.json(vuln);
+        } catch (error) {
+            console.error("Error fetching vulnerabilita:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+);
 export default router;

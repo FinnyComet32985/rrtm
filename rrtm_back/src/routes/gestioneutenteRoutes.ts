@@ -34,7 +34,7 @@ router.post("/login", async (req: Request, res: Response) => {
     }
 });
 
-router.post("/createUser", async (req: Request, res: Response) => {
+router.post("/creaUtente", async (req: Request, res: Response) => {
     const { username, password, email, nome, cognome } = req.body;
 
     if (!username || !password || !email) {
@@ -49,12 +49,23 @@ router.post("/createUser", async (req: Request, res: Response) => {
             nome,
             cognome
         );
-        if (userCreated) {
-            return res
-                .status(201)
-                .json({ message: "User created successfully" });
+
+        if (userCreated.success) {
+            if ("token" in userCreated) {
+                return res.status(201).json({
+                    message: "User created and logged in successfully",
+                    token: userCreated.token,
+                });
+            } else {
+                return res.status(500).json({
+                    message: "User created but login failed",
+                });
+            }
         } else {
-            return res.status(500).json({ message: "Failed to create user" });
+            return res.status(500).json({
+                message: "Failed to create and login user",
+                error: "error",
+            });
         }
     } catch (error) {
         if (error instanceof Error) {
@@ -67,7 +78,8 @@ router.post("/createUser", async (req: Request, res: Response) => {
         }
     }
 });
-router.post("/createAmministratore", async (req: Request, res: Response) => {
+
+router.post("/creaAmministratore", async (req: Request, res: Response) => {
     const { username, password, email, nome, cognome } = req.body;
 
     if (!username || !password || !email) {
@@ -82,12 +94,23 @@ router.post("/createAmministratore", async (req: Request, res: Response) => {
             nome,
             cognome
         );
-        if (ammCreated) {
-            return res
-                .status(201)
-                .json({ message: "Amm created successfully" });
+
+        if (ammCreated.success) {
+            if ("token" in ammCreated) {
+                return res.status(201).json({
+                    message: "User created and logged in successfully",
+                    token: ammCreated.token,
+                });
+            } else {
+                return res.status(500).json({
+                    message: "User created but login failed",
+                });
+            }
         } else {
-            return res.status(500).json({ message: "Failed to create amm" });
+            return res.status(500).json({
+                message: "Failed to create and login user",
+                error: "error",
+            });
         }
     } catch (error) {
         if (error instanceof Error) {

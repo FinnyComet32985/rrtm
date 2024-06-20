@@ -101,7 +101,10 @@ class InterfacciaAutenticazione {
         email: string,
         nome: string,
         cognome: string
-    ): Promise<boolean> {
+    ): Promise<
+        | { success: boolean; token?: string }
+        | { success: boolean; error?: string }
+    > {
         const hashedPassword = await bcrypt.hash(password, 10); // Genera la password hashata
 
         const query = `
@@ -112,23 +115,55 @@ class InterfacciaAutenticazione {
             connection.query(
                 query,
                 [username, hashedPassword, email, nome, cognome],
-                (err: mysql.MysqlError | null, results: any) => {
+                async (err: mysql.MysqlError | null, results: any) => {
                     if (err) {
-                        reject(err);
-                        return;
+                        return reject({ success: false, error: err.message });
                     }
-                    resolve(true); // Registrazione avvenuta con successo
+
+                    try {
+                        // Una volta terminata la registrazione, effettua il login
+                        const loginResult =
+                            await InterfacciaAutenticazione.login(
+                                username,
+                                password
+                            );
+
+                        if (loginResult) {
+                            resolve({
+                                success: true,
+                                token: loginResult.token,
+                            }); // Registrazione e login avvenuti con successo
+                        } else {
+                            resolve({ success: false, error: "Login failed" }); // Registrazione avvenuta, ma login fallito
+                        }
+                    } catch (loginError) {
+                        if (loginError instanceof Error) {
+                            reject({
+                                success: false,
+                                error: loginError.message,
+                            }); // Gestione dell'errore di login
+                        } else {
+                            reject({
+                                success: false,
+                                error: "Unknown login error",
+                            });
+                        }
+                    }
                 }
             );
         });
     }
+
     public static async createAmministratore(
         username: string,
         password: string,
         email: string,
         nome: string,
         cognome: string
-    ): Promise<boolean> {
+    ): Promise<
+        | { success: boolean; token?: string }
+        | { success: boolean; error?: string }
+    > {
         const hashedPassword = await bcrypt.hash(password, 10); // Genera la password hashata
 
         const query = `
@@ -139,12 +174,40 @@ class InterfacciaAutenticazione {
             connection.query(
                 query,
                 [username, hashedPassword, email, nome, cognome],
-                (err: mysql.MysqlError | null, results: any) => {
+                async (err: mysql.MysqlError | null, results: any) => {
                     if (err) {
-                        reject(err);
-                        return;
+                        return reject({ success: false, error: err.message });
                     }
-                    resolve(true); // Registrazione avvenuta con successo
+
+                    try {
+                        // Una volta terminata la registrazione, effettua il login
+                        const loginResult =
+                            await InterfacciaAutenticazione.login(
+                                username,
+                                password
+                            );
+
+                        if (loginResult) {
+                            resolve({
+                                success: true,
+                                token: loginResult.token,
+                            }); // Registrazione e login avvenuti con successo
+                        } else {
+                            resolve({ success: false, error: "Login failed" }); // Registrazione avvenuta, ma login fallito
+                        }
+                    } catch (loginError) {
+                        if (loginError instanceof Error) {
+                            reject({
+                                success: false,
+                                error: loginError.message,
+                            }); // Gestione dell'errore di login
+                        } else {
+                            reject({
+                                success: false,
+                                error: "Unknown login error",
+                            });
+                        }
+                    }
                 }
             );
         });

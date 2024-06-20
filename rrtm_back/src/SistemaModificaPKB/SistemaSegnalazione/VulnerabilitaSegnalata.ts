@@ -36,7 +36,9 @@ class VulnerabilitaSegnalata extends Vulnerabilita {
                         );
                         resolve(vulnerabilita);
                     } else {
-                        reject(new Error(`Pattern not found for id: ${id}`));
+                        reject(
+                            new Error(`Vulnerabilita not found for id: ${id}`)
+                        );
                     }
                 }
             );

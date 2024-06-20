@@ -69,3 +69,34 @@ export const verificaTokenAmm = (
         return res.status(401).json({ message: "Token non valido" });
     }
 };
+
+export const verificaToken = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Estrarre il token dall'header Authorization
+    if (!token) {
+        return res.status(401).json({ message: "Authorization token missing" });
+    }
+
+    try {
+        const decoded = jwt.verify(token, "your_jwt_secret") as {
+            username: string;
+            tipo: string;
+        };
+        const amministratore =
+            InterfacciaAutenticazione.getAmministratoreAutenticatoByToken(
+                token
+            );
+        const utente =
+            InterfacciaAutenticazione.getUtenteAutenticatoByToken(token);
+        if (!amministratore && !utente) {
+            return res.status(401).json({ message: "Utente non trovato" });
+        }
+
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: "Token non valido" });
+    }
+};

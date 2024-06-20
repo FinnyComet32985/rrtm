@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import finny from "../../assets/FinnyComet32985.png";
 import "./LoginPage.css";
 
 function LoginPage() {
@@ -12,21 +11,16 @@ function LoginPage() {
     const [error, setError] = useState("");
 
     const handleTitleClick = () => {
-        navigate("/"); // Reindirizza alla homepage
+        navigate("/");
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Esegui la logica di autenticazione qui (puoi implementare la tua logica di autenticazione, ad esempio, chiamando un'API)
-        if (username === "admin" && password === "password") {
-            // Esegui il login
-            login(username, finny, true);
+        try {
+            await login(username, password);
             navigate("/");
-        } else if (username === "finny" && password === "rrtm") {
-            login(username, finny, false);
-            navigate("/");
-        } else {
+        } catch (error) {
             setError("Credenziali non valide. Riprova.");
         }
     };
@@ -42,7 +36,7 @@ function LoginPage() {
     return (
         <div className="login-page">
             <div className="login-container">
-                <h2 className=".titleLogin" onClick={handleTitleClick}>
+                <h2 className="titleLogin" onClick={handleTitleClick}>
                     RRTM
                 </h2>
                 <form onSubmit={handleSubmit}>

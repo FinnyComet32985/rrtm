@@ -14,7 +14,7 @@ class InterfacciaAutenticazione {
     public static async login(
         username: string,
         password: string
-    ): Promise<{ token: string } | null> {
+    ): Promise<{ token: string; tipo: string } | null> {
         const query = `
             SELECT username, password, 'utente' as tipo FROM Utente WHERE username=?
             UNION
@@ -52,7 +52,10 @@ class InterfacciaAutenticazione {
                                 password
                             );
                             this.utentiAutenticati.push(utenteInstance);
-                            resolve({ token: utenteInstance.getToken() });
+                            resolve({
+                                token: utenteInstance.getToken(),
+                                tipo: "utente",
+                            });
                         } else if (user.tipo === "amministratore") {
                             const ammInstance = new Amministratore(
                                 token,
@@ -60,7 +63,10 @@ class InterfacciaAutenticazione {
                                 password
                             );
                             this.amministratoriAutenticati.push(ammInstance);
-                            resolve({ token: ammInstance.getToken() });
+                            resolve({
+                                token: ammInstance.getToken(),
+                                tipo: "amministratore",
+                            });
                         }
                     } else {
                         resolve(null);
@@ -102,7 +108,7 @@ class InterfacciaAutenticazione {
         nome: string,
         cognome: string
     ): Promise<
-        | { success: boolean; token?: string }
+        | { success: boolean; token?: string; tipo: string }
         | { success: boolean; error?: string }
     > {
         const hashedPassword = await bcrypt.hash(password, 10); // Genera la password hashata
@@ -132,6 +138,7 @@ class InterfacciaAutenticazione {
                             resolve({
                                 success: true,
                                 token: loginResult.token,
+                                tipo: loginResult.tipo,
                             }); // Registrazione e login avvenuti con successo
                         } else {
                             resolve({ success: false, error: "Login failed" }); // Registrazione avvenuta, ma login fallito
@@ -161,7 +168,7 @@ class InterfacciaAutenticazione {
         nome: string,
         cognome: string
     ): Promise<
-        | { success: boolean; token?: string }
+        | { success: boolean; token?: string; tipo: string }
         | { success: boolean; error?: string }
     > {
         const hashedPassword = await bcrypt.hash(password, 10); // Genera la password hashata
@@ -191,6 +198,7 @@ class InterfacciaAutenticazione {
                             resolve({
                                 success: true,
                                 token: loginResult.token,
+                                tipo: loginResult.tipo,
                             }); // Registrazione e login avvenuti con successo
                         } else {
                             resolve({ success: false, error: "Login failed" }); // Registrazione avvenuta, ma login fallito
@@ -210,6 +218,30 @@ class InterfacciaAutenticazione {
                     }
                 }
             );
+        });
+    }
+    private static removeUtenteByToken(token: string): void {
+        this.utentiAutenticati = this.utentiAutenticati.filter(
+            (u) => u.getToken() !== token
+        );
+    }
+
+    private static removeAmministratoreByToken(token: string): void {
+        this.amministratoriAutenticati = this.amministratoriAutenticati.filter(
+            (a) => a.getToken() !== token
+        );
+    }
+    public static async logout(token: string, tipo: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            if (tipo === "utente") {
+                this.removeUtenteByToken(token);
+                resolve(true);
+            } else if (tipo === "amministratore") {
+                this.removeAmministratoreByToken(token);
+                resolve(true);
+            } else {
+                resolve(false);
+            }
         });
     }
 }

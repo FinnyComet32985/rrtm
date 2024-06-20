@@ -1,10 +1,10 @@
 import express from "express";
 import InterfacciaModifica from "../SistemaModificaPKB/InterfacciaModifica";
-
+import { verificaTokenAmm } from "../Auth/Auth";
 const router = express.Router();
 
 // Pattern
-router.post("/modificaPattern", async (req, res) => {
+router.post("/modificaPattern", verificaTokenAmm, async (req, res) => {
     const { Id, titolo, sommario, contesto, problema, soluzione, esempio } =
         req.body;
     const result = await InterfacciaModifica.modificaPattern(
@@ -19,7 +19,7 @@ router.post("/modificaPattern", async (req, res) => {
     res.json(result);
 });
 
-router.post("/inserisciPattern", async (req, res) => {
+router.post("/inserisciPattern", verificaTokenAmm, async (req, res) => {
     const { Id, titolo, sommario, contesto, problema, soluzione, esempio } =
         req.body;
     const result = await InterfacciaModifica.inserisciPattern(
@@ -34,106 +34,106 @@ router.post("/inserisciPattern", async (req, res) => {
     res.json(result);
 });
 
-router.delete("/eliminaPattern/:Id", async (req, res) => {
+router.delete("/eliminaPattern/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
     const result = await InterfacciaModifica.eliminaPattern(parseInt(Id));
     res.json(result);
 });
 
 // Articolo
-router.post("/modificaArticolo", async (req, res) => {
+router.post("/modificaArticolo", verificaTokenAmm, async (req, res) => {
     const { Id, titolo } = req.body;
     const result = await InterfacciaModifica.modificaArticolo(Id, titolo);
     res.json(result);
 });
 
-router.post("/inserisciArticolo", async (req, res) => {
+router.post("/inserisciArticolo", verificaTokenAmm, async (req, res) => {
     const { Id, titolo } = req.body;
     const result = await InterfacciaModifica.inserisciArticolo(Id, titolo);
     res.json(result);
 });
 
-router.delete("/eliminaArticolo/:Id", async (req, res) => {
+router.delete("/eliminaArticolo/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
     const result = await InterfacciaModifica.eliminaArticolo(parseInt(Id));
     res.json(result);
 });
 // Categoria OWASP
-router.post("/modificaOWASP", async (req, res) => {
+router.post("/modificaOWASP", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.modificaOWASP(Id, nome);
     res.json(result);
 });
 
-router.post("/inserisciOWASP", async (req, res) => {
+router.post("/inserisciOWASP", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.inserisciOWASP(Id, nome);
     res.json(result);
 });
 
-router.delete("/eliminaOWASP/:Id", async (req, res) => {
+router.delete("/eliminaOWASP/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
     const result = await InterfacciaModifica.eliminaOWASP(parseInt(Id));
     res.json(result);
 });
 // FaseISO
-router.post("/modificaISO", async (req, res) => {
+router.post("/modificaISO", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.modificaISO(Id, nome);
     res.json(result);
 });
 
-router.post("/inserisciISO", async (req, res) => {
+router.post("/inserisciISO", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.inserisciISO(Id, nome);
     res.json(result);
 });
 
-router.delete("/eliminaISO/:Id", async (req, res) => {
+router.delete("/eliminaISO/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
     const result = await InterfacciaModifica.eliminaISO(parseFloat(Id));
     res.json(result);
 });
 // principio PbD
-router.post("/modificaPbD", async (req, res) => {
+router.post("/modificaPbD", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.modificaPbD(Id, nome);
     res.json(result);
 });
 
-router.post("/inserisciPbD", async (req, res) => {
+router.post("/inserisciPbD", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.inserisciPbD(Id, nome);
     res.json(result);
 });
 
-router.delete("/eliminaPbD/:Id", async (req, res) => {
+router.delete("/eliminaPbD/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
     const result = await InterfacciaModifica.eliminaPbD(parseInt(Id));
     res.json(result);
 });
 
 // strategia
-router.post("/modificaStrategia", async (req, res) => {
+router.post("/modificaStrategia", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.modificaStrategia(Id, nome);
     res.json(result);
 });
 
-router.post("/inserisciStrategia", async (req, res) => {
+router.post("/inserisciStrategia", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
     const result = await InterfacciaModifica.inserisciStrategia(Id, nome);
     res.json(result);
 });
 
-router.delete("/eliminaStrategia/:Id", async (req, res) => {
+router.delete("/eliminaStrategia/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
     const result = await InterfacciaModifica.eliminaStrategia(parseInt(Id));
     res.json(result);
 });
 
 // vulnerabilita
-router.post("/modificaVulnerabilita", async (req, res) => {
+router.post("/modificaVulnerabilita", verificaTokenAmm, async (req, res) => {
     const { Id, titolo, cwe, stato } = req.body;
     const result = await InterfacciaModifica.modificaVulnerabilita(
         Id,
@@ -144,7 +144,7 @@ router.post("/modificaVulnerabilita", async (req, res) => {
     res.json(result);
 });
 
-router.post("/inserisciVulnerabilita", async (req, res) => {
+router.post("/inserisciVulnerabilita", verificaTokenAmm, async (req, res) => {
     const { Id, titolo, cwe, stato } = req.body;
     const result = await InterfacciaModifica.inserisciVulnerabilita(
         Id,
@@ -155,14 +155,20 @@ router.post("/inserisciVulnerabilita", async (req, res) => {
     res.json(result);
 });
 
-router.delete("/eliminaVulnerabilita/:Id", async (req, res) => {
-    const { Id } = req.params;
-    const result = await InterfacciaModifica.eliminaVulnerabilita(parseInt(Id));
-    res.json(result);
-});
+router.delete(
+    "/eliminaVulnerabilita/:Id",
+    verificaTokenAmm,
+    async (req, res) => {
+        const { Id } = req.params;
+        const result = await InterfacciaModifica.eliminaVulnerabilita(
+            parseInt(Id)
+        );
+        res.json(result);
+    }
+);
 
 //Feedback
-router.get("/showFeedback", async (req, res) => {
+router.get("/showFeedback", verificaTokenAmm, async (req, res) => {
     try {
         const feedback = await InterfacciaModifica.showFeedback();
         res.json(feedback);

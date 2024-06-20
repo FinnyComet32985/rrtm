@@ -67,4 +67,37 @@ router.post("/createUser", async (req: Request, res: Response) => {
         }
     }
 });
+router.post("/createAmministratore", async (req: Request, res: Response) => {
+    const { username, password, email, nome, cognome } = req.body;
+
+    if (!username || !password || !email) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    try {
+        const ammCreated = await InterfacciaAutenticazione.createAmministratore(
+            username,
+            password,
+            email,
+            nome,
+            cognome
+        );
+        if (ammCreated) {
+            return res
+                .status(201)
+                .json({ message: "Amm created successfully" });
+        } else {
+            return res.status(500).json({ message: "Failed to create amm" });
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({
+                message: "Internal server error",
+                error: error.message,
+            });
+        } else {
+            return res.status(500).json({ message: "Unknown error occurred" });
+        }
+    }
+});
 export default router;

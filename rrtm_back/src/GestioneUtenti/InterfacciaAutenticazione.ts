@@ -3,11 +3,13 @@ import * as mysql from "mysql";
 import Utente from "./Utente";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Amministratore from "./Amministratore";
 
 const JWT_SECRET = "your_jwt_secret";
 
 class InterfacciaAutenticazione {
     private static utentiAutenticati: Utente[] = [];
+    private static amministratoriAutenticati: Amministratore[] = [];
 
     public static async login(
         username: string,
@@ -51,16 +53,15 @@ class InterfacciaAutenticazione {
                             );
                             this.utentiAutenticati.push(utenteInstance);
                             resolve({ token: utenteInstance.getToken() });
-                        } // else if (user.tipo === "amministratore") {
-                        //     utenteInstance = new Amministratore(
-                        //         token,
-                        //         user.username,
-                        //         password,
-                        //         user.email,
-                        //         "",
-                        //         ""
-                        //     );
-                        //}
+                        } else if (user.tipo === "amministratore") {
+                            const ammInstance = new Amministratore(
+                                token,
+                                user.username,
+                                password
+                            );
+                            this.amministratoriAutenticati.push(ammInstance);
+                            resolve({ token: ammInstance.getToken() });
+                        }
                     } else {
                         resolve(null);
                     }
@@ -80,6 +81,19 @@ class InterfacciaAutenticazione {
 
         return utente;
     }
+    public static getAmministratoreAutenticatoByToken(
+        tokenRicevuto: string
+    ): Amministratore | undefined {
+        const utente = InterfacciaAutenticazione.amministratoriAutenticati.find(
+            (a) => {
+                const tokenMemorizzato = a.getToken();
+
+                return tokenMemorizzato === tokenRicevuto;
+            }
+        );
+
+        return utente;
+    }
 
     public static async createUser(
         username: string,
@@ -92,6 +106,33 @@ class InterfacciaAutenticazione {
 
         const query = `
             INSERT INTO Utente (username, password, email, nome, cognome)
+            VALUES (?, ?, ?, ?, ?)
+        `;
+        return new Promise((resolve, reject) => {
+            connection.query(
+                query,
+                [username, hashedPassword, email, nome, cognome],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve(true); // Registrazione avvenuta con successo
+                }
+            );
+        });
+    }
+    public static async createAmministratore(
+        username: string,
+        password: string,
+        email: string,
+        nome: string,
+        cognome: string
+    ): Promise<boolean> {
+        const hashedPassword = await bcrypt.hash(password, 10); // Genera la password hashata
+
+        const query = `
+            INSERT INTO Amministratore (username, password, email, nome, cognome)
             VALUES (?, ?, ?, ?, ?)
         `;
         return new Promise((resolve, reject) => {

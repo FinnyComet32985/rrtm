@@ -1,9 +1,9 @@
 import express from "express";
 import InterfacciaSegnalazione from "../SistemaModificaPKB/SistemaSegnalazione/InterfacciaSegnalazione";
-import { verificaToken } from "../Auth/Auth";
+import { verificaTokenUt } from "../Auth/Auth";
 const router = express.Router();
 
-router.post("/segnalaVulnerabilita", async (req, res) => {
+router.post("/segnalaVulnerabilita", verificaTokenUt, async (req, res) => {
     const { Id, titolo, usernameUt } = req.body;
     const result = await InterfacciaSegnalazione.segnalaVulnerabilita(
         Id,
@@ -13,7 +13,7 @@ router.post("/segnalaVulnerabilita", async (req, res) => {
     res.json(result);
 });
 
-router.get("/findVulnSegnUt/:Ut", async (req, res) => {
+router.get("/findVulnSegnUt/:Ut", verificaTokenUt, async (req, res) => {
     try {
         const result = await InterfacciaSegnalazione.findVulnSegnalateUt(
             req.params.Ut
@@ -25,7 +25,7 @@ router.get("/findVulnSegnUt/:Ut", async (req, res) => {
     }
 });
 
-router.post("/inserisciFeedback", verificaToken, async (req, res) => {
+router.post("/inserisciFeedback", verificaTokenUt, async (req, res) => {
     const { Id, titolo, descrizione, usernameUt } = req.body;
 
     // Puoi accedere all'utente autenticato tramite (req as any).utente se necessario

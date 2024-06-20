@@ -1,17 +1,9 @@
-.PatternPage {
-    position: relative;
-    top: 15vh;
-    height: 190vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20vh;
-}
+
 .pattern {
     position: relative;
     top: 0;
     width: 80%;
+    padding: 10px;
     padding-bottom: 5vh;
     background-color: #131921;
     border-radius: 2vh;
@@ -38,10 +30,49 @@
     justify-content: center;
     width: 100%;
 }
+
+
+
+/* loading*/ 
+/* Loading spinner styles */
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.spinner .dot1,
+.spinner .dot2 {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    background-color: #6b8bb9;
+    border-radius: 50%;
+    display: inline-block;
+    animation: dotBounce 1.5s infinite ease-in-out;
+}
+
+.spinner .dot2 {
+    animation-delay: -0.75s;
+}
+
+@keyframes dotBounce {
+    0%, 100% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+/* strategie associate */
 .StrategieAssociate {
     position: relative;
-    top: -15vh;
-    width: 70vh;
+    width: 80%;
     background-color: #444;
     color: white;
     padding: 10px;
@@ -57,7 +88,7 @@
 }
 
 .StrategieAssociate.open {
-    max-height: 15vh; /* Altezza massima del contenuto espanso */
+    max-height: 20vh; /* Altezza massima del contenuto espanso */
     opacity: 1;
 }
 .StrategieAssociate h3 {
@@ -91,8 +122,7 @@
 /* vulnerabilita associate */ 
 .VulnerabilitaAssociate {
     position: relative;
-    width: 70vh;
-    top: -15vh;
+    width: 80%;
     background-color: #444;
     color: white;
     padding: 10px;
@@ -117,6 +147,7 @@
     text-align: center;
 }
 
+
 .vulnerabilita-details {
     position: relative;
     opacity: 0;
@@ -126,6 +157,13 @@
     border-radius: 8px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.vulnerabilita-details > p {
+    width: 100%;
+    display: flex;
     justify-content: center;
 }
 
@@ -138,4 +176,164 @@
     flex-wrap: nowrap;
     gap: 2vh;
     justify-content: center;
+}
+
+/* PbD */
+.PbDAssociati {
+    position: relative;
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.PbDAssociati.closed {
+    max-height: 25px;
+    opacity: 0.8;
+}
+
+.PbDAssociati.open {
+    max-height: var(--max-height-vuln); /* Altezza massima dinamica */
+    opacity: 1;
+}
+
+.PbDAssociati h3 {
+    margin: 0;
+    text-align: center;
+}
+
+
+.PbD-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.PbDAssociati.open .PbD-details {
+    opacity: 1;
+}
+
+.PbDAssocMap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh;
+    justify-content: center;
+    flex-direction: column;
+}
+/* MVC */
+.MVCAssociati {
+    position: relative;
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.MVCAssociati.closed {
+    max-height: 25px;
+    opacity: 0.8;
+}
+
+.MVCAssociati.open {
+    max-height: var(--max-height-vuln); /* Altezza massima dinamica */
+    opacity: 1;
+}
+
+.MVCAssociati h3 {
+    margin: 0;
+    text-align: center;
+}
+
+
+.MVC-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.MVCAssociati.open .MVC-details {
+    opacity: 1;
+}
+
+.MVCAssocMap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh;
+    justify-content: center;
+    flex-direction: column;
+}
+/* OWASP */
+.OWASPAssociate {
+    position: relative;
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.OWASPAssociate.closed {
+    max-height: 25px;
+    opacity: 0.8;
+}
+
+.OWASPAssociate.open {
+    
+    opacity: 1;
+}
+
+.OWASPAssociate h3 {
+    margin: 0;
+    text-align: center;
+}
+
+
+.OWASP-details {
+    position: relative;
+    opacity: 0;
+    background-color: #555;
+    transition: opacity 0.5s ease;
+    margin-top: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.OWASPAssociate.open .OWASP-details {
+    opacity: 1;
+}
+
+.OWASPAssocMap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vh;
+    justify-content: center;
+    flex-direction: column;
 }

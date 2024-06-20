@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 97.3%;
     padding: 20px;
 }
 
@@ -17,7 +17,7 @@
     text-align: center;
     margin-bottom: 20px;
 }
-
+/* articoli associati */
 .PatternAssociati {
     width: 80%;
     background-color: #444;
@@ -54,6 +54,49 @@
 }
 
 .pattern-details div {
+    margin-top: 10px;
+    background-color: #555;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* articoli associati */ 
+.ArticoliAssociati {
+    width: 80%;
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    border-radius: 2vh;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.ArticoliAssociati.closed {
+    max-height: 25px; /* Altezza solo del titolo */
+    opacity: 0.8;
+}
+
+.ArticoliAssociati.open {
+    max-height: 500px; /* Altezza massima del contenuto espanso */
+    opacity: 1;
+}
+
+.ArticoliAssociati h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.articoli-details {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.ArticoliAssociati.open .articoli-details {
+    opacity: 1;
+}
+
+.articoli-details div {
     margin-top: 10px;
     background-color: #555;
     padding: 10px;

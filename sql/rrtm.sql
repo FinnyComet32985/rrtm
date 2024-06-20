@@ -6,11 +6,23 @@ USE rrtm;
 DROP TABLE IF EXISTS pattern;
 CREATE TABLE pattern( Id int not null primary key, titolo varchar(100), sommario text, contesto text, problema text, soluzione text, esempio text);
 DROP TABLE IF EXISTS strategia;
-CREATE TABLE strategia( Id int not null primary key, nome varchar(100));
+CREATE TABLE strategia( Id int not null primary key, nome varchar(100) );
 DROP TABLE IF EXISTS vulnerabilita;
-CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300));
+CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300), tipo varchar(300), usernameUt varchar(300));
 DROP TABLE IF EXISTS articoloGDPR;
 CREATE TABLE articoloGDPR( Id int not null primary key, titolo varchar(500));
+DROP TABLE IF EXISTS principioPbD;
+CREATE TABLE principioPbD( Id int not null primary key, nome varchar(500));
+DROP TABLE IF EXISTS collocazioneMVC;
+CREATE TABLE collocazioneMVC( Id int not null primary key, nome varchar(500));
+DROP TABLE IF EXISTS faseIso;
+CREATE TABLE faseIso( Id decimal(10,2) not null primary key, nome varchar(500));
+DROP TABLE IF EXISTS categoriaOWASP;
+CREATE TABLE categoriaOWASP( Id int not null primary key, nome varchar(500));
+DROP TABLE IF EXISTS feedback;
+CREATE TABLE feedback( Id int not null primary key, titolo varchar(500), descrizione text, usernameUt varchar(500));
+
+
 
 /* creazione tabelle relazioni */
 DROP TABLE IF EXISTS StrategiaPattern;
@@ -19,6 +31,24 @@ DROP TABLE IF EXISTS VulnerabilitaPattern;
 CREATE TABLE VulnerabilitaPattern(vulnerabilitaId int not null, patternId int not null , primary key (vulnerabilitaId, patternId), FOREIGN KEY (vulnerabilitaId) REFERENCES vulnerabilita(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 DROP TABLE IF EXISTS ArticoloPattern;
 CREATE TABLE ArticoloPattern(articoloId int not null, patternId int not null , primary key (articoloId, patternId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
+DROP TABLE IF EXISTS ArticoloStrategia;
+CREATE TABLE ArticoloStrategia(articoloId int not null, strategiaId int not null , primary key (articoloId, strategiaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (strategiaId) REFERENCES strategia(Id));
+DROP TABLE IF EXISTS ArticoloVulnerabilita;
+CREATE TABLE ArticoloVulnerabilita(articoloId int not null, vulnerabilitaId int not null , primary key (articoloId, vulnerabilitaId), FOREIGN KEY (articoloId) REFERENCES articoloGDPR(Id), FOREIGN KEY (vulnerabilitaId) REFERENCES vulnerabilita(Id));
+DROP TABLE IF EXISTS PbdStrategia;
+CREATE TABLE PbdStrategia(PbdId int not null, strategiaId int not null , primary key (PbdId, strategiaId), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id), FOREIGN KEY (strategiaId) REFERENCES strategia(Id));
+DROP TABLE IF EXISTS PbdPattern;
+CREATE TABLE PbdPattern(PbdId int not null, patternId int not null , primary key (PbdId, patternId), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
+DROP TABLE IF EXISTS MvcPattern;
+CREATE TABLE MvcPattern(MvcId int not null, patternId int not null , primary key (MvcId, patternId), FOREIGN KEY (MvcId) REFERENCES collocazioneMVC(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
+DROP TABLE IF EXISTS IsoMvc;
+CREATE TABLE IsoMvc(IsoId decimal(10,2) not null, MvcId int not null , primary key (IsoId, MvcId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (MvcId) REFERENCES collocazioneMVC(Id));
+DROP TABLE IF EXISTS IsoPattern;
+CREATE TABLE IsoPattern(IsoId decimal(10,2) not null, patternId int not null , primary key (IsoId, patternId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
+DROP TABLE IF EXISTS PbdIso;
+CREATE TABLE PbdIso(PbdId int not null, IsoId decimal(10,2) not null , primary key (PbdId, IsoId), FOREIGN KEY (IsoId) REFERENCES faseIso(Id), FOREIGN KEY (PbdId) REFERENCES principioPbD(Id));
+DROP TABLE IF EXISTS OwaspPattern;
+CREATE TABLE OwaspPattern(OwaspId int not null, patternId int not null , primary key (OwaspId, patternId), FOREIGN KEY (OwaspId) REFERENCES categoriaOWASP(Id), FOREIGN KEY (patternId) REFERENCES pattern(Id));
 
 
 /* inserimento pattern */
@@ -37,15 +67,36 @@ INSERT INTO strategia VALUES(6, "Enforce");
 INSERT INTO strategia VALUES(7, "Separate");
 
 /* inserimento vulnerabilita */
-INSERT INTO vulnerabilita VALUES(1, 306, "Missing Authentication for Critical Function", "pubblicata");
-INSERT INTO vulnerabilita VALUES(2, 798, "Use of Hard-coded Credentials", "pubblicata");
-INSERT INTO vulnerabilita VALUES(3, 287, "Improper Authentication", "pubblicata");
-INSERT INTO vulnerabilita VALUES(4, 269, "Improper Privilege Management", "pubblicata");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(1, 306, "Missing Authentication for Critical Function", "pubblicata", "inserita");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(2, 798, "Use of Hard-coded Credentials", "pubblicata", "inserita");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(3, 287, "Improper Authentication", "pubblicata", "inserita");
+INSERT INTO vulnerabilita(Id, cwe, titolo, stato, tipo) VALUES(4, 269, "Improper Privilege Management", "pubblicata", "inserita");
 
 
 /* inserimento articoli */
 INSERT INTO articoloGDPR VALUES(32, "Security of processing");
 
+/* inseriemento principiPbD */
+INSERT INTO principioPbD VALUES(1, "Privacy as the default setting");
+INSERT INTO principioPbD VALUES(2, "Privacy Embedded into Design");
+INSERT INTO principioPbD VALUES(3, "Visibility and Transparency");
+INSERT INTO principioPbD VALUES(4, "Proactive not Reactive");
+
+/* Inserimento MVC */ 
+INSERT INTO collocazioneMVC VALUES(1, "Model");
+INSERT INTO collocazioneMVC VALUES(2, "View");
+INSERT INTO collocazioneMVC VALUES(3, "Controller");
+
+/* Inserimento ISO */ 
+INSERT INTO faseIso VALUES(7.4, "Producing design solutions");
+
+/* Inserimento OWASP */ 
+INSERT INTO categoriaOWASP VALUES(5, "Security Misconfiguration");
+INSERT INTO categoriaOWASP VALUES(7, "Identification and Authentication Failures");
+
+
+
+/* Inserimento relazioni */
 /* inserimento StrategiaPattern */
 INSERT INTO StrategiaPattern VALUES(1, 1);
 INSERT INTO StrategiaPattern VALUES(1, 2);
@@ -63,6 +114,54 @@ INSERT INTO VulnerabilitaPattern VALUES(4, 3);
 /* inserimento ArticoloPattern */
 INSERT INTO ArticoloPattern VALUES(32, 1);
 
+/* inserimento ArticoloStrategia */ 
+INSERT INTO ArticoloStrategia VALUES(32, 1);
+INSERT INTO ArticoloStrategia VALUES(32, 2);
+INSERT INTO ArticoloStrategia VALUES(32, 3);
+INSERT INTO ArticoloStrategia VALUES(32, 4);
+INSERT INTO ArticoloStrategia VALUES(32, 7);
 
+/* inserimento ArticoloVulnerabilita */
+INSERT INTO ArticoloVulnerabilita VALUES(32, 1);
+
+/* insermento PbDStrategia */
+INSERT INTO PbDStrategia VALUES(1, 1);
+INSERT INTO PbDStrategia VALUES(2, 1);
+INSERT INTO PbDStrategia VALUES(3, 1);
+INSERT INTO PbDStrategia VALUES(4, 1);
+INSERT INTO PbDStrategia VALUES(1, 2);
+
+/* inserimento MVC Pattern */
+INSERT INTO MvcPattern VALUES(1, 1);
+INSERT INTO MvcPattern VALUES(2, 1);
+INSERT INTO MvcPattern VALUES(3, 1);
+INSERT INTO MvcPattern VALUES(1, 2);
+INSERT INTO MvcPattern VALUES(2, 2);
+
+/* insetrimento ISO MVC */ 
+INSERT INTO IsoMvc VALUES(7.4, 1);
+INSERT INTO IsoMvc VALUES(7.4, 2);
+INSERT INTO IsoMvc VALUES(7.4, 3);
+
+/* inserimento PbDPattern */ 
+INSERT INTO PbDPattern VALUES(1, 1);
+INSERT INTO PbDPattern VALUES(2, 1);
+INSERT INTO PbDPattern VALUES(3, 1);
+INSERT INTO PbDPattern VALUES(4, 1);
+
+/* inserimento IsoPattern */
+INSERT INTO IsoPattern VALUES(7.4, 1);
+INSERT INTO IsoPattern VALUES(7.4, 2);
+INSERT INTO IsoPattern VALUES(7.4, 3);
+
+/* inserimento PbdIso */
+INSERT INTO PbdIso VALUES(1, 7.4);
+INSERT INTO PbdIso VALUES(2, 7.4);
+INSERT INTO PbdIso VALUES(3, 7.4);
+INSERT INTO PbdIso VALUES(4, 7.4);
+
+/* inserimento OwaspPattern */ 
+INSERT INTO OwaspPattern VALUES(5, 1);
+INSERT INTO OwaspPattern VALUES(7, 1);
 
 

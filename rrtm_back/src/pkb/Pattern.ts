@@ -1,7 +1,6 @@
 import * as mysql from "mysql";
 import connection from "../index.ts";
 import FiltroApplicato from "./SistemaDiRicerca/FiltroApplicato.ts";
-import Vulnerabilita from "./Vulnerabilita.ts";
 
 class Pattern {
     private Id: number;
@@ -13,6 +12,11 @@ class Pattern {
     private esempio: string;
     private strategie: number[];
     private vulnerabilita: number[];
+    private articoli: number[];
+    private principiPbD: number[];
+    private collocazioneMVC: number[];
+    private faseISO: number[];
+    private categoriaOWASP: number[];
     constructor(
         Id: number,
         titolo?: string,
@@ -22,7 +26,12 @@ class Pattern {
         soluzione?: string,
         esempio?: string,
         strategie?: number[],
-        vulnerabilita?: number[]
+        vulnerabilita?: number[],
+        articoli?: number[],
+        principiPbD?: number[],
+        collocazioneMVC?: number[],
+        faseISO?: number[],
+        categoriaOWASP?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -64,6 +73,31 @@ class Pattern {
             this.vulnerabilita = vulnerabilita;
         } else {
             this.vulnerabilita = [];
+        }
+        if (articoli !== undefined) {
+            this.articoli = articoli;
+        } else {
+            this.articoli = [];
+        }
+        if (principiPbD !== undefined) {
+            this.principiPbD = principiPbD;
+        } else {
+            this.principiPbD = [];
+        }
+        if (collocazioneMVC !== undefined) {
+            this.collocazioneMVC = collocazioneMVC;
+        } else {
+            this.collocazioneMVC = [];
+        }
+        if (faseISO !== undefined) {
+            this.faseISO = faseISO;
+        } else {
+            this.faseISO = [];
+        }
+        if (categoriaOWASP !== undefined) {
+            this.categoriaOWASP = categoriaOWASP;
+        } else {
+            this.categoriaOWASP = [];
         }
     }
     // get Pattern by ID
@@ -108,6 +142,21 @@ class Pattern {
     }
     getVulnerabilita() {
         return this.vulnerabilita;
+    }
+    getArticoli() {
+        return this.articoli;
+    }
+    getPbD() {
+        return this.principiPbD;
+    }
+    getMVC() {
+        return this.collocazioneMVC;
+    }
+    getISO() {
+        return this.faseISO;
+    }
+    getOWASP() {
+        return this.categoriaOWASP;
     }
 
     // setters
@@ -175,6 +224,103 @@ class Pattern {
             );
         });
     }
+    public setArticoli() {
+        const query =
+            "SELECT articoloId FROM ArticoloPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.articoli = results.map(
+                            (row: any) => row.articoloId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
+    public setPbD() {
+        const query = "SELECT PbDId FROM PbDPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.principiPbD = results.map((row: any) => row.PbDId);
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
+    public setMVC() {
+        const query = "SELECT MvcId FROM MvcPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.collocazioneMVC = results.map(
+                            (row: any) => row.MvcId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
+    public setISO() {
+        const query = "SELECT IsoId FROM IsoPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.faseISO = results.map((row: any) => row.IsoId);
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
+    public setOWASP() {
+        const query = "SELECT OwaspId FROM OwaspPattern WHERE patternId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.categoriaOWASP = results.map(
+                            (row: any) => row.OwaspId
+                        );
+                        resolve();
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
 
     static async updateFiltro(
         filtro: FiltroApplicato,
@@ -205,6 +351,21 @@ class Pattern {
                         }
                         if (tipo === "vulnerabilita-pattern") {
                             await filtro.filtroPattern.setVulnerabilita();
+                        }
+                        if (tipo === "articolo-pattern") {
+                            await filtro.filtroPattern.setArticoli();
+                        }
+                        if (tipo === "PbD-pattern") {
+                            await filtro.filtroPattern.setPbD();
+                        }
+                        if (tipo === "MVC-pattern") {
+                            await filtro.filtroPattern.setMVC();
+                        }
+                        if (tipo === "ISO-pattern") {
+                            await filtro.filtroPattern.setISO();
+                        }
+                        if (tipo === "OWASP-pattern") {
+                            await filtro.filtroPattern.setOWASP();
                         }
                         resolve();
                     } else {
@@ -239,6 +400,134 @@ class Pattern {
                     } else {
                         reject(new Error(`Pattern not found for id: ${id}`));
                     }
+                }
+            );
+        });
+    }
+
+    public async updatePatternDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            let query = "UPDATE pattern SET ";
+            const fields: string[] = [];
+            const values: any[] = [];
+
+            if (this.titolo !== "") {
+                fields.push("titolo = ?");
+                values.push(this.titolo);
+            }
+            if (this.sommario !== "") {
+                fields.push("sommario = ?");
+                values.push(this.sommario);
+            }
+            if (this.contesto !== "") {
+                fields.push("contesto = ?");
+                values.push(this.contesto);
+            }
+            if (this.problema !== "") {
+                fields.push("problema = ?");
+                values.push(this.problema);
+            }
+            if (this.soluzione !== "") {
+                fields.push("soluzione = ?");
+                values.push(this.soluzione);
+            }
+            if (this.esempio !== "") {
+                fields.push("esempio = ?");
+                values.push(this.esempio);
+            }
+
+            if (fields.length === 0) {
+                return resolve(false); // No fields to update
+            }
+
+            query += fields.join(", ") + " WHERE id = ?";
+            values.push(this.Id);
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
+                }
+            );
+        });
+    }
+
+    public async insertPatternDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            let query = "INSERT INTO pattern (";
+            const fields: string[] = ["id"];
+            const values: any[] = [this.Id];
+            const placeholders: string[] = ["?"];
+
+            if (this.titolo !== "") {
+                fields.push("titolo");
+                values.push(this.titolo);
+                placeholders.push("?");
+            }
+            if (this.sommario !== "") {
+                fields.push("sommario");
+                values.push(this.sommario);
+                placeholders.push("?");
+            }
+            if (this.contesto !== "") {
+                fields.push("contesto");
+                values.push(this.contesto);
+                placeholders.push("?");
+            }
+            if (this.problema !== "") {
+                fields.push("problema");
+                values.push(this.problema);
+                placeholders.push("?");
+            }
+            if (this.soluzione !== "") {
+                fields.push("soluzione");
+                values.push(this.soluzione);
+                placeholders.push("?");
+            }
+            if (this.esempio !== "") {
+                fields.push("esempio");
+                values.push(this.esempio);
+                placeholders.push("?");
+            }
+
+            if (fields.length === 1) {
+                return reject(new Error("No fields to insert")); // No fields to insert
+            }
+
+            query +=
+                fields.join(", ") +
+                ") VALUES (" +
+                placeholders.join(", ") +
+                ")";
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0); // Returns true if the row was inserted successfully
+                }
+            );
+        });
+    }
+
+    public async deletePatternDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const query = "DELETE FROM pattern WHERE id = ?";
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
                 }
             );
         });

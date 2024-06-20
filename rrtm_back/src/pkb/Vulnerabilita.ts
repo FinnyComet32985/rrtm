@@ -3,19 +3,22 @@ import * as mysql from "mysql";
 import FiltroApplicato from "./SistemaDiRicerca/FiltroApplicato.ts";
 
 class Vulnerabilita {
-    private Id: number;
-    private cwe: number;
-    private titolo: string;
-    private stato: string;
+    protected Id: number;
+    protected cwe: number;
+    protected titolo: string;
+    protected stato: string;
 
-    private pattern: number[];
+    protected pattern: number[];
+    protected articoli: number[];
+
     // costruttore
     public constructor(
         Id: number,
         titolo?: string,
         stato?: string,
         cwe?: number,
-        pattern?: number[]
+        pattern?: number[],
+        articoli?: number[]
     ) {
         this.Id = Id;
         if (titolo !== undefined) {
@@ -37,6 +40,11 @@ class Vulnerabilita {
             this.pattern = pattern;
         } else {
             this.pattern = [];
+        }
+        if (articoli !== undefined) {
+            this.articoli = articoli;
+        } else {
+            this.articoli = [];
         }
     }
     // get Vulnerabilita by ID
@@ -66,6 +74,9 @@ class Vulnerabilita {
     getPatterns() {
         return this.pattern;
     }
+    getArticoli() {
+        return this.articoli;
+    }
 
     // seters
     setId(Id: number) {
@@ -92,6 +103,27 @@ class Vulnerabilita {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         this.pattern = results.map((row: any) => row.patternId);
+                        resolve();
+                    } else {
+                        reject(new Error("nessun risultato"));
+                    }
+                }
+            );
+        });
+    }
+    public setArticoli() {
+        const query =
+            "SELECT articoloId FROM ArticoloVulnerabilita WHERE vulnerabilitaId = ?";
+        return new Promise<void>((resolve, reject) => {
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        this.articoli = results.map(
+                            (row: any) => row.articoloId
+                        );
                         resolve();
                     } else {
                         reject(new Error("nessun risultato"));
@@ -130,6 +162,9 @@ class Vulnerabilita {
                         if (tipo === "pattern-vulnerabilita") {
                             await filtro.filtroVulnerabilita.setPatterns();
                         }
+                        if (tipo === "articolo-vulnerabilita") {
+                            await filtro.filtroVulnerabilita.setArticoli();
+                        }
                         resolve();
                     } else {
                         reject(new Error("Pattern not found"));
@@ -160,6 +195,105 @@ class Vulnerabilita {
                     } else {
                         reject(new Error(`Pattern not found for id: ${id}`));
                     }
+                }
+            );
+        });
+    }
+
+    public async updateVulnerabilitaDB(): Promise<boolean> {
+        return new Promise(async (resolve, reject) => {
+            let query = "UPDATE vulnerabilita SET ";
+            const fields: string[] = [];
+            const values: any[] = [];
+
+            if (this.titolo !== "") {
+                fields.push("titolo = ?");
+                values.push(this.titolo);
+            }
+            if (this.cwe !== 0) {
+                fields.push("cwe = ?");
+                values.push(this.cwe);
+            }
+            if (this.stato !== "") {
+                fields.push("stato = ?");
+                values.push(this.stato);
+            }
+            if (fields.length === 0) {
+                return resolve(false); // No fields to update
+            }
+
+            query += fields.join(", ") + " WHERE id = ?";
+            values.push(this.Id);
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
+                }
+            );
+        });
+    }
+
+    public async insertVulnerabilitaDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            let query = "INSERT INTO vulnerabilita (";
+            const fields: string[] = ["id", "tipo"];
+            const values: any[] = [this.Id, "inserita"];
+            const placeholders: string[] = ["?", "?"];
+
+            if (this.titolo !== "") {
+                fields.push("titolo");
+                values.push(this.titolo);
+                placeholders.push("?");
+            }
+            if (this.cwe !== 0) {
+                fields.push("cwe");
+                values.push(this.cwe);
+                placeholders.push("?");
+            }
+            if (this.stato !== "") {
+                fields.push("stato");
+                values.push(this.stato);
+                placeholders.push("?");
+            }
+            if (fields.length === 2) {
+                return reject(new Error("No fields to insert")); // No fields to insert
+            }
+
+            query +=
+                fields.join(", ") +
+                ") VALUES (" +
+                placeholders.join(", ") +
+                ")";
+
+            connection.query(
+                query,
+                values,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0); // Returns true if the row was inserted successfully
+                }
+            );
+        });
+    }
+
+    public async deleteVulnerabilitaDB(): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const query = "DELETE FROM vulnerabilita WHERE id = ?";
+            connection.query(
+                query,
+                [this.Id],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(results.affectedRows > 0);
                 }
             );
         });

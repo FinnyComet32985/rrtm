@@ -10,6 +10,11 @@ function PatternPage() {
     const navigate = useNavigate();
     const [strategieExpanded, setStrategieExpanded] = useState(false);
     const [vulnerabilitaExpanded, setVulnerabilitaExpanded] = useState(false);
+    const [PbDExpanded, setPbDExpanded] = useState(false);
+    const [ISOExpanded, setISOExpanded] = useState(false);
+    const [MVCExpanded, setMVCExpanded] = useState(false);
+    const [isArticoliExpanded, setIsArticoloExpanded] = useState(false);
+    const [OWASPExpanded, setOWASPExpanded] = useState(false);
     const [maxHeightVuln, setMaxHeightVuln] = useState(null);
 
     const { data, loading, error } = useFetch(
@@ -22,7 +27,21 @@ function PatternPage() {
     const handleClickVulnerabilita = (vulnerabilitaId) => {
         navigate(`/VulnerabilitaPage/${vulnerabilitaId}`); // Passa l'ID come parte dell'URL
     };
-
+    const handleClickPbD = (PbDId) => {
+        navigate(`/PbDPage/${PbDId}`); // Passa l'ID come parte dell'URL
+    };
+    const handleClickISO = (ISOId) => {
+        navigate(`/ISOPage/${ISOId}`); // Passa l'ID come parte dell'URL
+    };
+    const handleClickMVC = (MVCId) => {
+        navigate(`/MVCPage/${MVCId}`); // Passa l'ID come parte dell'URL
+    };
+    const handleArticoloClick = (articoloId) => {
+        navigate(`/articoloPage/${articoloId}`)
+    }
+    const handleClickOWASP = (OWASPId) => {
+        navigate(`/OWASPPage/${OWASPId}`); // Passa l'ID come parte dell'URL
+    };
     const {
         data: data2,
         loading: loading2,
@@ -33,19 +52,42 @@ function PatternPage() {
         loading: loading3,
         error: error3,
     } = useFetch(`http://localhost:1337/api/findVulnPatt/${patternId}`);
-    
-    
+    const {
+        data: data4,
+        loading: loading4,
+        error: error4,
+    } = useFetch(`http://localhost:1337/api/findPbDPatt/${patternId}`);
+    const {
+        data: data5,
+        loading: loading5,
+        error: error5,
+    } = useFetch(`http://localhost:1337/api/findISOPatt/${patternId}`);
+    const {
+        data: data6,
+        loading: loading6,
+        error: error6,
+    } = useFetch(`http://localhost:1337/api/findMVCPatt/${patternId}`);
+    const {
+        data: data7,
+        loading: loading7,
+        error: error7,
+    } = useFetch(`http://localhost:1337/api/findArtPatt/${patternId}`);
+    const {
+        data: data8,
+        loading: loading8,
+        error: error8,
+    } = useFetch(`http://localhost:1337/api/findOWASPPatt/${patternId}`);
     const initialMount = useRef(true);
 
     useEffect(() => {
         // Calcolo dell'altezza massima per le vulnerabilità solo alla prima apertura
         if (vulnerabilitaExpanded && data3 && initialMount.current) {
-            const maxHeightCalcVuln = `${(data3.length*9.36)+7.6}vh`;
+            const maxHeightCalcVuln = `${data3.length * 14.52 + 7.6}vh`;
             setMaxHeightVuln(maxHeightCalcVuln);
             initialMount.current = false; // Imposta il primo montaggio a false dopo il calcolo iniziale
         }
     }, [vulnerabilitaExpanded, data3]);
-    
+
     const handleToggleStrategie = () => {
         setStrategieExpanded(!strategieExpanded);
     };
@@ -54,11 +96,30 @@ function PatternPage() {
         setVulnerabilitaExpanded(!vulnerabilitaExpanded);
     };
 
-    if (loading || loading2 || loading3) {
+    const handleTogglePbD = () => {
+        setPbDExpanded(!PbDExpanded);
+    };
+
+    const handleToggleISO = () => {
+        setISOExpanded(!ISOExpanded);
+    };
+    const handleToggleMVC = () => {
+        setMVCExpanded(!MVCExpanded);
+    };
+    const handleArticoliToggle = () => {
+        setIsArticoloExpanded(!isArticoliExpanded);
+    };
+    const handleToggleOWASP = () => {
+        setOWASPExpanded(!OWASPExpanded);
+    };
+    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7 || loading8 ) {
         return (
             <div>
                 <Header></Header>
-                <div>Loading...</div>;
+                <div className="spinner">
+                    <div className="dot1"></div>
+                    <div className="dot2"></div>
+                </div>
             </div>
         );
     }
@@ -73,86 +134,207 @@ function PatternPage() {
     if (error3) {
         return <div>Error3: {error3.message}</div>;
     }
-
+    if (error4) {
+        return <div>Error4: {error4.message}</div>;
+    }
+    if (error5) {
+        return <div>Error5: {error5.message}</div>;
+    }
+    if (error6) {
+        return <div>Error6: {error6.message}</div>;
+    }
+    if (error7) {
+        return <div>Error7: {error7.message}</div>;
+    }
+    if (error8) {
+        return <div>Error7: {error7.message}</div>;
+    }
     return (
         <div className="PatternPage">
             <Header />
-            {data && (
-                <div className="pattern">
-                    <div className="titoloPattern">
-                        <h3 key={data.Id}>{data.titolo}</h3>
+            <div className="container">
+                {data && (
+                    <div className="pattern">
+                        <div className="titoloPattern">
+                            <h3 key={data.Id}>{data.titolo}</h3>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>sommario:</h3>
+                            <p key={data.Id}>{data.sommario}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>contesto:</h3>
+                            <p key={data.Id}>{data.contesto}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>problema:</h3>
+                            <p key={data.Id}>{data.problema}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>soluzione:</h3>
+                            <p key={data.Id}>{data.soluzione}</p>
+                        </div>
+                        <div className="PatternDivs">
+                            <h3>esempio:</h3>
+                            <p key={data.Id}>{data.esempio}</p>
+                        </div>
                     </div>
-                    <div className="PatternDivs">
-                        <h3>sommario:</h3>
-                        <p key={data.Id}>{data.sommario}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>contesto:</h3>
-                        <p key={data.Id}>{data.contesto}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>problema:</h3>
-                        <p key={data.Id}>{data.problema}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>soluzione:</h3>
-                        <p key={data.Id}>{data.soluzione}</p>
-                    </div>
-                    <div className="PatternDivs">
-                        <h3>esempio:</h3>
-                        <p key={data.Id}>{data.esempio}</p>
+                )}
+
+                {/* Strategie Associate */}
+                <div
+                    className={`StrategieAssociate ${
+                        strategieExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleStrategie}
+                >
+                    <h3>strategie Associate</h3>
+                    <div className="stratAssocMap">
+                        {data2 &&
+                            data2.map((strategia) => (
+                                <div
+                                    className="strategie-details"
+                                    key={strategia.Id}
+                                >
+                                    <h4
+                                        onClick={() =>
+                                            handleClickStrategia(strategia.Id)
+                                        }
+                                    >
+                                        {strategia.nome}
+                                    </h4>
+                                </div>
+                            ))}
                     </div>
                 </div>
-            )}
-            
-            {/* Strategie Associate */}
-            <div
-                className={`StrategieAssociate ${
-                    strategieExpanded ? "open" : "closed"
-                }`}
-                onClick={handleToggleStrategie}
-            >
-                <h3>strategie Associate</h3>
-                <div className="stratAssocMap">
-                    {data2 &&
-                        data2.map((strategia) => (
-                            <div className="strategie-details" key={strategia.Id}>
+
+                {/* Vulnerabilità Associate */}
+                <div
+                    className={`VulnerabilitaAssociate ${
+                        vulnerabilitaExpanded ? "open" : "closed"
+                    }`}
+                    style={{ "--max-height-vuln": maxHeightVuln }}
+                    onClick={handleToggleVulnerabilita}
+                >
+                    <h3>vulnerabilità Associate</h3>
+                    {data3 &&
+                        data3.map((vulnerabilita) => (
+                            <div
+                                className="vulnerabilita-details"
+                                key={vulnerabilita.Id}
+                            >
                                 <h4
                                     onClick={() =>
-                                        handleClickStrategia(strategia.Id)
+                                        handleClickVulnerabilita(
+                                            vulnerabilita.Id
+                                        )
                                     }
                                 >
-                                    {strategia.nome}
+                                    {vulnerabilita.titolo}
                                 </h4>
+                                <p>CWE: {vulnerabilita.cwe}</p>
                             </div>
                         ))}
                 </div>
-            </div>
 
-            {/* Vulnerabilità Associate */}
-            <div
-                className={`VulnerabilitaAssociate ${
-                    vulnerabilitaExpanded ? "open" : "closed"
-                }`}
-                style={{ "--max-height-vuln": maxHeightVuln }}
-                onClick={handleToggleVulnerabilita}
-            >
-                <h3>vulnerabilità Associate</h3>
-                {data3 && data3.map((vulnerabilita) => (
-                    <div className="vulnerabilita-details" key={vulnerabilita.Id}>
-                    <h4
-                        onClick={() =>
-                            handleClickVulnerabilita(vulnerabilita.Id)
-                        }
-                    >
-                        {vulnerabilita.titolo}
-                    </h4>
+                {/* PbD Associate */}
+                <div
+                    className={`PbDAssociati ${
+                        PbDExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleTogglePbD}
+                >
+                    <h3>Principi PbD Associati</h3>
+                    <div className="PbDAssocMap">
+                        {data4 &&
+                            data4.map((PbD) => (
+                                <div className="PbD-details" key={PbD.Id}>
+                                    <h4 onClick={() => handleClickPbD(PbD.Id)}>
+                                        {PbD.nome}
+                                    </h4>
+                                </div>
+                            ))}
+                    </div>
                 </div>
-                ))}
+                {/* MVC Associati */}
+                <div
+                    className={`MVCAssociati ${
+                        MVCExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleMVC}
+                >
+                    <h3>MVC Associati</h3>
+                    <div className="MVCAssocMap">
+                        {data6 &&
+                            data6.map((MVC) => (
+                                <div className="MVC-details" key={MVC.Id}>
+                                    <h4 onClick={() => handleClickMVC(MVC.Id)}>
+                                        {MVC.nome}
+                                    </h4>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* ISO Associate */}
+                <div
+                    className={`ISOAssociati ${
+                        ISOExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleISO}
+                >
+                    <h3>Fasi ISO Associate</h3>
+                    <div className="ISOAssocMap">
+                        {data5 &&
+                            data5.map((ISO) => (
+                                <div className="ISO-details" key={ISO.Id}>
+                                    <div onClick={() => handleClickISO(ISO.Id)}>
+                                        <h4>{ISO.Id}</h4>     
+                                        <h4>{ISO.nome}</h4>
+                                    </div>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* Articoli Associati */}
+                <div
+                    className={`ArticoliAssociati ${
+                        isArticoliExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleArticoliToggle}
+                >
+                    <h3>Articoli Associati</h3>
+                    <div className="articoli-details">
+                        {data7 &&
+                            data7.map((articolo) => (
+                                <div key={articolo.Id} onClick={() => handleArticoloClick(articolo.Id)}>
+                                    <h4>{articolo.titolo}</h4>
+                                    <p>Articolo N°: {articolo.Id}</p>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+                {/* OWASP Associate */}
+                <div
+                    className={`OWASPAssociate ${
+                        OWASPExpanded ? "open" : "closed"
+                    }`}
+                    onClick={handleToggleOWASP}
+                >
+                    <h3>Categorie OWASP Associate</h3>
+                    <div className="OWASPAssocMap">
+                        {data8 &&
+                            data8.map((OWASP) => (
+                                <div className="OWASP-details" key={OWASP.Id}>
+                                    <h4 onClick={() => handleClickOWASP(OWASP.Id)}>
+                                        {OWASP.nome}
+                                    </h4>
+                                </div>
+                            ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
 
 export default PatternPage;
-

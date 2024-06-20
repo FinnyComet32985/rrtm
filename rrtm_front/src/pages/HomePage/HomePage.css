@@ -1,28 +1,400 @@
 .homepage {
     position: absolute;
-    height: 120%;
     width: 100%;
+    padding-bottom: 20vh;
     background-color: #ffffff;
     z-index: -5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
 }
 
-.trendingDiv {
+.trendingDivPatt {
     display: flex;
     flex-wrap: wrap;
-    position: absolute;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
     top: 13vh;
     gap: 2vh;
-    padding-left: 1vh;
-    padding-right: 1vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+}
+.buttonDivPattern {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    top: 2vh;
+}
+.buttonDivPattern > button {
+    height: 45.6px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: white;
+    background-color: #3f526d;
+    border: 2.5px solid #6b8bb9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonDivPattern > button:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
+}
+.AllPatternTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; 
+}
+
+/* Strategie */
+.trendingDivStrat {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+}
+.AllStrategieTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white; 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Vulnerabilita */ 
+.trendingDivVuln {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
 
 }
-.showPatterns {
-    position: relative;
-    top: 50%;
-    left: 50%;
+.AllVulnerabilitaTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; 
 }
-.hidePatterns {
+.buttonDivVulnerabilita {
+    display: flex;
+    width: 100%;
+    justify-content: center;
     position: relative;
-    top: 80%;
-    left: 50%;
+    top: 2vh;
+}
+.buttonDivVulnerabilita > button {
+    height: 45.6px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: white;
+    background-color: #3f526d;
+    border: 2.5px solid #6b8bb9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonDivVulnerabilita > button:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
+}
+/* Articoli */ 
+.trendingDivArt {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+
+}
+.AllArticoliTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.buttonDivVArticolo {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    top: 2vh;
+}
+.buttonDivArticolo > button {
+    height: 45.6px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: white;
+    background-color: #3f526d;
+    border: 2.5px solid #6b8bb9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonDivArticolo > button:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
+}
+
+/* PbD */ 
+.trendingDivPbD {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+
+}
+.AllPbDTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.buttonDivPbD {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    top: 2vh;
+}
+.buttonDivPbD > button {
+    height: 45.6px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: white;
+    background-color: #3f526d;
+    border: 2.5px solid #6b8bb9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonDivPbD > button:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
+}
+
+/* MVC */
+.trendingDivMVC {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+}
+.AllMVCTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white; 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* ISO */ 
+.trendingDivISO {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+
+}
+.AllISOTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.buttonDivISO {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    top: 2vh;
+}
+.buttonDivISO> button {
+    height: 45.6px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: white;
+    background-color: #3f526d;
+    border: 2.5px solid #6b8bb9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonDivISO > button:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
+}
+
+/* OWASP */ 
+.trendingDivOWASP {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+
+}
+.AllOWASPTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.buttonDivOWASP {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    top: 2vh;
+}
+.buttonDivOWASP > button {
+    height: 45.6px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 15px;
+    padding-left: 8px;
+    font-size: 18.72px;
+    color: white;
+    background-color: #3f526d;
+    border: 2.5px solid #6b8bb9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.buttonDivOWASP > button:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
 }

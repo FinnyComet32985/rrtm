@@ -1,7 +1,7 @@
-import "./TrendingPattern.css";
+import "./Pattern.css";
 import { useNavigate } from "react-router-dom";
 
-function TrendingPattern({ id, titolo, sommario, strategie }) {
+function Pattern({ id, titolo, sommario }) {
     const navigate = useNavigate();
     const handleTitleClick = () => {
         navigate(`/patternPage/${id}`); // Passa l'ID come parte dell'URL
@@ -16,4 +16,4 @@ function TrendingPattern({ id, titolo, sommario, strategie }) {
     );
 }
 
-export default TrendingPattern;
+export default Pattern;

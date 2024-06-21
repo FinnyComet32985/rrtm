@@ -316,6 +316,7 @@ INSERT INTO principioPbD VALUES(3, "Visibility and Transparency");
 INSERT INTO principioPbD VALUES(4, "Proactive not Reactive");
 INSERT INTO principioPbD VALUES(5, "Respect for User Privacy");
 INSERT INTO principioPbD VALUES(6, "End-to-End Security");
+INSERT INTO principioPbD VALUES(7, "Full Functionality");
 
 /* Inserimento MVC */ 
 INSERT INTO collocazioneMVC VALUES(1, "Model");
@@ -519,53 +520,252 @@ INSERT INTO ArticoloPattern VALUES(32, 24);
 INSERT INTO ArticoloPattern VALUES(25, 25);
 
 /* inserimento ArticoloStrategia */ 
-INSERT INTO ArticoloStrategia VALUES(32, 1);
-INSERT INTO ArticoloStrategia VALUES(32, 2);
-INSERT INTO ArticoloStrategia VALUES(32, 3);
-INSERT INTO ArticoloStrategia VALUES(32, 4);
-INSERT INTO ArticoloStrategia VALUES(32, 7);
+INSERT INTO ArticoloStrategia VALUES(32, 1); -- Minimize
+INSERT INTO ArticoloStrategia VALUES(32, 5); -- Control
+INSERT INTO ArticoloStrategia VALUES(32, 6); -- Enforce
+INSERT INTO ArticoloStrategia VALUES(32, 7); -- Separate
+INSERT INTO ArticoloStrategia VALUES(25, 1); -- Minimize
+INSERT INTO ArticoloStrategia VALUES(25, 3); -- Abstract
+INSERT INTO ArticoloStrategia VALUES(25, 4); -- Inform
+INSERT INTO ArticoloStrategia VALUES(33, 5); -- Control
+INSERT INTO ArticoloStrategia VALUES(34, 5); -- Control
+INSERT INTO ArticoloStrategia VALUES(12, 3); -- Abstract
+INSERT INTO ArticoloStrategia VALUES(35, 2); -- Hide
+INSERT INTO ArticoloStrategia VALUES(28, 6); -- Enforce
+INSERT INTO ArticoloStrategia VALUES(13, 4); -- Inform
+INSERT INTO ArticoloStrategia VALUES(6, 6); -- Enforce
+INSERT INTO ArticoloStrategia VALUES(5, 1); -- Minimize
+INSERT INTO ArticoloStrategia VALUES(7, 2); -- Hide 
 
 /* inserimento ArticoloVulnerabilita */
-INSERT INTO ArticoloVulnerabilita VALUES(32, 1);
+INSERT INTO ArticoloVulnerabilita VALUES(32, 1); -- CWE-306: Missing Authentication for Critical Function
+INSERT INTO ArticoloVulnerabilita VALUES(32, 2); -- CWE-798: Use of Hard-coded Credentials
+INSERT INTO ArticoloVulnerabilita VALUES(32, 3); -- CWE-287: Improper Authentication
+INSERT INTO ArticoloVulnerabilita VALUES(25, 16); -- CWE-5: Principles relating to processing of personal data
+INSERT INTO ArticoloVulnerabilita VALUES(25, 11); -- CWE-28: Processor
+INSERT INTO ArticoloVulnerabilita VALUES(33, 4); -- CWE-502: Deserialization of Untrusted Data
+INSERT INTO ArticoloVulnerabilita VALUES(34, 4); -- CWE-502: Deserialization of Untrusted Data
+INSERT INTO ArticoloVulnerabilita VALUES(12, 17); -- CWE-12: Transparent information, communication and modalities for the exercise of the rights of the data subject
+INSERT INTO ArticoloVulnerabilita VALUES(35, 10); -- CWE-35: Data protection impact assessment
+INSERT INTO ArticoloVulnerabilita VALUES(28, 11); -- CWE-28: Processor
+INSERT INTO ArticoloVulnerabilita VALUES(13, 11); -- CWE-20: Improper Input Validation
+INSERT INTO ArticoloVulnerabilita VALUES(6, 7); -- CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')
+INSERT INTO ArticoloVulnerabilita VALUES(6, 8);  -- CWE-862: Missing Authorization
+INSERT INTO ArticoloVulnerabilita VALUES(5, 16); -- CWE-5: Principles relating to processing of personal data
 
 /* insermento PbDStrategia */
 INSERT INTO PbDStrategia VALUES(1, 1);
 INSERT INTO PbDStrategia VALUES(2, 1);
 INSERT INTO PbDStrategia VALUES(3, 1);
 INSERT INTO PbDStrategia VALUES(4, 1);
-INSERT INTO PbDStrategia VALUES(1, 2);
+INSERT INTO PbDStrategia VALUES(5, 1);
+INSERT INTO PbDStrategia VALUES(3, 2);
+INSERT INTO PbDStrategia VALUES(2, 2);
+INSERT INTO PbDStrategia VALUES(4, 3);
+INSERT INTO PbDStrategia VALUES(5, 3);
+INSERT INTO PbDStrategia VALUES(6, 3);
+INSERT INTO PbDStrategia VALUES(5, 4);
+INSERT INTO PbDStrategia VALUES(6, 4);
+INSERT INTO PbDStrategia VALUES(2, 4);
+INSERT INTO PbDStrategia VALUES(7, 5);
+INSERT INTO PbDStrategia VALUES(6, 5);
+INSERT INTO PbDStrategia VALUES(4, 5);
+INSERT INTO PbDStrategia VALUES(1, 5);
+INSERT INTO PbDStrategia VALUES(2, 5);
+INSERT INTO PbDStrategia VALUES(3, 5);
+INSERT INTO PbDStrategia VALUES(1, 6);
+INSERT INTO PbDStrategia VALUES(5, 6);
+INSERT INTO PbDStrategia VALUES(7, 6);
+INSERT INTO PbDStrategia VALUES(2, 7);
+INSERT INTO PbDStrategia VALUES(7, 7);
 
 /* inserimento MVC Pattern */
 INSERT INTO MvcPattern VALUES(1, 1);
 INSERT INTO MvcPattern VALUES(2, 1);
 INSERT INTO MvcPattern VALUES(3, 1);
 INSERT INTO MvcPattern VALUES(1, 2);
-INSERT INTO MvcPattern VALUES(2, 2);
+INSERT INTO MvcPattern VALUES(3, 2);
+INSERT INTO MvcPattern VALUES(1, 3);
+INSERT INTO MvcPattern VALUES(3, 4);
+INSERT INTO MvcPattern VALUES(1, 4);
+INSERT INTO MvcPattern VALUES(3, 5);
+INSERT INTO MvcPattern VALUES(1, 6);
+INSERT INTO MvcPattern VALUES(3, 7);
+INSERT INTO MvcPattern VALUES(1, 8);
+INSERT INTO MvcPattern VALUES(3, 9);
+INSERT INTO MvcPattern VALUES(1, 10);
+INSERT INTO MvcPattern VALUES(1, 11);
+INSERT INTO MvcPattern VALUES(3, 11);
+INSERT INTO MvcPattern VALUES(1, 12);
+INSERT INTO MvcPattern VALUES(1, 13);
+INSERT INTO MvcPattern VALUES(3, 14);
+INSERT INTO MvcPattern VALUES(1, 15);
+INSERT INTO MvcPattern VALUES(1, 16);
+INSERT INTO MvcPattern VALUES(3, 16);
+INSERT INTO MvcPattern VALUES(2, 17);
+INSERT INTO MvcPattern VALUES(3, 17);
+INSERT INTO MvcPattern VALUES(3, 18);
+INSERT INTO MvcPattern VALUES(1, 19);
+INSERT INTO MvcPattern VALUES(3, 19);
+INSERT INTO MvcPattern VALUES(1, 20);
+INSERT INTO MvcPattern VALUES(3, 20);
+INSERT INTO MvcPattern VALUES(1, 21);
+INSERT INTO MvcPattern VALUES(3, 21);
+INSERT INTO MvcPattern VALUES(1, 22);
+INSERT INTO MvcPattern VALUES(1, 23);
+INSERT INTO MvcPattern VALUES(3, 23);
+INSERT INTO MvcPattern VALUES(1, 24);
+INSERT INTO MvcPattern VALUES(3, 24);
+INSERT INTO MvcPattern VALUES(2, 25);
+INSERT INTO MvcPattern VALUES(3, 25);
 
 /* insetrimento ISO MVC */ 
 INSERT INTO IsoMvc VALUES(7.4, 1);
 INSERT INTO IsoMvc VALUES(7.4, 2);
 INSERT INTO IsoMvc VALUES(7.4, 3);
+INSERT INTO IsoMvc VALUES(7.3, 1);
+INSERT INTO IsoMvc VALUES(7.2, 1);
+INSERT INTO IsoMvc VALUES(7.2, 3);
+INSERT INTO IsoMvc VALUES(7.5, 1);
+INSERT INTO IsoMvc VALUES(6.0, 1);
 
 /* inserimento PbDPattern */ 
 INSERT INTO PbDPattern VALUES(1, 1);
-INSERT INTO PbDPattern VALUES(2, 1);
-INSERT INTO PbDPattern VALUES(3, 1);
-INSERT INTO PbDPattern VALUES(4, 1);
+INSERT INTO PbDPattern VALUES(1, 2);
+INSERT INTO PbDPattern VALUES(1, 3);
+INSERT INTO PbDPattern VALUES(1, 4);
+INSERT INTO PbDPattern VALUES(2, 5);
+INSERT INTO PbDPattern VALUES(2, 6);
+INSERT INTO PbDPattern VALUES(2, 7);
+INSERT INTO PbDPattern VALUES(2, 8);
+INSERT INTO PbDPattern VALUES(3, 9);
+INSERT INTO PbDPattern VALUES(3, 10);
+INSERT INTO PbDPattern VALUES(4, 11);
+INSERT INTO PbDPattern VALUES(5, 12);
+INSERT INTO PbDPattern VALUES(5, 13);
+INSERT INTO PbDPattern VALUES(5, 14);
+INSERT INTO PbDPattern VALUES(6, 15);
+INSERT INTO PbDPattern VALUES(4, 16);
+INSERT INTO PbDPattern VALUES(2, 17);
+INSERT INTO PbDPattern VALUES(5, 18);
+INSERT INTO PbDPattern VALUES(5, 19);
+INSERT INTO PbDPattern VALUES(1, 20);
+INSERT INTO PbDPattern VALUES(4, 21);
+INSERT INTO PbDPattern VALUES(1, 22);
+INSERT INTO PbDPattern VALUES(1, 23);
+INSERT INTO PbDPattern VALUES(6, 24);
+INSERT INTO PbDPattern VALUES(2, 25);
 
 /* inserimento IsoPattern */
 INSERT INTO IsoPattern VALUES(7.4, 1);
 INSERT INTO IsoPattern VALUES(7.4, 2);
 INSERT INTO IsoPattern VALUES(7.4, 3);
+INSERT INTO IsoPattern VALUES(7.3, 4);
+INSERT INTO IsoPattern VALUES(7.3, 5);
+INSERT INTO IsoPattern VALUES(7.2, 6);
+INSERT INTO IsoPattern VALUES(7.5, 10);
+INSERT INTO IsoPattern VALUES(7.2, 11);
+INSERT INTO IsoPattern VALUES(7.4, 12);
+INSERT INTO IsoPattern VALUES(7.4, 13);
+INSERT INTO IsoPattern VALUES(7.2, 14);
+INSERT INTO IsoPattern VALUES(7.4, 15);
+INSERT INTO IsoPattern VALUES(7.2, 16);
+INSERT INTO IsoPattern VALUES(6.0, 19);
+INSERT INTO IsoPattern VALUES(7.3, 20);
+INSERT INTO IsoPattern VALUES(7.2, 21);
+INSERT INTO IsoPattern VALUES(7.4, 22);
+INSERT INTO IsoPattern VALUES(7.4, 23);
+INSERT INTO IsoPattern VALUES(7.4, 24);
+INSERT INTO IsoPattern VALUES(7.2, 25);
 
 /* inserimento PbdIso */
 INSERT INTO PbdIso VALUES(1, 7.4);
 INSERT INTO PbdIso VALUES(2, 7.4);
 INSERT INTO PbdIso VALUES(3, 7.4);
 INSERT INTO PbdIso VALUES(4, 7.4);
+INSERT INTO PbdIso VALUES(4, 7.3);
+INSERT INTO PbdIso VALUES(5, 7.3);
+INSERT INTO PbdIso VALUES(6, 7.2);
+INSERT INTO PbdIso VALUES(2, 7.2);
+INSERT INTO PbdIso VALUES(5, 7.2);
+INSERT INTO PbdIso VALUES(1, 7.2);
 
 /* inserimento OwaspPattern */ 
 INSERT INTO OwaspPattern VALUES(5, 1);
 INSERT INTO OwaspPattern VALUES(7, 1);
+INSERT INTO OwaspPattern VALUES(4, 2);
+INSERT INTO OwaspPattern VALUES(5, 2);
+INSERT INTO OwaspPattern VALUES(4, 3);
+INSERT INTO OwaspPattern VALUES(5, 3);
+INSERT INTO OwaspPattern VALUES(9, 3);
+INSERT INTO OwaspPattern VALUES(7, 3);
+INSERT INTO OwaspPattern VALUES(5, 4);
+INSERT INTO OwaspPattern VALUES(8, 4);
+INSERT INTO OwaspPattern VALUES(9, 4);
+INSERT INTO OwaspPattern VALUES(7, 5);
+INSERT INTO OwaspPattern VALUES(9, 5);
+INSERT INTO OwaspPattern VALUES(1, 5);
+INSERT INTO OwaspPattern VALUES(7, 6);
+INSERT INTO OwaspPattern VALUES(4, 6);
+INSERT INTO OwaspPattern VALUES(5, 6);
+INSERT INTO OwaspPattern VALUES(2, 7);
+INSERT INTO OwaspPattern VALUES(4, 7);
+INSERT INTO OwaspPattern VALUES(5, 7);
+INSERT INTO OwaspPattern VALUES(8, 7);
+INSERT INTO OwaspPattern VALUES(1, 8);
+INSERT INTO OwaspPattern VALUES(3, 8);
+INSERT INTO OwaspPattern VALUES(5, 8);
+INSERT INTO OwaspPattern VALUES(7, 8);
+INSERT INTO OwaspPattern VALUES(10, 9);
+INSERT INTO OwaspPattern VALUES(1, 9);
+INSERT INTO OwaspPattern VALUES(3, 9);
+INSERT INTO OwaspPattern VALUES(5, 9);
+INSERT INTO OwaspPattern VALUES(7, 9);
+INSERT INTO OwaspPattern VALUES(10, 10);
+INSERT INTO OwaspPattern VALUES(5, 10);
+INSERT INTO OwaspPattern VALUES(7, 10);
+INSERT INTO OwaspPattern VALUES(8, 10);
+INSERT INTO OwaspPattern VALUES(9, 10);
+INSERT INTO OwaspPattern VALUES(1, 11);
+INSERT INTO OwaspPattern VALUES(5, 11);
+INSERT INTO OwaspPattern VALUES(7, 11);
+INSERT INTO OwaspPattern VALUES(8, 11);
+INSERT INTO OwaspPattern VALUES(9, 11);
+INSERT INTO OwaspPattern VALUES(1, 12);
+INSERT INTO OwaspPattern VALUES(5, 12);
+INSERT INTO OwaspPattern VALUES(7, 12);
+INSERT INTO OwaspPattern VALUES(8, 12);
+INSERT INTO OwaspPattern VALUES(9, 12);
+INSERT INTO OwaspPattern VALUES(8, 13);
+INSERT INTO OwaspPattern VALUES(9, 13);
+INSERT INTO OwaspPattern VALUES(1, 14);
+INSERT INTO OwaspPattern VALUES(7, 14);
+INSERT INTO OwaspPattern VALUES(1, 15);
+INSERT INTO OwaspPattern VALUES(7, 16);
+INSERT INTO OwaspPattern VALUES(5, 16);
+INSERT INTO OwaspPattern VALUES(4, 17);
+INSERT INTO OwaspPattern VALUES(7, 17);
+INSERT INTO OwaspPattern VALUES(10, 18);
+INSERT INTO OwaspPattern VALUES(8, 19);
+INSERT INTO OwaspPattern VALUES(9, 19);
+INSERT INTO OwaspPattern VALUES(5, 20);
+INSERT INTO OwaspPattern VALUES(7, 20);
+INSERT INTO OwaspPattern VALUES(8, 20);
+INSERT INTO OwaspPattern VALUES(9, 20);
+INSERT INTO OwaspPattern VALUES(1, 21);
+INSERT INTO OwaspPattern VALUES(2, 21);
+INSERT INTO OwaspPattern VALUES(3, 21);
+INSERT INTO OwaspPattern VALUES(7, 21);
+INSERT INTO OwaspPattern VALUES(1, 22);
+INSERT INTO OwaspPattern VALUES(2, 22);
+INSERT INTO OwaspPattern VALUES(8, 22);
+INSERT INTO OwaspPattern VALUES(9, 22);
+INSERT INTO OwaspPattern VALUES(5, 23);
+INSERT INTO OwaspPattern VALUES(7, 23);
+INSERT INTO OwaspPattern VALUES(6, 24);
+INSERT INTO OwaspPattern VALUES(8, 24);
+INSERT INTO OwaspPattern VALUES(2, 25);
+INSERT INTO OwaspPattern VALUES(3, 25);
+INSERT INTO OwaspPattern VALUES(5, 25);
 
 

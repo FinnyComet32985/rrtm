@@ -41,7 +41,7 @@ class InterfacciaAutenticazione {
                             { username: user.username, tipo: user.tipo },
                             JWT_SECRET,
                             {
-                                expiresIn: "2h",
+                                expiresIn: "24h",
                             }
                         );
 

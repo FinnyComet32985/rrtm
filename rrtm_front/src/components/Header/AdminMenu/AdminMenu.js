@@ -42,6 +42,12 @@ function AdminMenu() {
         logout();
         navigate("/login"); // Dopo il logout, reindirizza alla pagina di login
     };
+    const handleVulnerabilita = () => {
+        navigate("/visualizzaVulnerabilitaUt");
+    }
+    const handleFeedback = () => {
+        navigate("/visualizzaFeedback");
+    }
 
     return (
         <div>
@@ -60,11 +66,11 @@ function AdminMenu() {
                         <h3>Modifica Pkb</h3>
                     </button>
                     <hr className="hr1" />
-                    <button id="visioneFeedback">
+                    <button id="visioneFeedback" onClick={handleFeedback}>
                         <FeedbackIcon className="feedbackIcon" />
                         <h3>Visualizza Feedback</h3>
                     </button>
-                    <button id="visioneVulnerabilita">
+                    <button id="visioneVulnerabilita" onClick={handleVulnerabilita}>
                         <WeaknessIcon className="weaknessIcon" />
                         <h3>Visualizza Vulnerabilità</h3>
                     </button>

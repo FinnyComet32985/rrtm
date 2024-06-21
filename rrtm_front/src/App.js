@@ -12,6 +12,8 @@ import ISOPage from './pages/InterfacciaUtenteNonLoggato/ISOPage/ISOPage';
 import OWASPPage from "./pages/InterfacciaUtenteNonLoggato/OWASPPage/OWASPPage";
 import InserimentoFeedbackPage from "./pages/InterfacciaUtenteLoggato/InserimentoFeedbackPage";
 import InserimentoVulnerabilitaPage from './pages/InterfacciaUtenteLoggato/InserimentoVulnerabilitaPage';
+import VulnerabilitaSegnalatePage from './pages/InterfacciaAministratore/VulnerabilitaSegnalatePage';
+import VisualizzaFeedbackPage from './pages/InterfacciaAministratore/VisualizzaFeedbackPage';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path='/OWASPPage/:OWASPId' element={<OWASPPage/>}/>
         <Route path='/inserimentoFeedbackUt' element={<InserimentoFeedbackPage/>}/>
         <Route path='/inserimentoVulnerabilitaUt' element={<InserimentoVulnerabilitaPage/>}/>
+        <Route path='/visualizzaVulnerabilitaUt' element={<VulnerabilitaSegnalatePage/>}/>
+        <Route path='/visualizzaFeedback' element={<VisualizzaFeedbackPage/>}/>
       </Routes>
     </Router>
   );

@@ -2,6 +2,8 @@ import ModificaPKB from "./ModificaPKB";
 import Feedback from "./SistemaSegnalazione/Feedback";
 import connection from "..";
 import * as mysql from "mysql";
+import { promises } from "dns";
+import VulnerabilitaSegnalata from "./SistemaSegnalazione/VulnerabilitaSegnalata";
 class InterfacciaModifica {
     // Pattern
     public static async modificaPattern(
@@ -184,6 +186,35 @@ class InterfacciaModifica {
                         }
                     } else {
                         reject(new Error("No feedback found"));
+                    }
+                }
+            );
+        });
+    }
+
+    // vulnerabilita segnalate
+    public static async showVulnerabilitaSegnalate(): Promise<
+        VulnerabilitaSegnalata[]
+    > {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM vulnerabilita WHERE tipo='segnalata'";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const vulIds = results.map((row: any) => row.Id);
+                            const promises = vulIds.map((id: number) =>
+                                VulnerabilitaSegnalata.getVulnerabilitaDB(id)
+                            );
+                            const vuln = await Promise.all(promises);
+                            resolve(vuln);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No vulnerabilita segnalate found"));
                     }
                 }
             );

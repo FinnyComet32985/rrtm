@@ -1,49 +1,78 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import defaultUserImage from "../../assets/header/person-circle-outline.svg";
+import React, { createContext, useState, useContext } from "react";
 
-// Definisci AuthContext prima di usarlo
 const AuthContext = createContext();
 
 export function useAuth() {
-    return useContext(AuthContext);
+return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState({ isLoggedIn: false, isAdmin: false }); // Inizialmente l'utente non è loggato né admin
+const [user, setUser] = useState({ isLoggedIn: false, isAdmin: false });
 
-    // Funzione per eseguire il login
-    const login = (username, userImage, isAdmin) => {
-        setUser({ isLoggedIn: true, username, userImage, isAdmin });
-    };
+const login = async (username, password) => {
+    try {
+        const response = await fetch("http://localhost:1337/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
 
-    // Funzione per eseguire il logout
-    const logout = () => {
+        if (!response.ok) {
+            throw new Error("Credenziali non valide. Riprova.");
+        }
+
+        const data = await response.json();
+        const { token, tipo } = data;
+
+        const isAdminUser = tipo === "amministratore";
+        localStorage.setItem("token", token);
+        localStorage.setItem("tipo", tipo) // Salva il token nel localStorage
+        setUser({ isLoggedIn: true, username, isAdmin: isAdminUser });
+    } catch (error) {
+        throw new Error("Credenziali non valide. Riprova.");
+    }
+};
+
+const logout = async () => {
+    const token = localStorage.getItem("token");
+    const tipo = localStorage.getItem("tipo");
+    try {
+        await fetch("http://localhost:1337/api/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ tipo }),
+        });
+    } catch (error) {
+        console.error("Errore durante il logout:", error);
+    } finally {
+        localStorage.removeItem("token");
+        localStorage.removeItem("tipo");
         setUser({ isLoggedIn: false, isAdmin: false });
-    };
+    }
+};
 
-    // Controllo se l'utente è autenticato
-    const isAuthenticated = () => {
-        return user.isLoggedIn;
-    };
+const isAuthenticated = () => {
+    return user.isLoggedIn;
+};
 
-    // Controllo se l'utente è un amministratore
-    const isAdmin = () => {
-        return user.isAdmin;
-    };
+const isAdmin = () => {
+    return user.isAdmin;
+};
 
-    // Effetto per controllare l'autenticazione dell'utente
-    useEffect(() => {
-        // Puoi implementare qui la logica per verificare l'autenticazione dell'utente.
-        // Ad esempio, controllando il token JWT, cookie, ecc.
-        // Se l'utente è autenticato, puoi impostare setUser({ isLoggedIn: true, ... }) qui.
-        // Altrimenti, setUser({ isLoggedIn: false }) per assicurarti che l'utente non sia considerato autenticato.
-    }, []);
+const getToken = () => {
+    return localStorage.getItem("token");
+}
 
-    return (
-        <AuthContext.Provider
-            value={{ user, login, logout, isAuthenticated, isAdmin, defaultUserImage }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+return (
+    <AuthContext.Provider
+        value={{ user, login, logout, isAuthenticated, isAdmin }}
+    >
+        {children}
+    </AuthContext.Provider>
+);
 }

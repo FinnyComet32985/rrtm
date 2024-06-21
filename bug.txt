@@ -1,0 +1,4 @@
+Onion Routing non parte (Probabilmente più della metà)
+Pattern View
+ISO View
+Home (PDB e ISO)

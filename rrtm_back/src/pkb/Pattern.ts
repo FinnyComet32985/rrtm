@@ -197,7 +197,8 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        this.strategie = [];
+                        reject();
                     }
                 }
             );
@@ -218,7 +219,8 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        this.vulnerabilita = [];
+                        reject();
                     }
                 }
             );
@@ -239,7 +241,8 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        this.articoli = [];
+                        reject();
                     }
                 }
             );
@@ -257,7 +260,8 @@ class Pattern {
                         this.principiPbD = results.map((row: any) => row.PbDId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        this.principiPbD = [];
+                        reject();
                     }
                 }
             );
@@ -277,7 +281,8 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        this.collocazioneMVC = [];
+                        reject();
                     }
                 }
             );
@@ -295,7 +300,8 @@ class Pattern {
                         this.faseISO = results.map((row: any) => row.IsoId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        this.faseISO = [];
+                        reject();
                     }
                 }
             );
@@ -315,7 +321,8 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        this.categoriaOWASP = [];
+                        reject();
                     }
                 }
             );

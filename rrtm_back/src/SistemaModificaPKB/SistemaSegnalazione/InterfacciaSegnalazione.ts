@@ -5,12 +5,21 @@ import Feedback from "./Feedback";
 
 class InterfacciaSegnalazione {
     public static async segnalaVulnerabilita(
-        Id: number,
         titolo: string,
         usernameUt: string
     ) {
-        const vulnSegn = new VulnerabilitaSegnalata(Id, titolo, 0, usernameUt);
-        return vulnSegn.insertVulnerabilitaDB();
+        try {
+            const idMax = await VulnerabilitaSegnalata.getIdMax();
+            const vulnSegn = new VulnerabilitaSegnalata(
+                idMax + 1,
+                titolo,
+                0,
+                usernameUt
+            );
+            return vulnSegn.insertVulnerabilitaDB();
+        } catch (error: any) {
+            throw new Error(`Error inserting vulnerabilita: ${error.message}`);
+        }
     }
     public static async findVulnSegnalateUt(
         usernameUt: string

@@ -4,9 +4,8 @@ import { verificaTokenUt } from "../Auth/Auth";
 const router = express.Router();
 
 router.post("/segnalaVulnerabilita", verificaTokenUt, async (req, res) => {
-    const { Id, titolo, usernameUt } = req.body;
+    const { titolo, usernameUt } = req.body;
     const result = await InterfacciaSegnalazione.segnalaVulnerabilita(
-        Id,
         titolo,
         usernameUt
     );

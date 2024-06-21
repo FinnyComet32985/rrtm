@@ -45,6 +45,9 @@ function UserMenu() {
     const handleFeedback = () => {
         navigate("/inserimentoFeedbackUt");
     }
+    const handleVulnerabilita = () => {
+        navigate("/inserimentoVulnerabilitaUt");
+    }
 
     return (
         <div>
@@ -67,7 +70,7 @@ function UserMenu() {
                         <FeedbackIcon className="feedbackIcon" />
                         <h3>Inserisci Feedback</h3>
                     </button>
-                    <button id="segnalazioneVulnerabilita">
+                    <button id="segnalazioneVulnerabilita" onClick={handleVulnerabilita}>
                         <WeaknessIcon className="weaknessIcon" />
                         <h3>Segnala Vulnerabilità</h3>
                     </button>

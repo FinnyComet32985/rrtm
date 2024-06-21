@@ -11,6 +11,7 @@ import MVCPage from './pages/InterfacciaUtenteNonLoggato/MVCPage/MVCPage';
 import ISOPage from './pages/InterfacciaUtenteNonLoggato/ISOPage/ISOPage';
 import OWASPPage from "./pages/InterfacciaUtenteNonLoggato/OWASPPage/OWASPPage";
 import InserimentoFeedbackPage from "./pages/InterfacciaUtenteLoggato/InserimentoFeedbackPage";
+import InserimentoVulnerabilitaPage from './pages/InterfacciaUtenteLoggato/InserimentoVulnerabilitaPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path='/ISOPage/:ISOId' element={<ISOPage/>}/>
         <Route path='/OWASPPage/:OWASPId' element={<OWASPPage/>}/>
         <Route path='/inserimentoFeedbackUt' element={<InserimentoFeedbackPage/>}/>
+        <Route path='/inserimentoVulnerabilitaUt' element={<InserimentoVulnerabilitaPage/>}/>
       </Routes>
     </Router>
   );

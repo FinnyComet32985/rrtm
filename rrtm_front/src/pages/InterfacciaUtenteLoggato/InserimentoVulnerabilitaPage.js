@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
-import "./InserimentoFeedbackPage.css";
+import "./InserimentoVulnerabilitaPage.css";
 
-function InserimentoFeedbackPage() {
-    const [feedbacks, setFeedbacks] = useState([]);
-    const [showAllFeedback, setShowAllFeedback] = useState(false);
+function InserimentoVulnerabilitaPage() {
+    const [vulnerabilities, setVulnerabilities] = useState([]);
+    const [showAllVulnerabilita, setShowAllVulnerabilita] = useState(false);
     const [buttonStatus, setButtonStatus] = useState(null); // null, 'success', 'error'
-    const [formData, setFormData] = useState({ titolo: "", descrizione: "" });
-    const [errors, setErrors] = useState({ titolo: false, descrizione: false }); // Stato degli errori sugli input
+    const [formData, setFormData] = useState({ titolo: ""});
+    const [errors, setErrors] = useState({ titolo: false}); // Stato degli errori sugli input
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
 
-    const getFeedback = useCallback(async () => {
+    const getVulnerabilita = useCallback(async () => {
         try {
             const response = await fetch(
-                `http://localhost:1337/api/findFeedbackUt/${username}`,
+                `http://localhost:1337/api/findVulnSegnUt/${username}`,
                 {
                     method: "GET",
                     headers: {
@@ -26,18 +26,18 @@ function InserimentoFeedbackPage() {
                 throw new Error("Errore nella risposta della rete");
             }
             const json = await response.json();
-            setFeedbacks(json);
+            setVulnerabilities(json);
         } catch (error) {
-            console.error("Errore durante il recupero dei feedback:", error);
+            console.error("Errore durante il recupero delle vulnerabilita:", error);
         }
     }, [username, token]);
 
     useEffect(() => {
-        getFeedback();
-    }, [getFeedback]);
+        getVulnerabilita();
+    }, [getVulnerabilita]);
 
-    const handleToggleFeedback = () => {
-        setShowAllFeedback(!showAllFeedback);
+    const handleToggleVulnerabilita = () => {
+        setShowAllVulnerabilita(!showAllVulnerabilita);
     };
 
     const handleInserisci = async (e) => {
@@ -45,24 +45,23 @@ function InserimentoFeedbackPage() {
 
         // Controlla se i campi sono vuoti
         const newErrors = {
-            titolo: !formData.titolo,
-            descrizione: !formData.descrizione,
+            titolo: !formData.titolo
         };
         setErrors(newErrors);
 
         // Se ci sono errori, non inviare il form
-        if (newErrors.titolo || newErrors.descrizione) {
+        if (newErrors.titolo) {
             setButtonStatus('error');
             // Forza il ricaricamento degli stili per l'animazione
             setTimeout(() => {
-                setErrors({ titolo: false, descrizione: false });
+                setErrors({ titolo: false});
                 setButtonStatus(null);
             }, 2000); // Reset button status and errors after 2 seconds
             return;
         }
 
         try {
-            const response = await fetch("http://localhost:1337/api/inserisciFeedback", {
+            const response = await fetch("http://localhost:1337/api/segnalaVulnerabilita", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -73,8 +72,8 @@ function InserimentoFeedbackPage() {
             const result = await response.text();
             if (result === "true") {
                 setButtonStatus('success');
-                getFeedback(); // Ricarica i feedback dopo l'inserimento
-                setFormData({ titolo: "", descrizione: "" }); // Reset form data
+                getVulnerabilita(); // Ricarica i feedback dopo l'inserimento
+                setFormData({ titolo: ""}); // Reset form data
             } else {
                 setButtonStatus('error');
             }
@@ -99,36 +98,33 @@ function InserimentoFeedbackPage() {
         <div>
             <Header />
             <div className="container">
-                <div className="visioneFeedback">
-                    <h1 className="AllFeedbackTitle">Feedback Inseriti</h1>
-                    {feedbacks.length > 0 ? (
-                        feedbacks
-                            .slice(0, showAllFeedback ? feedbacks.length : 3)
-                            .map((feedback) => (
-                                <div key={feedback.Id} className="feedback">
-                                    <h3 className="titoloFeedback">
-                                        {feedback.titolo}
+                <div className="visioneVulnerabilitaUt">
+                    <h1 className="AllVulnerabilitaUtTitle">Vulnerabilita Segnalate</h1>
+                    {vulnerabilities.length > 0 ? (
+                        vulnerabilities
+                            .slice(0, showAllVulnerabilita ? vulnerabilities.length : 3)
+                            .map((vulnerabilita) => (
+                                <div key={vulnerabilita.Id} className="vulnerabilitaUt">
+                                    <h3 className="titoloVulnerabilitaUt">
+                                        {vulnerabilita.titolo}
                                     </h3>
-                                    <p className="descrizioneFeedback">
-                                        {feedback.descrizione}
-                                    </p>
                                 </div>
                             ))
                     ) : (
-                        <p style={{color: "white"}}>Nessun feedback trovato.</p>
+                        <p style={{color: "white"}}>Nessuna vulnerabilità trovata.</p>
                     )}
-                    {feedbacks.length > 3 && (
-                        <div className="buttonDivFeedback">
-                            <button onClick={handleToggleFeedback}>
-                                {showAllFeedback
-                                    ? "Nascondi feedback"
-                                    : "Visualizza tutti i feedback"}
+                    {vulnerabilities.length > 3 && (
+                        <div className="buttonDivVulnerabilita">
+                            <button onClick={handleToggleVulnerabilita}>
+                                {showAllVulnerabilita
+                                    ? "Nascondi vulnerabilita segnalate"
+                                    : "Visualizza tutte le vulnerabilita segnalate"}
                             </button>
                         </div>
                     )}
                 </div>
-                <form className="inserisciFeedback" onSubmit={handleInserisci}>
-                    <h1>Inserisci Feedback</h1>
+                <form className="inserisciVulnerabilita" onSubmit={handleInserisci}>
+                    <h1>Inserisci Vulnerabilita</h1>
                     <div>
                         <label htmlFor="titolo">Titolo</label>
                         <input
@@ -140,17 +136,6 @@ function InserimentoFeedbackPage() {
                             className={errors.titolo ? "inputError" : ""}
                         />
                     </div>
-                    <div>
-                        <label htmlFor="descrizione">Descrizione</label>
-                        <input
-                            type="text"
-                            id="descrizione"
-                            name="descrizione"
-                            value={formData.descrizione}
-                            onChange={handleChange}
-                            className={errors.descrizione ? "inputError" : ""}
-                        />
-                    </div>
                     <button
                         type="submit"
                         className={
@@ -158,7 +143,7 @@ function InserimentoFeedbackPage() {
                                 ? "success"
                                 : buttonStatus === "error"
                                 ? "error"
-                                : "buttonInsertFeedback"
+                                : "buttonInsertVulnerabilitaUt"
                         }
                     >
                         Inserisci
@@ -169,4 +154,4 @@ function InserimentoFeedbackPage() {
     );
 }
 
-export default InserimentoFeedbackPage;
+export default InserimentoVulnerabilitaPage;

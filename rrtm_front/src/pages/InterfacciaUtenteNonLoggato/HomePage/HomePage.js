@@ -244,7 +244,7 @@ function HomePage() {
                 <h1 className="AllISOTitle">Fasi ISO</h1>
                 {data7 &&
                     data7
-                        .slice(0, showAllISO ? data7.length : 3)
+                        .slice(0, showAllISO ? data7.length : 2)
                         .map((iso) => (
                             <ISO
                                 key={iso.Id}
@@ -252,7 +252,7 @@ function HomePage() {
                                 nome={iso.nome}
                             />
                         ))}
-                {data7.length > 3 && (
+                {data7.length > 2 && (
                     <div className="buttonDivISO">
                         <button onClick={handleToggleISO}>
                             {showAllISO

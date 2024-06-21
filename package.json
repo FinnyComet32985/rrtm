@@ -1,0 +1,10 @@
+{
+  "name": "progetto",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix rrtm_front\" \"npm run start --prefix rrtm_back\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

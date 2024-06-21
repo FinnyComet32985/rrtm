@@ -85,7 +85,7 @@ class Strategia {
                         this.pattern = results.map((row: any) => row.patternId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        resolve();
                     }
                 }
             );
@@ -106,7 +106,7 @@ class Strategia {
                         );
                         resolve();
                     } else {
-                        reject(new Error("articolo not found"));
+                        resolve();
                     }
                 }
             );
@@ -124,7 +124,7 @@ class Strategia {
                         this.principiPbD = results.map((row: any) => row.PbDId);
                         resolve();
                     } else {
-                        reject(new Error("articolo not found"));
+                        resolve();
                     }
                 }
             );

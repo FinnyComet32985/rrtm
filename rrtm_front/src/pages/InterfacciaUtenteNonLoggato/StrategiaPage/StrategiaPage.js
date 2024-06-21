@@ -1,40 +1,42 @@
 import { useParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
-import "./ISOPage.css";
+import useFetch from "../../../hooks/useFetch";
+import "./StrategiaPage.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
+import Header from "../../../components/Header/Header";
 
-function ISOPage() {
-    let { ISOId } = useParams();
+function StrategiaPage() {
+    let { strategiaId } = useParams();
     const [isPatternExpanded, setIsPatternExpanded] = useState(false);
-    const [MVCExpanded, setMVCExpanded] = useState(false);
+    const [isArticoliExpanded, setIsArticoloExpanded] = useState(false);
     const [PbDExpanded, setPbDExpanded] = useState(false);
+
     const { data, loading, error } = useFetch(
-        `http://localhost:1337/api/findISO/${ISOId}`
+        `http://localhost:1337/api/findStrategia/${strategiaId}`
     );
     const {
         data: data2,
         loading: loading2,
         error: error2,
-    } = useFetch(`http://localhost:1337/api/findPattISO/${ISOId}`);
+    } = useFetch(`http://localhost:1337/api/findPattStrat/${strategiaId}`);
     const {
         data: data3,
         loading: loading3,
         error: error3,
-    } = useFetch(`http://localhost:1337/api/findMVCISO/${ISOId}`);
+    } = useFetch(`http://localhost:1337/api/findArtStrat/${strategiaId}`);
     const {
         data: data4,
         loading: loading4,
         error: error4,
-    } = useFetch(`http://localhost:1337/api/findPbDISO/${ISOId}`);
+    } = useFetch(`http://localhost:1337/api/findPbDStrat/${strategiaId}`);
+
     const navigate = useNavigate();
 
     const handlePatternToggle = () => {
         setIsPatternExpanded(!isPatternExpanded);
     };
-    const handleToggleMVC = () => {
-        setMVCExpanded(!MVCExpanded);
+    const handleArticoliToggle = () => {
+        setIsArticoloExpanded(!isArticoliExpanded);
     };
     const handleTogglePbD = () => {
         setPbDExpanded(!PbDExpanded);
@@ -42,11 +44,11 @@ function ISOPage() {
     const handlePatternClick = (patternId) => {
         navigate(`/patternPage/${patternId}`);
     };
-    const handleClickMVC = (mvcId) => {
-        navigate(`/MVCPage/${mvcId}`);
+    const handleArticoloClick = (articoloId) => {
+        navigate(`/articoloPage/${articoloId}`);
     };
-    const handleClickPbD = (pbdId) => {
-        navigate(`/PbDPage/${pbdId}`);
+    const handleClickPbD = (PbDId) => {
+        navigate(`/PbDPage/${PbDId}`);
     };
     if (loading || loading2 || loading3 || loading4) {
         return (
@@ -69,15 +71,14 @@ function ISOPage() {
         return <div>Error3: {error3.message}</div>;
     }
     if (error4) {
-        return <div>Error4: {error4.message}</div>;
+        return <div>Error3: {error3.message}</div>;
     }
     return (
         <div>
             <Header></Header>
             <div className="container">
-                <div className="ISO">
-                    {data && <h3>{data.Id}</h3>}
-                    {data && <h3>{data.nome}</h3>}</div>
+                <div className="Strategia">{data && <h3>{data.nome}</h3>}</div>
+                {/* Pattern Associati */}
                 <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
@@ -100,21 +101,25 @@ function ISOPage() {
                             ))}
                     </div>
                 </div>
-                {/* MVC Associati */}
+                {/* Articoli Associati */}
                 <div
-                    className={`MVCAssociati ${
-                        MVCExpanded ? "open" : "closed"
+                    className={`ArticoliAssociati ${
+                        isArticoliExpanded ? "open" : "closed"
                     }`}
-                    onClick={handleToggleMVC}
+                    onClick={handleArticoliToggle}
                 >
-                    <h3>MVC Associati</h3>
-                    <div className="MVCAssocMap">
+                    <h3>Articoli Associati</h3>
+                    <div className="articoli-details">
                         {data3 &&
-                            data3.map((mvc) => (
-                                <div className="MVC-details" key={mvc.Id}>
-                                    <h4 onClick={() => handleClickMVC(mvc.Id)}>
-                                        {mvc.nome}
-                                    </h4>
+                            data3.map((articolo) => (
+                                <div
+                                    key={articolo.Id}
+                                    onClick={() =>
+                                        handleArticoloClick(articolo.Id)
+                                    }
+                                >
+                                    <h4>{articolo.titolo}</h4>
+                                    <p>Articolo N°: {articolo.Id}</p>
                                 </div>
                             ))}
                     </div>
@@ -126,14 +131,16 @@ function ISOPage() {
                     }`}
                     onClick={handleTogglePbD}
                 >
-                    <h3>Principi PbD Associati</h3>
+                    <h3>Principi PbD associati</h3>
                     <div className="PbDAssocMap">
                         {data4 &&
                             data4.map((PbD) => (
-                                <div className="PbD-details" key={PbD.Id}>
-                                    <h4 onClick={() => handleClickPbD(PbD.Id)}>
-                                        {PbD.nome}
-                                    </h4>
+                                <div
+                                    className="PbD-details"
+                                    key={PbD.Id}
+                                    onClick={() => handleClickPbD(PbD.Id)}
+                                >
+                                    <h4>{PbD.nome}</h4>
                                 </div>
                             ))}
                     </div>
@@ -143,4 +150,4 @@ function ISOPage() {
     );
 }
 
-export default ISOPage;
+export default StrategiaPage;

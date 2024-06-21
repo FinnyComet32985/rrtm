@@ -46,14 +46,50 @@ class InterfacciaSegnalazione {
         });
     }
 
+    public static async findFeedbackUt(
+        usernameUt: string
+    ): Promise<Feedback[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM Feedback WHERE usernameUt = ?";
+            connection.query(
+                query,
+                [usernameUt],
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const feedbackIds = results.map(
+                                (row: any) => row.Id
+                            );
+                            const promises = feedbackIds.map((id: number) =>
+                                Feedback.getFeedbackDB(id)
+                            );
+                            const feedback = await Promise.all(promises);
+                            resolve(feedback);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("no feedback found"));
+                    }
+                }
+            );
+        });
+    }
+
     public static async inserisciFeedback(
-        Id: number,
         titolo: string,
         descrizione: string,
-        usenameUt: string
+        usernameUt: string
     ) {
-        const fed = new Feedback(Id, titolo, descrizione, usenameUt);
-        fed.insertFeedbackDB();
+        try {
+            const idMax = await Feedback.getIdMax();
+            const newId = idMax + 1;
+            const fed = new Feedback(newId, titolo, descrizione, usernameUt);
+            return fed.insertFeedbackDB();
+        } catch (error: any) {
+            throw new Error(`Error inserting feedback: ${error.message}`);
+        }
     }
 }
 export default InterfacciaSegnalazione;

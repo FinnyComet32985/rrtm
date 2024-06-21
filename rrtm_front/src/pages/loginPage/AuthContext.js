@@ -28,7 +28,8 @@ const login = async (username, password) => {
 
         const isAdminUser = tipo === "amministratore";
         localStorage.setItem("token", token);
-        localStorage.setItem("tipo", tipo) // Salva il token nel localStorage
+        localStorage.setItem("username", username);
+        localStorage.setItem("tipo", tipo);
         setUser({ isLoggedIn: true, username, isAdmin: isAdminUser });
     } catch (error) {
         throw new Error("Credenziali non valide. Riprova.");
@@ -64,9 +65,6 @@ const isAdmin = () => {
     return user.isAdmin;
 };
 
-const getToken = () => {
-    return localStorage.getItem("token");
-}
 
 return (
     <AuthContext.Provider

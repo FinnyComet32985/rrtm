@@ -138,7 +138,6 @@
 }
 
 .VulnerabilitaAssociate.open {
-    max-height: var(--max-height-vuln); /* Altezza massima dinamica */
     opacity: 1;
 }
 
@@ -197,7 +196,6 @@
 }
 
 .PbDAssociati.open {
-    max-height: var(--max-height-vuln); /* Altezza massima dinamica */
     opacity: 1;
 }
 
@@ -250,7 +248,6 @@
 }
 
 .MVCAssociati.open {
-    max-height: var(--max-height-vuln); /* Altezza massima dinamica */
     opacity: 1;
 }
 

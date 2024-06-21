@@ -42,6 +42,9 @@ function UserMenu() {
         logout();
         navigate("/login"); // Dopo il logout, reindirizza alla pagina di login
     };
+    const handleFeedback = () => {
+        navigate("/inserimentoFeedbackUt");
+    }
 
     return (
         <div>
@@ -60,7 +63,7 @@ function UserMenu() {
                         <h3>Notifiche e Preferenze</h3>
                     </button>
                     <hr className="hr1" />
-                    <button id="inserimentoFeedback">
+                    <button id="inserimentoFeedback" onClick={handleFeedback}>
                         <FeedbackIcon className="feedbackIcon" />
                         <h3>Inserisci Feedback</h3>
                     </button>

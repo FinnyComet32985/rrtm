@@ -1,15 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import LoginPage from './pages/loginPage/LoginPage';
-import HomePage from './pages/HomePage/HomePage';
-import PatternPage from './pages/PatternPage/PatternPage';
-import StrategiaPage from './pages/StrategiaPage/StrategiaPage';
-import VulnerabilitaPage from './pages/VulnerabilitaPage/VulnerabilitaPage';
-import ArticoloPage from './pages/ArticoloPage/ArticoloPage';
-import PbDPage from "./pages/PbDPage/PbDPage";
-import MVCPage from './pages/MVCPage/MVCPage';
-import ISOPage from './pages/ISOPage/ISOPage';
-import OWASPPage from "./pages/OWASPPage/OWASPPage";
+import HomePage from './pages/InterfacciaUtenteNonLoggato/HomePage/HomePage';
+import PatternPage from './pages/InterfacciaUtenteNonLoggato/PatternPage/PatternPage';
+import StrategiaPage from './pages/InterfacciaUtenteNonLoggato/StrategiaPage/StrategiaPage';
+import VulnerabilitaPage from './pages/InterfacciaUtenteNonLoggato/VulnerabilitaPage/VulnerabilitaPage';
+import ArticoloPage from './pages/InterfacciaUtenteNonLoggato/ArticoloPage/ArticoloPage';
+import PbDPage from "./pages/InterfacciaUtenteNonLoggato/PbDPage/PbDPage";
+import MVCPage from './pages/InterfacciaUtenteNonLoggato/MVCPage/MVCPage';
+import ISOPage from './pages/InterfacciaUtenteNonLoggato/ISOPage/ISOPage';
+import OWASPPage from "./pages/InterfacciaUtenteNonLoggato/OWASPPage/OWASPPage";
+import InserimentoFeedbackPage from "./pages/InterfacciaUtenteLoggato/InserimentoFeedbackPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/MVCPage/:MVCId' element={<MVCPage/>}/>
         <Route path='/ISOPage/:ISOId' element={<ISOPage/>}/>
         <Route path='/OWASPPage/:OWASPId' element={<OWASPPage/>}/>
+        <Route path='/inserimentoFeedbackUt' element={<InserimentoFeedbackPage/>}/>
       </Routes>
     </Router>
   );

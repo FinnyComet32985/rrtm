@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../../hooks/useFetch";
 import "./MVCPage.css";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Header from "../../components/Header/Header";
+import Header from "../../../components/Header/Header";
 
 function MVCPage() {
     let { MVCId } = useParams();
@@ -91,8 +91,9 @@ function MVCPage() {
                                 <div
                                     className="ISO-details"
                                     key={ISO.Id}
+                                    onClick={() => handleClickISO(ISO.Id)}
                                 >
-                                    <div onClick={() => handleClickISO(ISO.Id)}>
+                                    <div>
                                         <h4>{ISO.Id}</h4>     
                                         <h4>{ISO.nome}</h4>
                                     </div>

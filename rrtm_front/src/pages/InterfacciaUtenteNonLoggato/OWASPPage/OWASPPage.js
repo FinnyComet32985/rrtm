@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../../hooks/useFetch";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../../components/Header/Header";
+import Header from "../../../components/Header/Header";
 import "./OWASPPage.css";
 
 function VulnerabilitaPage() {
@@ -48,6 +48,7 @@ function VulnerabilitaPage() {
                 <div className="OWASP">
                     {data && <h3>{data.nome}</h3>}
                 </div>
+                {/* Pattern associati */}
                 <div
                     className={`PatternAssociati ${
                         isExpanded ? "open" : "closed"

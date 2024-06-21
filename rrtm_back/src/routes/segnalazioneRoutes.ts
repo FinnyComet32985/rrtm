@@ -24,13 +24,23 @@ router.get("/findVulnSegnUt/:Ut", verificaTokenUt, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get("/findFeedbackUt/:Ut", verificaTokenUt, async (req, res) => {
+    try {
+        const result = await InterfacciaSegnalazione.findFeedbackUt(
+            req.params.Ut
+        );
+        res.json(result);
+    } catch (error) {
+        console.error("Error fetching vulnerabilita:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 router.post("/inserisciFeedback", verificaTokenUt, async (req, res) => {
-    const { Id, titolo, descrizione, usernameUt } = req.body;
+    const { titolo, descrizione, usernameUt } = req.body;
 
     // Puoi accedere all'utente autenticato tramite (req as any).utente se necessario
     const result = await InterfacciaSegnalazione.inserisciFeedback(
-        Id,
         titolo,
         descrizione,
         usernameUt

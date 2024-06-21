@@ -1,47 +1,35 @@
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import Header from "../../components/Header/Header";
-import "./ArticoloPage.css";
+import { useState } from "react";
+import Header from "../../../components/Header/Header";
+import "./PbDPage.css";
 
-function ArticoloPage() {
-    let { articoloId } = useParams();
+function PbDPage() {
+    let { PbDId } = useParams();
     const navigate = useNavigate();
     const [isPatternExpanded, setIsPatternExpanded] = useState(false);
     const [isStrategiaExpanded, setIsStrategiaExpanded] = useState(false);
-    const [isVulnerabilitaExpanded, setIsVulnerabilitaExpanded] = useState(false);
-    const [maxHeightVuln, setMaxHeightVuln] = useState(null);
+    const [isISOExpanded, setIsISOExpanded] = useState(false);
     const { data, loading, error } = useFetch(
-        `http://localhost:1337/api/findArticolo/${articoloId}`
+        `http://localhost:1337/api/findPbD/${PbDId}`
     );
     const {
         data: data2,
         loading: loading2,
         error: error2,
-    } = useFetch(`http://localhost:1337/api/findPattArt/${articoloId}`);
+    } = useFetch(`http://localhost:1337/api/findPattPbD/${PbDId}`);
     const {
         data: data3,
         loading: loading3,
         error: error3,
-    } = useFetch(`http://localhost:1337/api/findStratArt/${articoloId}`);
+    } = useFetch(`http://localhost:1337/api/findStratPbD/${PbDId}`);
+
     const {
         data: data4,
         loading: loading4,
         error: error4,
-    } = useFetch(`http://localhost:1337/api/findVulnArt/${articoloId}`);
-
-    const initialMount = useRef(true);
-
-    useEffect(() => {
-        // Calcolo dell'altezza massima per le vulnerabilità solo alla prima apertura
-        if (isVulnerabilitaExpanded && data4 && initialMount.current) {
-            const maxHeightCalcVuln = `${data4.length * 14.52 + 7.6}vh`;
-            setMaxHeightVuln(maxHeightCalcVuln);
-            initialMount.current = false; // Imposta il primo montaggio a false dopo il calcolo iniziale
-        }
-    }, [isVulnerabilitaExpanded, data4]);
-
+    } = useFetch(`http://localhost:1337/api/findISOPbD/${PbDId}`);
 
     const handlePatternToggle = () => {
         setIsPatternExpanded(!isPatternExpanded);
@@ -49,17 +37,18 @@ function ArticoloPage() {
     const handleStrategieToggle = () => {
         setIsStrategiaExpanded(!isStrategiaExpanded);
     };
-    const handleVulnerabilitaToggle = () => {
-        setIsVulnerabilitaExpanded(!isVulnerabilitaExpanded);
+    const handleISOToggle = () => {
+        setIsISOExpanded(!isISOExpanded);
     };
+
     const handlePatternClick = (patternId) => {
         navigate(`/patternPage/${patternId}`);
     };
     const handleStrategiaClick = (strategiaId) => {
-        navigate(`/strategiaPage/${strategiaId}`);
+        navigate(`/StrategiaPage/${strategiaId}`);
     };
-    const handleVulnerabilitaClick = (vulnerabilitaId) => {
-        navigate(`/vulnerabilitaPage/${vulnerabilitaId}`);
+    const handleISOClick = (ISOId) => {
+        navigate(`/ISOPage/${ISOId}`);
     };
     if (loading || loading2 || loading3 || loading4) {
         return (
@@ -88,16 +77,8 @@ function ArticoloPage() {
         <div>
             <Header></Header>
             <div className="container">
-                {data && (
-                    <div className="articolo">
-                        <div className="titoloArticolo">
-                            <h3 key={data.Id}>{data.titolo}</h3>
-                        </div>
-                        <div className="articoloDiv">
-                            <h3>Articolo n°: {data.Id}</h3>
-                        </div>
-                    </div>
-                )}
+                <div className="PbD">{data && <h3>{data.nome}</h3>}</div>
+                {/* Pattern Associati */}
                 <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
@@ -134,48 +115,38 @@ function ArticoloPage() {
                                 <div
                                     className="strategie-details"
                                     key={strategia.Id}
+                                    onClick={() =>
+                                        handleStrategiaClick(strategia.Id)
+                                    }
                                 >
-                                    <h4
-                                        onClick={() =>
-                                            handleStrategiaClick(strategia.Id)
-                                        }
-                                    >
-                                        {strategia.nome}
-                                    </h4>
+                                    <h4>{strategia.nome}</h4>
                                 </div>
                             ))}
                     </div>
                 </div>
+                {/* ISO */}
                 <div
-                    className={`VulnerabilitaAssociate ${
-                        isVulnerabilitaExpanded ? "open" : "closed"
+                    className={`ISOAssociate ${
+                        isISOExpanded ? "open" : "closed"
                     }`}
-                    style={{ "--max-height-vuln": maxHeightVuln }}
-                    onClick={handleVulnerabilitaToggle}
+                    onClick={handleISOToggle}
                 >
-                    <h3>vulnerabilità Associate</h3>
-                    {data4 &&
-                        data4.map((vulnerabilita) => (
-                            <div
-                                className="vulnerabilita-details"
-                                key={vulnerabilita.Id}
-                            >
-                                <h4
-                                    onClick={() =>
-                                        handleVulnerabilitaClick(
-                                            vulnerabilita.Id
-                                        )
-                                    }
+                    <h3>Fasi ISO Associate</h3>
+                    <div className="ISO-details">
+                        {data4 &&
+                            data4.map((iso) => (
+                                <div
+                                    key={iso.Id}
+                                    onClick={() => handleISOClick(iso.Id)}
                                 >
-                                    {vulnerabilita.titolo}
-                                </h4>
-                                <p>CWE: {vulnerabilita.cwe}</p>
-                            </div>
-                        ))}
+                                    <h4>{iso.Id}</h4>
+                                    <h4>{iso.nome}</h4>
+                                </div>
+                            ))}
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
-
-export default ArticoloPage;
+export default PbDPage;

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../../hooks/useFetch";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../../components/Header/Header";
+import Header from "../../../components/Header/Header";
 import "./VulnerabilitaPage.css";
 
 function VulnerabilitaPage() {
@@ -63,6 +63,7 @@ function VulnerabilitaPage() {
                 <div className="Vulnerabilita">
                     {data && <h3>{data.titolo}</h3>}
                 </div>
+                {/* Articoli Associati */}
                 <div
                     className={`PatternAssociati ${
                         isExpanded ? "open" : "closed"
@@ -85,6 +86,7 @@ function VulnerabilitaPage() {
                             ))}
                     </div>
                 </div>
+                {/* Articoli Associati */}
                 <div
                     className={`ArticoliAssociati ${
                         isArticoliExpanded ? "open" : "closed"

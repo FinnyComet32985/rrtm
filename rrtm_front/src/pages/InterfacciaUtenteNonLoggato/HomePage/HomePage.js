@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import useFetch from "../../hooks/useFetch";
-import Header from "../../components/Header/Header";
-import Pattern from "../../components/Pattern/Pattern";
-import Strategia from "../../components/Strategia/Strategia";
-import Vulnerabilita from "../../components/Vulnerabilita/Vulnerabilita";
-import Articolo from "../../components/Articolo/Articolo";
-import PbD from "../../components/PbD/PbD";
-import MVC from "../../components/MVC/MVC";
-import ISO from "../../components/ISO/ISO";
-import OWASP from "../../components/OWASP/OWASP";
+import useFetch from "../../../hooks/useFetch";
+import Header from "../../../components/Header/Header";
+import Pattern from "../../../components/Pattern/Pattern";
+import Strategia from "../../../components/Strategia/Strategia";
+import Vulnerabilita from "../../../components/Vulnerabilita/Vulnerabilita";
+import Articolo from "../../../components/Articolo/Articolo";
+import PbD from "../../../components/PbD/PbD";
+import MVC from "../../../components/MVC/MVC";
+import ISO from "../../../components/ISO/ISO";
+import OWASP from "../../../components/OWASP/OWASP";
 
 import "./HomePage.css";
 

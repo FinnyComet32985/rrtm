@@ -1,8 +1,8 @@
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import Header from "../../components/Header/Header";
+import Header from "../../../components/Header/Header";
 import "./PatternPage.css";
 
 function PatternPage() {
@@ -37,8 +37,8 @@ function PatternPage() {
         navigate(`/MVCPage/${MVCId}`); // Passa l'ID come parte dell'URL
     };
     const handleArticoloClick = (articoloId) => {
-        navigate(`/articoloPage/${articoloId}`)
-    }
+        navigate(`/articoloPage/${articoloId}`);
+    };
     const handleClickOWASP = (OWASPId) => {
         navigate(`/OWASPPage/${OWASPId}`); // Passa l'ID come parte dell'URL
     };
@@ -112,7 +112,16 @@ function PatternPage() {
     const handleToggleOWASP = () => {
         setOWASPExpanded(!OWASPExpanded);
     };
-    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7 || loading8 ) {
+    if (
+        loading ||
+        loading2 ||
+        loading3 ||
+        loading4 ||
+        loading5 ||
+        loading6 ||
+        loading7 ||
+        loading8
+    ) {
         return (
             <div>
                 <Header></Header>
@@ -195,14 +204,11 @@ function PatternPage() {
                                 <div
                                     className="strategie-details"
                                     key={strategia.Id}
+                                    onClick={() =>
+                                        handleClickStrategia(strategia.Id)
+                                    }
                                 >
-                                    <h4
-                                        onClick={() =>
-                                            handleClickStrategia(strategia.Id)
-                                        }
-                                    >
-                                        {strategia.nome}
-                                    </h4>
+                                    <h4>{strategia.nome}</h4>
                                 </div>
                             ))}
                     </div>
@@ -222,16 +228,11 @@ function PatternPage() {
                             <div
                                 className="vulnerabilita-details"
                                 key={vulnerabilita.Id}
+                                onClick={() =>
+                                    handleClickVulnerabilita(vulnerabilita.Id)
+                                }
                             >
-                                <h4
-                                    onClick={() =>
-                                        handleClickVulnerabilita(
-                                            vulnerabilita.Id
-                                        )
-                                    }
-                                >
-                                    {vulnerabilita.titolo}
-                                </h4>
+                                <h4>{vulnerabilita.titolo}</h4>
                                 <p>CWE: {vulnerabilita.cwe}</p>
                             </div>
                         ))}
@@ -248,10 +249,12 @@ function PatternPage() {
                     <div className="PbDAssocMap">
                         {data4 &&
                             data4.map((PbD) => (
-                                <div className="PbD-details" key={PbD.Id}>
-                                    <h4 onClick={() => handleClickPbD(PbD.Id)}>
-                                        {PbD.nome}
-                                    </h4>
+                                <div
+                                    className="PbD-details"
+                                    key={PbD.Id}
+                                    onClick={() => handleClickPbD(PbD.Id)}
+                                >
+                                    <h4>{PbD.nome}</h4>
                                 </div>
                             ))}
                     </div>
@@ -267,10 +270,12 @@ function PatternPage() {
                     <div className="MVCAssocMap">
                         {data6 &&
                             data6.map((MVC) => (
-                                <div className="MVC-details" key={MVC.Id}>
-                                    <h4 onClick={() => handleClickMVC(MVC.Id)}>
-                                        {MVC.nome}
-                                    </h4>
+                                <div
+                                    className="MVC-details"
+                                    key={MVC.Id}
+                                    onClick={() => handleClickMVC(MVC.Id)}
+                                >
+                                    <h4>{MVC.nome}</h4>
                                 </div>
                             ))}
                     </div>
@@ -286,9 +291,13 @@ function PatternPage() {
                     <div className="ISOAssocMap">
                         {data5 &&
                             data5.map((ISO) => (
-                                <div className="ISO-details" key={ISO.Id}>
-                                    <div onClick={() => handleClickISO(ISO.Id)}>
-                                        <h4>{ISO.Id}</h4>     
+                                <div
+                                    className="ISO-details"
+                                    key={ISO.Id}
+                                    onClick={() => handleClickISO(ISO.Id)}
+                                >
+                                    <div>
+                                        <h4>{ISO.Id}</h4>
                                         <h4>{ISO.nome}</h4>
                                     </div>
                                 </div>
@@ -306,7 +315,12 @@ function PatternPage() {
                     <div className="articoli-details">
                         {data7 &&
                             data7.map((articolo) => (
-                                <div key={articolo.Id} onClick={() => handleArticoloClick(articolo.Id)}>
+                                <div
+                                    key={articolo.Id}
+                                    onClick={() =>
+                                        handleArticoloClick(articolo.Id)
+                                    }
+                                >
                                     <h4>{articolo.titolo}</h4>
                                     <p>Articolo N°: {articolo.Id}</p>
                                 </div>
@@ -324,10 +338,12 @@ function PatternPage() {
                     <div className="OWASPAssocMap">
                         {data8 &&
                             data8.map((OWASP) => (
-                                <div className="OWASP-details" key={OWASP.Id}>
-                                    <h4 onClick={() => handleClickOWASP(OWASP.Id)}>
-                                        {OWASP.nome}
-                                    </h4>
+                                <div
+                                    className="OWASP-details"
+                                    key={OWASP.Id}
+                                    onClick={() => handleClickOWASP(OWASP.Id)}
+                                >
+                                    <h4>{OWASP.nome}</h4>
                                 </div>
                             ))}
                     </div>

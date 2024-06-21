@@ -64,7 +64,7 @@ function VulnerabilitaPage() {
                     {data && <h3>{data.titolo}</h3>}
                 </div>
                 {/* Articoli Associati */}
-                <div
+                {data2.lenght !== 0 && <div
                     className={`PatternAssociati ${
                         isExpanded ? "open" : "closed"
                     }`}
@@ -85,9 +85,9 @@ function VulnerabilitaPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* Articoli Associati */}
-                <div
+                {data3.lenght !== 0 && <div
                     className={`ArticoliAssociati ${
                         isArticoliExpanded ? "open" : "closed"
                     }`}
@@ -103,7 +103,7 @@ function VulnerabilitaPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

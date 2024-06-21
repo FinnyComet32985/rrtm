@@ -57,7 +57,6 @@
 }
 
 .PatternAssociati.open {
-    max-height: 500px; /* Altezza massima del contenuto espanso */
     opacity: 1;
 }
 

@@ -86,7 +86,7 @@ function ArticoloPage() {
                         </div>
                     </div>
                 )}
-                <div
+                {data2.lenght !== 0 && <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
                     }`}
@@ -107,9 +107,9 @@ function ArticoloPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* Strategie Associate */}
-                <div
+                {data3.lenght !== 0 && <div
                     className={`StrategieAssociate ${
                         isStrategiaExpanded ? "open" : "closed"
                     }`}
@@ -130,8 +130,9 @@ function ArticoloPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
-                <div
+                </div>}
+                {/* vulnerabilita associate*/}
+                {data4.lenght !== 0 && <div
                     className={`VulnerabilitaAssociate ${
                         isVulnerabilitaExpanded ? "open" : "closed"
                     }`}
@@ -151,7 +152,7 @@ function ArticoloPage() {
                                 <p>CWE: {vulnerabilita.cwe}</p>
                             </div>
                         ))}
-                </div>
+                </div>}
             </div>
         </div>
     );

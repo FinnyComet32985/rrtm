@@ -79,7 +79,7 @@ function PbDPage() {
             <div className="container">
                 <div className="PbD">{data && <h3>{data.nome}</h3>}</div>
                 {/* Pattern Associati */}
-                <div
+                {data2.lenght !== 0 && <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
                     }`}
@@ -100,9 +100,9 @@ function PbDPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* Strategie Associate */}
-                <div
+                {data3.lenght !== 0 && <div
                     className={`StrategieAssociate ${
                         isStrategiaExpanded ? "open" : "closed"
                     }`}
@@ -123,9 +123,9 @@ function PbDPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* ISO */}
-                <div
+                {data4.lenght !== 0 && <div
                     className={`ISOAssociate ${
                         isISOExpanded ? "open" : "closed"
                     }`}
@@ -144,7 +144,7 @@ function PbDPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

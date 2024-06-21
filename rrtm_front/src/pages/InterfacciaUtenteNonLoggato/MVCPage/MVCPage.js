@@ -60,7 +60,8 @@ function MVCPage() {
             <Header></Header>
             <div className="container">
                 <div className="MVC">{data && <h3>{data.nome}</h3>}</div>
-                <div
+                {/* pattern associati */}
+                {data2.lenght !== 0 && <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
                     }`}
@@ -76,9 +77,9 @@ function MVCPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* ISO Associate */}
-                <div
+                {data3.lenght !== 0 && <div
                     className={`ISOAssociati ${
                         ISOExpanded ? "open" : "closed"
                     }`}
@@ -100,7 +101,7 @@ function MVCPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

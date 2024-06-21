@@ -197,8 +197,7 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        this.strategie = [];
-                        reject();
+                        resolve();
                     }
                 }
             );
@@ -219,8 +218,7 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        this.vulnerabilita = [];
-                        reject();
+                        resolve();
                     }
                 }
             );
@@ -241,8 +239,7 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        this.articoli = [];
-                        reject();
+                        resolve();
                     }
                 }
             );
@@ -260,8 +257,7 @@ class Pattern {
                         this.principiPbD = results.map((row: any) => row.PbDId);
                         resolve();
                     } else {
-                        this.principiPbD = [];
-                        reject();
+                        resolve();
                     }
                 }
             );
@@ -281,8 +277,7 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        this.collocazioneMVC = [];
-                        reject();
+                        resolve();
                     }
                 }
             );
@@ -300,8 +295,7 @@ class Pattern {
                         this.faseISO = results.map((row: any) => row.IsoId);
                         resolve();
                     } else {
-                        this.faseISO = [];
-                        reject();
+                        resolve();
                     }
                 }
             );
@@ -321,8 +315,7 @@ class Pattern {
                         );
                         resolve();
                     } else {
-                        this.categoriaOWASP = [];
-                        reject();
+                        resolve();
                     }
                 }
             );

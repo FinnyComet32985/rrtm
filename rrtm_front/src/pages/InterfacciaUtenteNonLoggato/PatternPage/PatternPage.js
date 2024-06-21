@@ -191,7 +191,7 @@ function PatternPage() {
                 )}
 
                 {/* Strategie Associate */}
-                <div
+                {data2.length !== 0  && <div
                     className={`StrategieAssociate ${
                         strategieExpanded ? "open" : "closed"
                     }`}
@@ -212,10 +212,10 @@ function PatternPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
 
                 {/* Vulnerabilità Associate */}
-                <div
+                {data3.length !== 0  && <div
                     className={`VulnerabilitaAssociate ${
                         vulnerabilitaExpanded ? "open" : "closed"
                     }`}
@@ -236,10 +236,9 @@ function PatternPage() {
                                 <p>CWE: {vulnerabilita.cwe}</p>
                             </div>
                         ))}
-                </div>
-
+                </div>}
                 {/* PbD Associate */}
-                <div
+                {data4.length !== 0 && <div
                     className={`PbDAssociati ${
                         PbDExpanded ? "open" : "closed"
                     }`}
@@ -258,9 +257,9 @@ function PatternPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* MVC Associati */}
-                <div
+                {data5.length !== 0  && <div
                     className={`MVCAssociati ${
                         MVCExpanded ? "open" : "closed"
                     }`}
@@ -279,9 +278,9 @@ function PatternPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* ISO Associate */}
-                <div
+                {data6.length !== 0  && <div
                     className={`ISOAssociati ${
                         ISOExpanded ? "open" : "closed"
                     }`}
@@ -303,9 +302,9 @@ function PatternPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* Articoli Associati */}
-                <div
+                {data7.length !== 0  && <div
                     className={`ArticoliAssociati ${
                         isArticoliExpanded ? "open" : "closed"
                     }`}
@@ -326,9 +325,9 @@ function PatternPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* OWASP Associate */}
-                <div
+                {data8.length !== 0  && <div
                     className={`OWASPAssociate ${
                         OWASPExpanded ? "open" : "closed"
                     }`}
@@ -347,7 +346,7 @@ function PatternPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

@@ -80,7 +80,7 @@ function ISOPage() {
                     {data && <h3>{data.nome}</h3>}
                 </div>
                 {/* Pattern Associati */}
-                <div
+                {data2.lenght !== 0 && <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
                     }`}
@@ -101,9 +101,9 @@ function ISOPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* MVC Associati */}
-                <div
+                {data3.lenght !== 0 && <div
                     className={`MVCAssociati ${
                         MVCExpanded ? "open" : "closed"
                     }`}
@@ -122,9 +122,9 @@ function ISOPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* PbD Associate */}
-                <div
+                {data4.lenght !== 0 && <div
                     className={`PbDAssociati ${
                         PbDExpanded ? "open" : "closed"
                     }`}
@@ -143,7 +143,7 @@ function ISOPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

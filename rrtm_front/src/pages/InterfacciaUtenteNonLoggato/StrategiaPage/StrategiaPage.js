@@ -79,7 +79,7 @@ function StrategiaPage() {
             <div className="container">
                 <div className="Strategia">{data && <h3>{data.nome}</h3>}</div>
                 {/* Pattern Associati */}
-                <div
+                {data2.lenght !== 0 && <div
                     className={`PatternAssociati ${
                         isPatternExpanded ? "open" : "closed"
                     }`}
@@ -100,9 +100,9 @@ function StrategiaPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* Articoli Associati */}
-                <div
+                {data3.lenght !== 0 && <div
                     className={`ArticoliAssociati ${
                         isArticoliExpanded ? "open" : "closed"
                     }`}
@@ -123,9 +123,9 @@ function StrategiaPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
                 {/* PbD Associate */}
-                <div
+                {data4.lenght !== 0 && <div
                     className={`PbDAssociati ${
                         PbDExpanded ? "open" : "closed"
                     }`}
@@ -144,7 +144,7 @@ function StrategiaPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

@@ -7,6 +7,9 @@ const router = express.Router();
 router.post("/modificaPattern", verificaTokenAmm, async (req, res) => {
     const { Id, titolo, sommario, contesto, problema, soluzione, esempio } =
         req.body;
+    if (!Id) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.modificaPattern(
         Id,
         titolo,
@@ -20,10 +23,9 @@ router.post("/modificaPattern", verificaTokenAmm, async (req, res) => {
 });
 
 router.post("/inserisciPattern", verificaTokenAmm, async (req, res) => {
-    const { Id, titolo, sommario, contesto, problema, soluzione, esempio } =
+    const { titolo, sommario, contesto, problema, soluzione, esempio } =
         req.body;
     const result = await InterfacciaModifica.inserisciPattern(
-        Id,
         titolo,
         sommario,
         contesto,
@@ -36,6 +38,9 @@ router.post("/inserisciPattern", verificaTokenAmm, async (req, res) => {
 
 router.delete("/eliminaPattern/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
+    if (!Id) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.eliminaPattern(parseInt(Id));
     res.json(result);
 });
@@ -43,12 +48,18 @@ router.delete("/eliminaPattern/:Id", verificaTokenAmm, async (req, res) => {
 // Articolo
 router.post("/modificaArticolo", verificaTokenAmm, async (req, res) => {
     const { Id, titolo } = req.body;
+    if (!Id) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.modificaArticolo(Id, titolo);
     res.json(result);
 });
 
 router.post("/inserisciArticolo", verificaTokenAmm, async (req, res) => {
     const { Id, titolo } = req.body;
+    if (!Id) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.inserisciArticolo(Id, titolo);
     res.json(result);
 });
@@ -66,8 +77,8 @@ router.post("/modificaOWASP", verificaTokenAmm, async (req, res) => {
 });
 
 router.post("/inserisciOWASP", verificaTokenAmm, async (req, res) => {
-    const { Id, nome } = req.body;
-    const result = await InterfacciaModifica.inserisciOWASP(Id, nome);
+    const { nome } = req.body;
+    const result = await InterfacciaModifica.inserisciOWASP(nome);
     res.json(result);
 });
 
@@ -85,6 +96,9 @@ router.post("/modificaISO", verificaTokenAmm, async (req, res) => {
 
 router.post("/inserisciISO", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
+    if (!Id) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.inserisciISO(Id, nome);
     res.json(result);
 });
@@ -102,8 +116,8 @@ router.post("/modificaPbD", verificaTokenAmm, async (req, res) => {
 });
 
 router.post("/inserisciPbD", verificaTokenAmm, async (req, res) => {
-    const { Id, nome } = req.body;
-    const result = await InterfacciaModifica.inserisciPbD(Id, nome);
+    const { nome } = req.body;
+    const result = await InterfacciaModifica.inserisciPbD(nome);
     res.json(result);
 });
 
@@ -121,8 +135,8 @@ router.post("/modificaStrategia", verificaTokenAmm, async (req, res) => {
 });
 
 router.post("/inserisciStrategia", verificaTokenAmm, async (req, res) => {
-    const { Id, nome } = req.body;
-    const result = await InterfacciaModifica.inserisciStrategia(Id, nome);
+    const { nome } = req.body;
+    const result = await InterfacciaModifica.inserisciStrategia(nome);
     res.json(result);
 });
 
@@ -145,9 +159,8 @@ router.post("/modificaVulnerabilita", verificaTokenAmm, async (req, res) => {
 });
 
 router.post("/inserisciVulnerabilita", verificaTokenAmm, async (req, res) => {
-    const { Id, titolo, cwe, stato } = req.body;
+    const { titolo, cwe, stato } = req.body;
     const result = await InterfacciaModifica.inserisciVulnerabilita(
-        Id,
         titolo,
         cwe,
         stato
@@ -191,4 +204,19 @@ router.get(
         }
     }
 );
+
+router.post("/inserisciNotifica", verificaTokenAmm, async (req, res) => {
+    try {
+        const { titolo, oggetto, testo } = req.body;
+        const not = await InterfacciaModifica.inserisciNotifica(
+            titolo,
+            oggetto,
+            testo
+        );
+        res.json(not);
+    } catch (error) {
+        console.error("Error sending notification:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router;

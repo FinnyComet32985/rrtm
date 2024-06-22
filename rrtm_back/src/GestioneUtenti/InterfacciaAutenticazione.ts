@@ -106,21 +106,24 @@ class InterfacciaAutenticazione {
         password: string,
         email: string,
         nome: string,
-        cognome: string
+        cognome: string,
+        notPref: boolean
     ): Promise<
         | { success: boolean; token?: string; tipo: string }
         | { success: boolean; error?: string }
     > {
         const hashedPassword = await bcrypt.hash(password, 10); // Genera la password hashata
-
+        if (!notPref) {
+            notPref = false;
+        }
         const query = `
-            INSERT INTO Utente (username, password, email, nome, cognome)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO Utente (username, password, email, nome, cognome, notPref)
+            VALUES (?, ?, ?, ?, ?, ?)
         `;
         return new Promise((resolve, reject) => {
             connection.query(
                 query,
-                [username, hashedPassword, email, nome, cognome],
+                [username, hashedPassword, email, nome, cognome, notPref],
                 async (err: mysql.MysqlError | null, results: any) => {
                     if (err) {
                         return reject({ success: false, error: err.message });

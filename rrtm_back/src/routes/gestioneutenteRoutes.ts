@@ -38,7 +38,7 @@ router.post("/login", async (req: Request, res: Response) => {
 });
 
 router.post("/creaUtente", async (req: Request, res: Response) => {
-    const { username, password, email, nome, cognome } = req.body;
+    const { username, password, email, nome, cognome, notPref } = req.body;
 
     if (!username || !password || !email) {
         return res.status(400).json({ message: "Missing required fields" });
@@ -50,7 +50,8 @@ router.post("/creaUtente", async (req: Request, res: Response) => {
             password,
             email,
             nome,
-            cognome
+            cognome,
+            notPref
         );
 
         if (userCreated.success) {

@@ -14,7 +14,8 @@ import InserimentoFeedbackPage from "./pages/InterfacciaUtenteLoggato/Inseriment
 import InserimentoVulnerabilitaPage from './pages/InterfacciaUtenteLoggato/InserimentoVulnerabilitaPage';
 import VulnerabilitaSegnalatePage from './pages/InterfacciaAministratore/VulnerabilitaSegnalatePage';
 import VisualizzaFeedbackPage from './pages/InterfacciaAministratore/VisualizzaFeedbackPage';
-
+import NotifichePage from "./pages/InterfacciaUtenteLoggato/NotifichePage";
+import InserimentoNotifichePage from "./pages/InterfacciaAministratore/InserisciNotifichePage"
 function App() {
   return (
     <Router>
@@ -33,6 +34,8 @@ function App() {
         <Route path='/inserimentoVulnerabilitaUt' element={<InserimentoVulnerabilitaPage/>}/>
         <Route path='/visualizzaVulnerabilitaUt' element={<VulnerabilitaSegnalatePage/>}/>
         <Route path='/visualizzaFeedback' element={<VisualizzaFeedbackPage/>}/>
+        <Route path='/NotifichePage' element={<NotifichePage/>}/>
+        <Route path='/InserimentoNotifichePage' element={<InserimentoNotifichePage/>}/>
       </Routes>
     </Router>
   );

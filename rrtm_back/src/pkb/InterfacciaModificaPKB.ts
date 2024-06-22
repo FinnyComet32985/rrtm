@@ -30,7 +30,6 @@ class InterfacciaModificaPKB {
         return pattModificato.updatePatternDB();
     }
     public static async insertPattern(
-        Id: number,
         titolo: string,
         sommario: string,
         contesto: string,
@@ -39,7 +38,7 @@ class InterfacciaModificaPKB {
         esempio: string
     ): Promise<boolean> {
         const pattInserito = new Pattern(
-            Id,
+            (await Pattern.getIdMax()) + 1,
             titolo,
             sommario,
             contesto,
@@ -80,11 +79,11 @@ class InterfacciaModificaPKB {
         const owaspModificato = new CategoriaOWASP(Id, nome);
         return owaspModificato.updateOWASPDB();
     }
-    public static async insertOWASP(
-        Id: number,
-        nome: string
-    ): Promise<boolean> {
-        const owaspInserito = new CategoriaOWASP(Id, nome);
+    public static async insertOWASP(nome: string): Promise<boolean> {
+        const owaspInserito = new CategoriaOWASP(
+            (await CategoriaOWASP.getIdMax()) + 1,
+            nome
+        );
         return owaspInserito.insertOWASPDB();
     }
     public static async deleteOWASP(Id: number): Promise<boolean> {
@@ -109,8 +108,11 @@ class InterfacciaModificaPKB {
         const Modificato = new PrincipioPbD(Id, nome);
         return Modificato.updatePbDDB();
     }
-    public static async insertPbD(Id: number, nome: string): Promise<boolean> {
-        const Inserito = new PrincipioPbD(Id, nome);
+    public static async insertPbD(nome: string): Promise<boolean> {
+        const Inserito = new PrincipioPbD(
+            (await PrincipioPbD.getIdMax()) + 1,
+            nome
+        );
         return Inserito.insertPbDDB();
     }
     public static async deletePbD(Id: number): Promise<boolean> {
@@ -125,11 +127,8 @@ class InterfacciaModificaPKB {
         const Modificato = new Strategia(Id, nome);
         return Modificato.updateStrategiaDB();
     }
-    public static async insertStrategia(
-        Id: number,
-        nome: string
-    ): Promise<boolean> {
-        const Inserito = new Strategia(Id, nome);
+    public static async insertStrategia(nome: string): Promise<boolean> {
+        const Inserito = new Strategia((await Strategia.getIdMax()) + 1, nome);
         return Inserito.insertStrategiaDB();
     }
     public static async deleteStrategia(Id: number): Promise<boolean> {
@@ -147,12 +146,16 @@ class InterfacciaModificaPKB {
         return Modificato.updateVulnerabilitaDB();
     }
     public static async insertVulnerabilita(
-        Id: number,
         titolo: string,
         cwe: number,
         statoVul: string
     ): Promise<boolean> {
-        const Inserito = new Vulnerabilita(Id, titolo, statoVul, cwe);
+        const Inserito = new Vulnerabilita(
+            (await Vulnerabilita.getIdMax()) + 1,
+            titolo,
+            statoVul,
+            cwe
+        );
         return Inserito.insertVulnerabilitaDB();
     }
     public static async deleteVulnerabilita(Id: number): Promise<boolean> {

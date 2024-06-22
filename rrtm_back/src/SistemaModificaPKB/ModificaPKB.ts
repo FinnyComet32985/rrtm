@@ -90,7 +90,6 @@ class ModificaPKB {
     }
     public async insertPattern(): Promise<boolean> {
         return InterfacciaModificaPKB.insertPattern(
-            this.Id,
             this.titolo,
             this.sommario,
             this.contesto,
@@ -119,7 +118,7 @@ class ModificaPKB {
         return InterfacciaModificaPKB.updateOWASP(this.Id, this.nome);
     }
     public async insertOWASP(): Promise<boolean> {
-        return InterfacciaModificaPKB.insertOWASP(this.Id, this.nome);
+        return InterfacciaModificaPKB.insertOWASP(this.nome);
     }
     public async deleteOWASP(): Promise<boolean> {
         return InterfacciaModificaPKB.deleteOWASP(this.Id);
@@ -141,7 +140,7 @@ class ModificaPKB {
         return InterfacciaModificaPKB.updatePbD(this.Id, this.nome);
     }
     public async insertPbD(): Promise<boolean> {
-        return InterfacciaModificaPKB.insertPbD(this.Id, this.nome);
+        return InterfacciaModificaPKB.insertPbD(this.nome);
     }
     public async deletePbD(): Promise<boolean> {
         return InterfacciaModificaPKB.deletePbD(this.Id);
@@ -152,7 +151,7 @@ class ModificaPKB {
         return InterfacciaModificaPKB.updateStrategia(this.Id, this.nome);
     }
     public async insertStrategia(): Promise<boolean> {
-        return InterfacciaModificaPKB.insertStrategia(this.Id, this.nome);
+        return InterfacciaModificaPKB.insertStrategia(this.nome);
     }
     public async deleteStrategia(): Promise<boolean> {
         return InterfacciaModificaPKB.deleteStrategia(this.Id);
@@ -169,7 +168,6 @@ class ModificaPKB {
     }
     public async insertVulnerabilita(): Promise<boolean> {
         return InterfacciaModificaPKB.insertVulnerabilita(
-            this.Id,
             this.titolo,
             this.cwe,
             this.statoVul

@@ -62,7 +62,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    cursor: pointer; 
 }
 
 /* Strategie */
@@ -118,7 +117,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    cursor: pointer; 
 }
 .buttonDivVulnerabilita {
     display: flex;

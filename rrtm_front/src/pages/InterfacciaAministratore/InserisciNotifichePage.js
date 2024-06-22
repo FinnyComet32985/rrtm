@@ -43,7 +43,7 @@ function InserisciNotifichePage() {
             const result = await response.text();
             if (result === "true") {
                 setButtonStatus('success');
-                setFormData({ titolo: "", descrizione: "" }); // Reset form data
+                setFormData({ titolo: "", oggetto: "", testo: "" }); // Reset form data
             } else {
                 setButtonStatus('error');
             }

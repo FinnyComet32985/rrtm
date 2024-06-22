@@ -227,6 +227,7 @@ class InterfacciaModifica {
     ) {
         const idMax = await Notifica.getIdMax();
         const not = new Notifica(idMax + 1, titolo, oggetto, testo);
+        not.insertDB();
         return not.send();
     }
 }

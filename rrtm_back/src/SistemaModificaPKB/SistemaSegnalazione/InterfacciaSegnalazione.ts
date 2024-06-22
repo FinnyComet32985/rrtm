@@ -2,6 +2,7 @@ import connection from "../../index";
 import * as mysql from "mysql";
 import VulnerabilitaSegnalata from "./VulnerabilitaSegnalata";
 import Feedback from "./Feedback";
+import Notifica from "../SistemaNotifica/Notifica";
 
 class InterfacciaSegnalazione {
     public static async segnalaVulnerabilita(
@@ -99,6 +100,34 @@ class InterfacciaSegnalazione {
         } catch (error: any) {
             throw new Error(`Error inserting feedback: ${error.message}`);
         }
+    }
+
+    public static async showNotifiche(): Promise<Notifica[]> {
+        return new Promise(async (resolve, reject) => {
+            const query = "SELECT Id FROM notifica";
+            connection.query(
+                query,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        try {
+                            const notificaIds = results.map(
+                                (row: any) => row.Id
+                            );
+                            const promises = notificaIds.map((id: number) =>
+                                Notifica.getNotificaDB(id)
+                            );
+                            const notifiche = await Promise.all(promises);
+                            resolve(notifiche);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    } else {
+                        reject(new Error("No articoli found"));
+                    }
+                }
+            );
+        });
     }
 }
 export default InterfacciaSegnalazione;

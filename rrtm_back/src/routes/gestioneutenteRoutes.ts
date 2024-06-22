@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import InterfacciaAutenticazione from "../GestioneUtenti/InterfacciaAutenticazione";
-import { verificaToken } from "../Auth/Auth";
+import { verificaToken, verificaTokenUt } from "../Auth/Auth";
+import InterfacciaGestioneUtente from "../GestioneUtenti/InterfacciaGestioneUtente";
 
 const router = express.Router();
 
@@ -160,4 +161,42 @@ router.post("/logout", verificaToken, async (req: Request, res: Response) => {
     }
 });
 
+router.post(
+    "/aggiungiConsenso",
+    verificaTokenUt,
+    async (req: Request, res: Response) => {
+        const authHeader = req.headers["authorization"];
+        const token = authHeader && authHeader.split(" ")[1];
+        if (!token) {
+            return res.status(400).json({ message: "Missing token" });
+        } else {
+            const result = InterfacciaGestioneUtente.aggiungiConsenso(token);
+            if (!result) {
+                return res.status(500).json({ message: "unnkown error" });
+            }
+            return res
+                .status(200)
+                .json({ message: "consenso aggiunto con successo" });
+        }
+    }
+);
+router.post(
+    "/rimuoviConsenso",
+    verificaTokenUt,
+    async (req: Request, res: Response) => {
+        const authHeader = req.headers["authorization"];
+        const token = authHeader && authHeader.split(" ")[1];
+        if (!token) {
+            return res.status(400).json({ message: "Missing token" });
+        } else {
+            const result = InterfacciaGestioneUtente.rimuoviConsenso(token);
+            if (!result) {
+                return res.status(500).json({ message: "unnkown error" });
+            }
+            return res
+                .status(200)
+                .json({ message: "consenso rimosso con successo" });
+        }
+    }
+);
 export default router;

@@ -11,14 +11,10 @@
     align-items: start;
     background-color: #131921;
     border-radius: 2vh;
-}
-.visioneFeedback {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    position: relative;
     top: 2vh;
+    width: 100%;
 }
+
 .visioneFeedback > button {
     height: 45.6px;
     width: 20%;

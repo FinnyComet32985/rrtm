@@ -51,5 +51,8 @@ class Utente {
             );
         });
     }
+    public getUsername() {
+        return this.username;
+    }
 }
 export default Utente;

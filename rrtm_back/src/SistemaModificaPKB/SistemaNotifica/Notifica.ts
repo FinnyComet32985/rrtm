@@ -13,9 +13,8 @@ class Notifica {
         this.titolo = titolo;
         this.oggetto = oggetto;
         this.testo = testo;
-        this.insertDB();
     }
-    private insertDB(): void {
+    public async insertDB(): Promise<void> {
         const query =
             "INSERT INTO notifica (Id, titolo, oggetto, testo) VALUES (?, ?, ?, ?)";
         connection.query(

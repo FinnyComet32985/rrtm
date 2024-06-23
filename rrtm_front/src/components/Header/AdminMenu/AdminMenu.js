@@ -48,6 +48,9 @@ function AdminMenu() {
     const handleFeedback = () => {
         navigate("/visualizzaFeedback");
     }
+    const handleModifica = () => {
+        navigate("/ModificaPKBPage");
+    }
 
     return (
         <div>
@@ -61,7 +64,7 @@ function AdminMenu() {
                 <div id="profileMenuAd" className={isMenuOpen ? "open" : ""}>
                     <h3 className="username">Ciao, {user?.username}!</h3>
                     <hr className="hr1" />
-                    <button id="modificaPKB">
+                    <button id="modificaPKB" onClick={handleModifica}>
                         <ModifyIcon className="modificaPKBIcon"></ModifyIcon>
                         <h3>Modifica Pkb</h3>
                     </button>

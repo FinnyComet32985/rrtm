@@ -16,6 +16,7 @@ import VulnerabilitaSegnalatePage from './pages/InterfacciaAministratore/Vulnera
 import VisualizzaFeedbackPage from './pages/InterfacciaAministratore/VisualizzaFeedbackPage';
 import NotifichePage from "./pages/InterfacciaUtenteLoggato/NotifichePage";
 import InserimentoNotifichePage from "./pages/InterfacciaAministratore/InserisciNotifichePage"
+import ModificaPKBPage from './pages/InterfacciaAministratore/ModificaPKBPage';
 function App() {
   return (
     <Router>
@@ -36,6 +37,7 @@ function App() {
         <Route path='/visualizzaFeedback' element={<VisualizzaFeedbackPage/>}/>
         <Route path='/NotifichePage' element={<NotifichePage/>}/>
         <Route path='/InserimentoNotifichePage' element={<InserimentoNotifichePage/>}/>
+        <Route path='/ModificaPKBPage' element={<ModificaPKBPage/>}/>
       </Routes>
     </Router>
   );

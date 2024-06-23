@@ -11,11 +11,6 @@ function NotifichePage() {
     const [consenso, setConsenso] = useState(storedNotPref === "1");
 const navigate = useNavigate();
 const {logout} = useAuth();
-    const handleUnauthorized = () => {
-        alert("C'è stato un problema di autenticazione. Riesegui il login.");
-        logout();
-        navigate("/login");
-    };
 
     const handleCheckboxChange = async (e) => {
         const isChecked = e.target.checked;
@@ -49,6 +44,11 @@ const {logout} = useAuth();
     };
 
     const getNotifiche = useCallback(async () => {
+        const handleUnauthorized = () => {
+            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            logout();
+            navigate("/login");
+        };
         try {
             const response = await fetch(
                 `http://localhost:1337/api/showNotifiche`,
@@ -71,7 +71,7 @@ const {logout} = useAuth();
         } catch (error) {
             console.error("Errore durante il recupero delle notifiche:", error);
         }
-    }, [token]);
+    }, [token, navigate, logout]);
 
     useEffect(() => {
         getNotifiche();

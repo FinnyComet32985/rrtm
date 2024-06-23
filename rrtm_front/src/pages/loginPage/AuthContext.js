@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
         const username = localStorage.getItem("username");
         const tipo = localStorage.getItem("tipo");
         if (tipo==='utente') {
-            const notifiche = localStorage.getItem("notifiche");
+            localStorage.getItem("notifiche");
         }
 
         if (token && username && tipo) {
@@ -39,7 +39,6 @@ export function AuthProvider({ children }) {
 
             const data = await response.json();
             const { token, tipo, notifiche } = data;
-            console.log(notifiche);
             const isAdminUser = tipo === "amministratore";
             localStorage.setItem("token", token);
             localStorage.setItem("username", username);

@@ -8,13 +8,13 @@ function VisualizzaFeedbackPage() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const {logout} = useAuth();
-    const handleUnauthorized = () => {
-        alert("C'è stato un problema di autenticazione. Riesegui il login.");
-        logout();
-        navigate("/login");
-    };
 
     const getFeedback = useCallback(async () => {
+        const handleUnauthorized = () => {
+            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            logout();
+            navigate("/login");
+        };
         try {
             const response = await fetch(
                 `http://localhost:1337/api/showFeedback`,
@@ -37,7 +37,7 @@ function VisualizzaFeedbackPage() {
         } catch (error) {
             console.error("Errore durante il recupero dei feedback:", error);
         }
-    }, [token]);
+    }, [token, logout, navigate]);
 
     useEffect(() => {
         getFeedback();

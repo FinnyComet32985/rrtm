@@ -10,12 +10,13 @@ function VulnerabilitaSegnalatePage() {
 const navigate = useNavigate();
 const {logout} = useAuth();
 
-    const handleUnauthorized = () => {
-        alert("C'è stato un problema di autenticazione. Riesegui il login.");
-        logout();
-        navigate("/login");
-    };
+    
     const getVulnerabilita = useCallback(async () => {
+        const handleUnauthorized = () => {
+            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            logout();
+            navigate("/login");
+        };
         try {
             const response = await fetch(
                 `http://localhost:1337/api/showVulnerabilitaSegnalate`,
@@ -38,7 +39,7 @@ const {logout} = useAuth();
         } catch (error) {
             console.error("Errore durante il recupero delle vulnerabilita:", error);
         }
-    }, [token]);
+    }, [token, navigate, logout]);
 
     useEffect(() => {
         getVulnerabilita();

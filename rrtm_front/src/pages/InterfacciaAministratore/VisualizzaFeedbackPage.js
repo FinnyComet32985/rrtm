@@ -1,10 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./VisualizzaFeedbackPage.css";
-
+import { useAuth } from "../loginPage/AuthContext";
+import { useNavigate } from "react-router-dom";
 function VisualizzaFeedbackPage() {
     const [feedbacks, setFeedbacks] = useState([]);
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+    const {logout} = useAuth();
+    const handleUnauthorized = () => {
+        alert("C'è stato un problema di autenticazione. Riesegui il login.");
+        logout();
+        navigate("/login");
+    };
 
     const getFeedback = useCallback(async () => {
         try {
@@ -17,6 +25,10 @@ function VisualizzaFeedbackPage() {
                     },
                 }
             );
+            if (response.status === 401) {
+                handleUnauthorized();
+                return null;
+            }
             if (!response.ok) {
                 throw new Error("Errore nella risposta della rete");
             }

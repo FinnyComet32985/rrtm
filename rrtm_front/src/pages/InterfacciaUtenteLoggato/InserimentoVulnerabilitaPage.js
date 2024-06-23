@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./InserimentoVulnerabilitaPage.css";
+import { useAuth } from "../loginPage/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function InserimentoVulnerabilitaPage() {
     const [vulnerabilities, setVulnerabilities] = useState([]);
@@ -10,6 +12,13 @@ function InserimentoVulnerabilitaPage() {
     const [errors, setErrors] = useState({ titolo: false}); // Stato degli errori sugli input
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
+const navigate = useNavigate();
+const {logout} = useAuth();
+    const handleUnauthorized = () => {
+        alert("C'è stato un problema di autenticazione. Riesegui il login.");
+        logout();
+        navigate("/login");
+    };
 
     const getVulnerabilita = useCallback(async () => {
         try {
@@ -22,6 +31,10 @@ function InserimentoVulnerabilitaPage() {
                     },
                 }
             );
+            if (response.status === 401) {
+                handleUnauthorized();
+                return null;
+            }
             if (!response.ok) {
                 throw new Error("Errore nella risposta della rete");
             }

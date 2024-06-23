@@ -14,7 +14,7 @@ class InterfacciaAutenticazione {
     public static async login(
         username: string,
         password: string
-    ): Promise<{ token: string; tipo: string } | null> {
+    ): Promise<{ token: string; tipo: string; notifiche?: boolean } | null> {
         const query = `
             SELECT username, password, 'utente' as tipo FROM Utente WHERE username=?
             UNION
@@ -51,10 +51,12 @@ class InterfacciaAutenticazione {
                                 user.username,
                                 password
                             );
+                            await utenteInstance.loadAdditionalData();
                             this.utentiAutenticati.push(utenteInstance);
                             resolve({
                                 token: utenteInstance.getToken(),
                                 tipo: "utente",
+                                notifiche: utenteInstance.getNotifiche(),
                             });
                         } else if (user.tipo === "amministratore") {
                             const ammInstance = new Amministratore(
@@ -62,6 +64,7 @@ class InterfacciaAutenticazione {
                                 user.username,
                                 password
                             );
+                            await ammInstance.loadAdditionalData();
                             this.amministratoriAutenticati.push(ammInstance);
                             resolve({
                                 token: ammInstance.getToken(),

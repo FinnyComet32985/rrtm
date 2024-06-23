@@ -1,6 +1,8 @@
 import Header from "../../components/Header/Header";
 import "./InserisciNotifichePage.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../loginPage/AuthContext";
 
 
 function InserisciNotifichePage() {
@@ -8,6 +10,14 @@ function InserisciNotifichePage() {
     const [buttonStatus, setButtonStatus] = useState(null); 
     const [formData, setFormData] = useState({ titolo: "", oggetto: "", testo: "" });
     const [errors, setErrors] = useState({ titolo: false, descrizione: false });
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+    const handleUnauthorized = () => {
+        alert("C'è stato un problema di autenticazione. Riesegui il login.");
+        logout();
+        navigate("/login");
+    };
+
 
     const handleInserisci = async (e) => {
         e.preventDefault();
@@ -41,6 +51,10 @@ function InserisciNotifichePage() {
                 body: JSON.stringify({ ...formData }),
             });
             const result = await response.text();
+            if (result.status === 401) {
+                handleUnauthorized();
+                return null;
+            }
             if (result === "true") {
                 setButtonStatus('success');
                 setFormData({ titolo: "", oggetto: "", testo: "" }); // Reset form data
@@ -67,7 +81,8 @@ function InserisciNotifichePage() {
 
 
     return (
-        <div className="conteiner">
+        <div className="container">
+<Header/>
             <form className="inserisciNotifica" onSubmit={handleInserisci}>
                 <h1>Invia Notifica</h1>
                 <div>
@@ -79,7 +94,7 @@ function InserisciNotifichePage() {
                         value={formData.titolo}
                         onChange={handleChange}
                         className={errors.titolo ? "inputError" : ""}
-                    />
+                        />
                 </div>
                 <div>
                     <label htmlFor="oggetto">Oggetto</label>
@@ -90,7 +105,7 @@ function InserisciNotifichePage() {
                         value={formData.oggetto}
                         onChange={handleChange}
                         className={errors.oggetto ? "inputError" : ""}
-                    />
+                        />
                     
                 </div>
                 <div>
@@ -102,18 +117,18 @@ function InserisciNotifichePage() {
                         value={formData.testo}
                         onChange={handleChange}
                         className={errors.testo ? "inputError" : ""}
-                    />
+                        />
                 </div>
                 <button
                     type="submit"
                     className={
                         buttonStatus === "success"
-                            ? "success"
-                            : buttonStatus === "error"
-                            ? "error"
-                            : "buttonInsertFeedback"
+                        ? "success"
+                        : buttonStatus === "error"
+                        ? "error"
+                        : "buttonInsertFeedback"
                     }
-                >
+                    >
                     Inserisci
                 </button>
             </form>

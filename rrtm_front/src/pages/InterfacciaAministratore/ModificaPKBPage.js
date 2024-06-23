@@ -7,8 +7,73 @@ import "./ModificaPKBPage.css";
 function ModificaPKBPage() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    const { user, logout } = useAuth();
+    const { logout } = useAuth();
     const [notify, setNotify] = useState(false);
+    const [buttonStatus, setButtonStatus] = useState({
+        // Pattern
+        modificaPattern: "wating",
+        inserisciPattern: "wating",
+        eliminaPattern: "wating",
+        // Strategia
+        modificaStrategia: "wating",
+        inserisciStrategia: "wating",
+        eliminaStrategia: "wating",
+        // Vulnerabilita
+        modificaVulnerabilita: "wating",
+        inserisciVulnerabilita: "wating",
+        eliminaVulnerabilita: "wating",
+        // Articolo
+        modificaArticolo: "wating",
+        inserisciArticolo: "wating",
+        eliminaArticolo: "wating",
+        // PbD
+        modificaPbD: "wating",
+        inserisciPbD: "wating",
+        eliminaPbD: "wating",
+        // ISO
+        modificaISO: "wating",
+        inserisciISO: "wating",
+        eliminaISO: "wating",
+        // OWASP
+        modificaOWASP: "wating",
+        inserisciOWASP: "wating",
+        eliminaOWASP: "wating",
+    });
+
+    const resetButtonStatus = () => {
+        setTimeout(() => {
+            setButtonStatus({
+                // Pattern
+                modificaPattern: "wating",
+                inserisciPattern: "wating",
+                eliminaPattern: "wating",
+                // Strategia
+                modificaStrategia: "wating",
+                inserisciStrategia: "wating",
+                eliminaStrategia: "wating",
+                // Vulnerabilita
+                modificaVulnerabilita: "wating",
+                inserisciVulnerabilita: "wating",
+                eliminaVulnerabilita: "wating",
+                // Articolo
+                modificaArticolo: "wating",
+                inserisciArticolo: "wating",
+                eliminaArticolo: "wating",
+                // PbD
+                modificaPbD: "wating",
+                inserisciPbD: "wating",
+                eliminaPbD: "wating",
+                // ISO
+                modificaISO: "wating",
+                inserisciISO: "wating",
+                eliminaISO: "wating",
+                // OWASP
+                modificaOWASP: "wating",
+                inserisciOWASP: "wating",
+                eliminaOWASP: "wating",
+            });
+        }, 2000); // Torna allo stato di partenza dopo 3 secondi
+    };
 
     // Pattern
     const modificaPatternForm = useRef(null);
@@ -70,10 +135,31 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaPattern: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaPattern: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaPattern: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleInserisciPatternSubmit = async (event) => {
@@ -95,10 +181,31 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                insersciPattern: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                insersciPattern: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                insersciPattern: "error",
+            });
+        }
+        resetButtonStatus();
+        
         return jsonResponse;
     };
     const handleEliminaPatternSubmit = async (event) => {
@@ -119,10 +226,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaPattern: "error",
+            });
+            resetButtonStatus();
+            return null;
+        } 
         const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaPattern: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaPattern: "error",
+            });
         }
+        resetButtonStatus();
         return jsonResponse;
     };
 
@@ -147,10 +274,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaStrategia: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaStrategia: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaStrategia: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleInserisciStrategiaSubmit = async (event) => {
@@ -173,10 +320,31 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciStrategia: "error",
+            });
+            resetButtonStatus();
+            return null;
+
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciStrategia: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciStrategia: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleEliminaStrategiaSubmit = async (event) => {
@@ -197,10 +365,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaStrategia: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaStrategia: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaStrategia: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
 
@@ -225,10 +413,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaVulnerabilita: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaVulnerabilita: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaVulnerabilita: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleInserisciVulnerabilitaSubmit = async (event) => {
@@ -251,10 +459,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciVulnerabilita: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciVulnerabilita: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciVulnerabilita: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleEliminaVulnerabilitaSubmit = async (event) => {
@@ -275,10 +503,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaVulnerabilita: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaVulnerabilita: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaVulnerabilita: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
 
@@ -303,10 +551,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaArticolo: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaArticolo: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaArticolo: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleInserisciArticoloSubmit = async (event) => {
@@ -329,10 +597,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciArticolo: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciArticolo: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciArticolo: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleEliminaArticoloSubmit = async (event) => {
@@ -353,10 +641,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaArticolo: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaArticolo: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaArticolo: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
 
@@ -378,10 +686,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaPbD: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaPbD: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaPbD: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleInserisciPbDSubmit = async (event) => {
@@ -401,10 +729,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciPbD: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciPbD: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciPbD: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleEliminaPbDSubmit = async (event) => {
@@ -425,10 +773,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaPbD: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaPbD: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaPbD: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
 
@@ -450,10 +818,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaISO: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaISO: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaISO: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleInserisciISOSubmit = async (event) => {
@@ -473,10 +861,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciISO: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciISO: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciISO: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleEliminaISOSubmit = async (event) => {
@@ -497,10 +905,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaISO: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaISO: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaISO: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
 
@@ -522,10 +950,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaOWASP: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaOWASP: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                modificaOWASP: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleInserisciOWASPSubmit = async (event) => {
@@ -545,10 +993,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciOWASP: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciOWASP: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                inserisciOWASP: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
     const handleEliminaOWASPSubmit = async (event) => {
@@ -569,10 +1037,30 @@ function ModificaPKBPage() {
             handleUnauthorized();
             return null;
         }
-        const jsonResponse = await result.json();
-        if (notify) {
-            navigate("/InserimentoNotifichePage");
+        if (!result.ok || result.status===400) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaOWASP: "error",
+            });
+            resetButtonStatus();
+            return null;
         }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaOWASP: "success",
+            });
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus({
+                ...buttonStatus,
+                eliminaOWASP: "error",
+            });
+        }
+        resetButtonStatus();
         return jsonResponse;
     };
 
@@ -611,7 +1099,18 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Modifica Pattern</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.modificaPattern === "success"
+                                        ? "success"
+                                        : buttonStatus.modificaPattern === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Modifica Pattern
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -640,7 +1139,18 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Inserisci Pattern</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.inserisciPattern === "success"
+                                        ? "success"
+                                        : buttonStatus.inserisciPattern === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Inserisci Pattern
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -663,7 +1173,18 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Elimina Pattern</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.eliminaPattern === "success"
+                                        ? "success"
+                                        : buttonStatus.eliminaPattern === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Elimina Pattern
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -688,7 +1209,18 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Modifica Strategia</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.modificaStrategia === "success"
+                                        ? "success"
+                                        : buttonStatus.modificaStrategia === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Modifica Strategia
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -707,7 +1239,18 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Inserisci Strategia</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.inserisciStrategia === "success"
+                                        ? "success"
+                                        : buttonStatus.inserisciStrategia === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Inserisci Strategia
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -730,7 +1273,18 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Elimina Strategia</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.eliminaStrategia === "success"
+                                        ? "success"
+                                        : buttonStatus.eliminaStrategia === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Elimina Strategia
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -757,7 +1311,16 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.modificaVulnerabilita === "success"
+                                        ? "success"
+                                        : buttonStatus.modificaVulnerabilita === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
                                 Modifica Vulnerabilita
                             </button>
                         </form>
@@ -780,7 +1343,16 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.inserisciVulnerabilita === "success"
+                                        ? "success"
+                                        : buttonStatus.inserisciVulnerabilita === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
                                 Inserisci Vulnerabilita
                             </button>
                         </form>
@@ -805,7 +1377,18 @@ function ModificaPKBPage() {
                                 ></input>
                                 <label>vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Elimina Vulnerabilita</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.eliminaVulnerabilita === "success"
+                                        ? "success"
+                                        : buttonStatus.eliminaVulnerabilita === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Elimina Vulnerabilita
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -831,7 +1414,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Modifica Articolo</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.modificaArticolo === "success"
+                                        ? "success"
+                                        : buttonStatus.modificaArticolo === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Modifica Articolo
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -852,7 +1446,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Inserisci Articolo</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.inserisciArticolo === "success"
+                                        ? "success"
+                                        : buttonStatus.inserisciArticolo === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Inserisci Articolo
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -871,7 +1476,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Elimina Articolo</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.eliminaArticolo === "success"
+                                        ? "success"
+                                        : buttonStatus.eliminaArticolo === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Elimina Articolo
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -897,7 +1513,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Modifica PbD</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.modificaPbD === "success"
+                                        ? "success"
+                                        : buttonStatus.modificaPbD === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Modifica PbD
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -916,7 +1543,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Inserisci PbD</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.inserisciPbD === "success"
+                                        ? "success"
+                                        : buttonStatus.inserisciPbD === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Inserisci PbD
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -935,7 +1573,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Elimina PbD</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.eliminaPbD === "success"
+                                        ? "success"
+                                        : buttonStatus.eliminaPbD === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Elimina PbD
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -961,7 +1610,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Modifica ISO</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.modificaISO === "success"
+                                        ? "success"
+                                        : buttonStatus.modificaISO === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Modifica ISO
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -982,7 +1642,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Inserisci ISO</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.inserisciISO === "success"
+                                        ? "success"
+                                        : buttonStatus.inserisciISO === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Inserisci ISO
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -1001,7 +1672,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Elimina ISO</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.eliminaISO === "success"
+                                        ? "success"
+                                        : buttonStatus.eliminaISO === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Elimina ISO
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -1027,7 +1709,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Modifica OWASP</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.modificaOWASP === "success"
+                                        ? "success"
+                                        : buttonStatus.modificaOWASP === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Modifica OWASP
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -1046,7 +1739,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Inserisci OWASP</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.inserisciOWASP === "success"
+                                        ? "success"
+                                        : buttonStatus.inserisciOWASP === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Inserisci OWASP
+                            </button>
                         </form>
                     </div>
                     <div className="modifica">
@@ -1065,7 +1769,18 @@ function ModificaPKBPage() {
                                 />
                                 <label>Vuoi inserire una notifica?</label>
                             </div>
-                            <button type="submit">Elimina OWASP</button>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus.eliminaOWASP === "success"
+                                        ? "success"
+                                        : buttonStatus.eliminaOWASP === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Elimina OWASP
+                            </button>
                         </form>
                     </div>
                 </div>

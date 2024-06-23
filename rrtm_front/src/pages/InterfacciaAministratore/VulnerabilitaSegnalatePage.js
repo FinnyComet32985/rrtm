@@ -1,10 +1,20 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./VulnerabilitaSegnalatePage.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../loginPage/AuthContext";
 
 function VulnerabilitaSegnalatePage() {
     const token = localStorage.getItem("token");
     const [vulnerabilities, setVulnerabilities] = useState([]);
+const navigate = useNavigate();
+const {logout} = useAuth();
+
+    const handleUnauthorized = () => {
+        alert("C'è stato un problema di autenticazione. Riesegui il login.");
+        logout();
+        navigate("/login");
+    };
     const getVulnerabilita = useCallback(async () => {
         try {
             const response = await fetch(
@@ -16,6 +26,10 @@ function VulnerabilitaSegnalatePage() {
                     },
                 }
             );
+            if (response.status === 401) {
+                handleUnauthorized();
+                return null;
+            }
             if (!response.ok) {
                 throw new Error("Errore nella risposta della rete");
             }

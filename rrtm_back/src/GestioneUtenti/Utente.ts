@@ -7,6 +7,7 @@ class Utente {
     private email: string;
     private nome: string;
     private cognome: string;
+    private notifiche: boolean;
 
     constructor(token: string, username: string, password: string) {
         this.token = token;
@@ -15,16 +16,14 @@ class Utente {
         this.email = "";
         this.nome = "";
         this.cognome = "";
-
-        // Esegui la query per recuperare le informazioni mancanti
-        this.loadAdditionalData();
+        this.notifiche = false;
     }
     public getToken() {
         return this.token;
     }
-    private async loadAdditionalData() {
+    public async loadAdditionalData() {
         const query = `
-            SELECT email, nome, cognome
+            SELECT email, nome, cognome, notPref
             FROM Utente
             WHERE username = ?
         `;
@@ -43,6 +42,7 @@ class Utente {
                         this.email = results[0].email;
                         this.nome = results[0].nome;
                         this.cognome = results[0].cognome;
+                        this.notifiche = results[0].notPref;
                         resolve();
                     } else {
                         reject(new Error("User not found"));
@@ -53,6 +53,9 @@ class Utente {
     }
     public getUsername() {
         return this.username;
+    }
+    public getNotifiche() {
+        return this.notifiche;
     }
 }
 export default Utente;

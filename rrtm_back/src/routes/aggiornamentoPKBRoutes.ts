@@ -7,11 +7,11 @@ const router = express.Router();
 router.post("/modificaPattern", verificaTokenAmm, async (req, res) => {
     const { Id, titolo, sommario, contesto, problema, soluzione, esempio } =
         req.body;
-    if (!Id) {
+    if (!Id || isNaN(Id)) {
         return res.status(400).json({ message: "Missing required fields" });
     }
     const result = await InterfacciaModifica.modificaPattern(
-        Id,
+        parseInt(Id),
         titolo,
         sommario,
         contesto,
@@ -38,7 +38,7 @@ router.post("/inserisciPattern", verificaTokenAmm, async (req, res) => {
 
 router.delete("/eliminaPattern/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
-    if (!Id) {
+    if (!Id || isNaN(parseInt(Id))) {
         return res.status(400).json({ message: "Missing required fields" });
     }
     const result = await InterfacciaModifica.eliminaPattern(parseInt(Id));
@@ -48,31 +48,43 @@ router.delete("/eliminaPattern/:Id", verificaTokenAmm, async (req, res) => {
 // Articolo
 router.post("/modificaArticolo", verificaTokenAmm, async (req, res) => {
     const { Id, titolo } = req.body;
-    if (!Id) {
+    if (!Id || isNaN(parseInt(Id))) {
         return res.status(400).json({ message: "Missing required fields" });
     }
-    const result = await InterfacciaModifica.modificaArticolo(Id, titolo);
+    const result = await InterfacciaModifica.modificaArticolo(
+        parseInt(Id),
+        titolo
+    );
     res.json(result);
 });
 
 router.post("/inserisciArticolo", verificaTokenAmm, async (req, res) => {
     const { Id, titolo } = req.body;
-    if (!Id) {
+    if (!Id || isNaN(parseInt(Id))) {
         return res.status(400).json({ message: "Missing required fields" });
     }
-    const result = await InterfacciaModifica.inserisciArticolo(Id, titolo);
+    const result = await InterfacciaModifica.inserisciArticolo(
+        parseInt(Id),
+        titolo
+    );
     res.json(result);
 });
 
 router.delete("/eliminaArticolo/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.eliminaArticolo(parseInt(Id));
     res.json(result);
 });
 // Categoria OWASP
 router.post("/modificaOWASP", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
-    const result = await InterfacciaModifica.modificaOWASP(Id, nome);
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+    const result = await InterfacciaModifica.modificaOWASP(parseInt(Id), nome);
     res.json(result);
 });
 
@@ -84,34 +96,46 @@ router.post("/inserisciOWASP", verificaTokenAmm, async (req, res) => {
 
 router.delete("/eliminaOWASP/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.eliminaOWASP(parseInt(Id));
     res.json(result);
 });
 // FaseISO
 router.post("/modificaISO", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
-    const result = await InterfacciaModifica.modificaISO(Id, nome);
+    if (!Id || isNaN(parseFloat(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+    const result = await InterfacciaModifica.modificaISO(parseFloat(Id), nome);
     res.json(result);
 });
 
 router.post("/inserisciISO", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
-    if (!Id) {
+    if (!Id || isNaN(parseFloat(Id))) {
         return res.status(400).json({ message: "Missing required fields" });
     }
-    const result = await InterfacciaModifica.inserisciISO(Id, nome);
+    const result = await InterfacciaModifica.inserisciISO(parseFloat(Id), nome);
     res.json(result);
 });
 
 router.delete("/eliminaISO/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
+    if (!Id || isNaN(parseFloat(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.eliminaISO(parseFloat(Id));
     res.json(result);
 });
 // principio PbD
 router.post("/modificaPbD", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
-    const result = await InterfacciaModifica.modificaPbD(Id, nome);
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+    const result = await InterfacciaModifica.modificaPbD(parseInt(Id), nome);
     res.json(result);
 });
 
@@ -123,6 +147,9 @@ router.post("/inserisciPbD", verificaTokenAmm, async (req, res) => {
 
 router.delete("/eliminaPbD/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.eliminaPbD(parseInt(Id));
     res.json(result);
 });
@@ -130,7 +157,13 @@ router.delete("/eliminaPbD/:Id", verificaTokenAmm, async (req, res) => {
 // strategia
 router.post("/modificaStrategia", verificaTokenAmm, async (req, res) => {
     const { Id, nome } = req.body;
-    const result = await InterfacciaModifica.modificaStrategia(Id, nome);
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
+    const result = await InterfacciaModifica.modificaStrategia(
+        parseInt(Id),
+        nome
+    );
     res.json(result);
 });
 
@@ -142,6 +175,9 @@ router.post("/inserisciStrategia", verificaTokenAmm, async (req, res) => {
 
 router.delete("/eliminaStrategia/:Id", verificaTokenAmm, async (req, res) => {
     const { Id } = req.params;
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.eliminaStrategia(parseInt(Id));
     res.json(result);
 });
@@ -149,8 +185,11 @@ router.delete("/eliminaStrategia/:Id", verificaTokenAmm, async (req, res) => {
 // vulnerabilita
 router.post("/modificaVulnerabilita", verificaTokenAmm, async (req, res) => {
     const { Id, titolo, cwe, stato } = req.body;
+    if (!Id || isNaN(parseInt(Id))) {
+        return res.status(400).json({ message: "Missing required fields" });
+    }
     const result = await InterfacciaModifica.modificaVulnerabilita(
-        Id,
+        parseInt(Id),
         titolo,
         cwe,
         stato
@@ -173,6 +212,9 @@ router.delete(
     verificaTokenAmm,
     async (req, res) => {
         const { Id } = req.params;
+        if (!Id || isNaN(parseInt(Id))) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
         const result = await InterfacciaModifica.eliminaVulnerabilita(
             parseInt(Id)
         );

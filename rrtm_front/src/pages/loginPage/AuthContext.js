@@ -13,6 +13,9 @@ export function AuthProvider({ children }) {
         const token = localStorage.getItem("token");
         const username = localStorage.getItem("username");
         const tipo = localStorage.getItem("tipo");
+        if (tipo==='utente') {
+            const notifiche = localStorage.getItem("notifiche");
+        }
 
         if (token && username && tipo) {
             const isAdminUser = tipo === "amministratore";
@@ -35,12 +38,15 @@ export function AuthProvider({ children }) {
             }
 
             const data = await response.json();
-            const { token, tipo } = data;
-
+            const { token, tipo, notifiche } = data;
+            console.log(notifiche);
             const isAdminUser = tipo === "amministratore";
             localStorage.setItem("token", token);
             localStorage.setItem("username", username);
             localStorage.setItem("tipo", tipo);
+            if (tipo==='utente') {
+                localStorage.setItem("notifiche", notifiche);
+            }
             setUser({ isLoggedIn: true, username, isAdmin: isAdminUser });
         } catch (error) {
             throw new Error("Credenziali non valide. Riprova.");
@@ -65,6 +71,7 @@ export function AuthProvider({ children }) {
             localStorage.removeItem("token");
             localStorage.removeItem("username");
             localStorage.removeItem("tipo");
+            localStorage.removeItem("notifiche");
             setUser({ isLoggedIn: false, isAdmin: false });
         }
     };

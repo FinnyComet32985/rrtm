@@ -1,11 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./NotifichePage.css";
+import { useAuth } from "../loginPage/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function NotifichePage() {
     const token = localStorage.getItem("token");
     const [notifiche, setNotifiche] = useState([]);
-    const [consenso, setConsenso] = useState(false);
+    const storedNotPref = localStorage.getItem("notifiche");
+    const [consenso, setConsenso] = useState(storedNotPref === "1");
+const navigate = useNavigate();
+const {logout} = useAuth();
+    const handleUnauthorized = () => {
+        alert("C'è stato un problema di autenticazione. Riesegui il login.");
+        logout();
+        navigate("/login");
+    };
 
     const handleCheckboxChange = async (e) => {
         const isChecked = e.target.checked;
@@ -24,6 +34,7 @@ function NotifichePage() {
                     },
                 }
             );
+            isChecked ? localStorage.setItem("notifiche", "1") : localStorage.setItem("notifiche", "0");
             if (!response.ok) {
                 throw new Error("Errore nella risposta della rete");
             }
@@ -48,6 +59,10 @@ function NotifichePage() {
                     },
                 }
             );
+            if (response.status === 401) {
+                handleUnauthorized();
+                throw new Error("unauthorized");
+            }
             if (!response.ok) {
                 throw new Error("Errore nella risposta della rete");
             }

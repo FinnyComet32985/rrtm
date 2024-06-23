@@ -18,11 +18,20 @@ router.post("/login", async (req: Request, res: Response) => {
             password
         );
         if (result) {
-            return res.status(200).json({
-                message: "Login successful",
-                token: result.token,
-                tipo: result.tipo,
-            });
+            if (result.tipo === "utente") {
+                return res.status(200).json({
+                    message: "Login successful",
+                    token: result.token,
+                    tipo: result.tipo,
+                    notifiche: result.notifiche,
+                });
+            } else {
+                return res.status(200).json({
+                    message: "Login successful",
+                    token: result.token,
+                    tipo: result.tipo,
+                });
+            }
         } else {
             return res.status(401).json({ message: "Invalid credentials" });
         }

@@ -204,6 +204,27 @@ class CategoriaOWASP {
             );
         });
     }
+
+    public static async getIdMax(): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            const query = "SELECT MAX(Id) as idMax FROM categoriaOWASP";
+            connection.query(
+                query,
+                [],
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    if (results.length > 0) {
+                        const idMax = results[0].idMax || 0; // Handle case where there are no entries yet
+                        resolve(idMax);
+                    } else {
+                        reject(new Error("Error"));
+                    }
+                }
+            );
+        });
+    }
 }
 
 export default CategoriaOWASP;

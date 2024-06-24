@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./InserimentoFeedbackPage.css";
-
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../loginPage/AuthContext";
 function InserimentoFeedbackPage() {
     const [feedbacks, setFeedbacks] = useState([]);
     const [showAllFeedback, setShowAllFeedback] = useState(false);
@@ -10,8 +11,14 @@ function InserimentoFeedbackPage() {
     const [errors, setErrors] = useState({ titolo: false, descrizione: false }); // Stato degli errori sugli input
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
-
+    const navigate = useNavigate();
+    const {logout} = useAuth();
     const getFeedback = useCallback(async () => {
+        const handleUnauthorized = () => {
+            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            logout();
+            navigate("/login");
+        };
         try {
             const response = await fetch(
                 `http://localhost:1337/api/findFeedbackUt/${username}`,
@@ -22,6 +29,10 @@ function InserimentoFeedbackPage() {
                     },
                 }
             );
+            if (response.status === 401) {
+                handleUnauthorized();
+                return null;
+            }
             if (!response.ok) {
                 throw new Error("Errore nella risposta della rete");
             }
@@ -30,7 +41,7 @@ function InserimentoFeedbackPage() {
         } catch (error) {
             console.error("Errore durante il recupero dei feedback:", error);
         }
-    }, [username, token]);
+    }, [username, token, navigate, logout]);
 
     useEffect(() => {
         getFeedback();

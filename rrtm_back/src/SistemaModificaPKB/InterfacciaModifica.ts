@@ -4,6 +4,7 @@ import connection from "..";
 import * as mysql from "mysql";
 import { promises } from "dns";
 import VulnerabilitaSegnalata from "./SistemaSegnalazione/VulnerabilitaSegnalata";
+import Notifica from "./SistemaNotifica/Notifica";
 class InterfacciaModifica {
     // Pattern
     public static async modificaPattern(
@@ -28,7 +29,6 @@ class InterfacciaModifica {
         return modificaPKB.modifyPattern();
     }
     public static async inserisciPattern(
-        Id: number,
         titolo?: string,
         sommario?: string,
         contesto?: string,
@@ -37,7 +37,7 @@ class InterfacciaModifica {
         esempio?: string
     ) {
         let modificaPKB = new ModificaPKB(
-            Id,
+            0,
             titolo,
             "",
             sommario,
@@ -70,8 +70,8 @@ class InterfacciaModifica {
         let modificaPKB = new ModificaPKB(Id, "", nome);
         return modificaPKB.modifyOWASP();
     }
-    public static async inserisciOWASP(Id: number, nome?: string) {
-        let modificaPKB = new ModificaPKB(Id, "", nome);
+    public static async inserisciOWASP(nome?: string) {
+        let modificaPKB = new ModificaPKB(0, "", nome);
         return modificaPKB.insertOWASP();
     }
     public static async eliminaOWASP(Id: number) {
@@ -96,8 +96,8 @@ class InterfacciaModifica {
         let modificaPKB = new ModificaPKB(Id, "", nome);
         return modificaPKB.modifyPbD();
     }
-    public static async inserisciPbD(Id: number, nome?: string) {
-        let modificaPKB = new ModificaPKB(Id, "", nome);
+    public static async inserisciPbD(nome?: string) {
+        let modificaPKB = new ModificaPKB(0, "", nome);
         return modificaPKB.insertPbD();
     }
     public static async eliminaPbD(Id: number) {
@@ -109,8 +109,8 @@ class InterfacciaModifica {
         let modificaPKB = new ModificaPKB(Id, "", nome);
         return modificaPKB.modifyStrategia();
     }
-    public static async inserisciStrategia(Id: number, nome?: string) {
-        let modificaPKB = new ModificaPKB(Id, "", nome);
+    public static async inserisciStrategia(nome?: string) {
+        let modificaPKB = new ModificaPKB(0, "", nome);
         return modificaPKB.insertStrategia();
     }
     public static async eliminaStrategia(Id: number) {
@@ -139,13 +139,12 @@ class InterfacciaModifica {
         return modificaPKB.modifyVulnerabilita();
     }
     public static async inserisciVulnerabilita(
-        Id: number,
         titolo?: string,
         cwe?: number,
         stato?: string
     ) {
         let modificaPKB = new ModificaPKB(
-            Id,
+            0,
             titolo,
             "",
             "",
@@ -219,6 +218,17 @@ class InterfacciaModifica {
                 }
             );
         });
+    }
+
+    public static async inserisciNotifica(
+        titolo: string,
+        oggetto: string,
+        testo: string
+    ) {
+        const idMax = await Notifica.getIdMax();
+        const not = new Notifica(idMax + 1, titolo, oggetto, testo);
+        not.insertDB();
+        return not.send();
     }
 }
 export default InterfacciaModifica;

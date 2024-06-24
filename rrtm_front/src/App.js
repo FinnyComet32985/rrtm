@@ -12,7 +12,11 @@ import ISOPage from './pages/InterfacciaUtenteNonLoggato/ISOPage/ISOPage';
 import OWASPPage from "./pages/InterfacciaUtenteNonLoggato/OWASPPage/OWASPPage";
 import InserimentoFeedbackPage from "./pages/InterfacciaUtenteLoggato/InserimentoFeedbackPage";
 import InserimentoVulnerabilitaPage from './pages/InterfacciaUtenteLoggato/InserimentoVulnerabilitaPage';
-
+import VulnerabilitaSegnalatePage from './pages/InterfacciaAministratore/VulnerabilitaSegnalatePage';
+import VisualizzaFeedbackPage from './pages/InterfacciaAministratore/VisualizzaFeedbackPage';
+import NotifichePage from "./pages/InterfacciaUtenteLoggato/NotifichePage";
+import InserimentoNotifichePage from "./pages/InterfacciaAministratore/InserisciNotifichePage"
+import ModificaPKBPage from './pages/InterfacciaAministratore/ModificaPKBPage';
 function App() {
   return (
     <Router>
@@ -29,6 +33,11 @@ function App() {
         <Route path='/OWASPPage/:OWASPId' element={<OWASPPage/>}/>
         <Route path='/inserimentoFeedbackUt' element={<InserimentoFeedbackPage/>}/>
         <Route path='/inserimentoVulnerabilitaUt' element={<InserimentoVulnerabilitaPage/>}/>
+        <Route path='/visualizzaVulnerabilitaUt' element={<VulnerabilitaSegnalatePage/>}/>
+        <Route path='/visualizzaFeedback' element={<VisualizzaFeedbackPage/>}/>
+        <Route path='/NotifichePage' element={<NotifichePage/>}/>
+        <Route path='/InserimentoNotifichePage' element={<InserimentoNotifichePage/>}/>
+        <Route path='/ModificaPKBPage' element={<ModificaPKBPage/>}/>
       </Routes>
     </Router>
   );

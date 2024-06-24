@@ -14,7 +14,7 @@ class InterfacciaAutenticazione {
     public static async login(
         username: string,
         password: string
-    ): Promise<{ token: string; tipo: string } | null> {
+    ): Promise<{ token: string; tipo: string; notifiche?: boolean } | null> {
         const query = `
             SELECT username, password, 'utente' as tipo FROM Utente WHERE username=?
             UNION
@@ -41,7 +41,7 @@ class InterfacciaAutenticazione {
                             { username: user.username, tipo: user.tipo },
                             JWT_SECRET,
                             {
-                                expiresIn: "2h",
+                                expiresIn: "24h",
                             }
                         );
 
@@ -51,10 +51,12 @@ class InterfacciaAutenticazione {
                                 user.username,
                                 password
                             );
+                            await utenteInstance.loadAdditionalData();
                             this.utentiAutenticati.push(utenteInstance);
                             resolve({
                                 token: utenteInstance.getToken(),
                                 tipo: "utente",
+                                notifiche: utenteInstance.getNotifiche(),
                             });
                         } else if (user.tipo === "amministratore") {
                             const ammInstance = new Amministratore(
@@ -62,6 +64,7 @@ class InterfacciaAutenticazione {
                                 user.username,
                                 password
                             );
+                            await ammInstance.loadAdditionalData();
                             this.amministratoriAutenticati.push(ammInstance);
                             resolve({
                                 token: ammInstance.getToken(),
@@ -106,21 +109,24 @@ class InterfacciaAutenticazione {
         password: string,
         email: string,
         nome: string,
-        cognome: string
+        cognome: string,
+        notPref: boolean
     ): Promise<
         | { success: boolean; token?: string; tipo: string }
         | { success: boolean; error?: string }
     > {
         const hashedPassword = await bcrypt.hash(password, 10); // Genera la password hashata
-
+        if (!notPref) {
+            notPref = false;
+        }
         const query = `
-            INSERT INTO Utente (username, password, email, nome, cognome)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO Utente (username, password, email, nome, cognome, notPref)
+            VALUES (?, ?, ?, ?, ?, ?)
         `;
         return new Promise((resolve, reject) => {
             connection.query(
                 query,
-                [username, hashedPassword, email, nome, cognome],
+                [username, hashedPassword, email, nome, cognome, notPref],
                 async (err: mysql.MysqlError | null, results: any) => {
                     if (err) {
                         return reject({ success: false, error: err.message });

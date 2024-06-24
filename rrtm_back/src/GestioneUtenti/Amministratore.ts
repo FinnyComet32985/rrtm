@@ -15,14 +15,11 @@ class Amministratore {
         this.email = "";
         this.nome = "";
         this.cognome = "";
-
-        // Esegui la query per recuperare le informazioni mancanti
-        this.loadAdditionalData();
     }
     public getToken() {
         return this.token;
     }
-    private async loadAdditionalData() {
+    public async loadAdditionalData() {
         const query = `
             SELECT email, nome, cognome
             FROM Amministratore

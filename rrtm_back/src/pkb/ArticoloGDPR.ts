@@ -237,7 +237,7 @@ class ArticoloGDPR {
                 placeholders.push("?");
             }
             if (fields.length === 1) {
-                return reject(new Error("No fields to insert")); // No fields to insert
+                return resolve(false);
             }
 
             query +=
@@ -251,7 +251,7 @@ class ArticoloGDPR {
                 values,
                 (err: mysql.MysqlError | null, results: any) => {
                     if (err) {
-                        return reject(err);
+                        return resolve(false);
                     }
                     resolve(results.affectedRows > 0); // Returns true if the row was inserted successfully
                 }

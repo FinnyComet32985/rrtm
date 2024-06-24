@@ -47,4 +47,14 @@ router.post("/inserisciFeedback", verificaTokenUt, async (req, res) => {
 
     res.json(result);
 });
+
+router.get("/showNotifiche/", verificaTokenUt, async (req, res) => {
+    try {
+        const result = await InterfacciaSegnalazione.showNotifiche();
+        res.json(result);
+    } catch (error) {
+        console.error("Error fetching vulnerabilita:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router;

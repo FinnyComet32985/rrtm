@@ -48,6 +48,9 @@ function UserMenu() {
     const handleVulnerabilita = () => {
         navigate("/inserimentoVulnerabilitaUt");
     }
+    const handleNotifiche = () => {
+        navigate("/NotifichePage");
+    }
 
     return (
         <div>
@@ -61,7 +64,7 @@ function UserMenu() {
                 <div id="profileMenu" className={isMenuOpen ? "open" : ""}>
                     <h3 className="username">Ciao, {user?.username}!</h3>
                     <hr className="hr1" />
-                    <button id="preferenzeNotifiche">
+                    <button id="preferenzeNotifiche" onClick={handleNotifiche}>
                         <NotificationIcon className="notificationIcon"></NotificationIcon>
                         <h3>Notifiche e Preferenze</h3>
                     </button>

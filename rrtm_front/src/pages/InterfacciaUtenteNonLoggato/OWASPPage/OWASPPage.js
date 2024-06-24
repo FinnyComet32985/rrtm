@@ -49,7 +49,7 @@ function VulnerabilitaPage() {
                     {data && <h3>{data.nome}</h3>}
                 </div>
                 {/* Pattern associati */}
-                <div
+                {data2.lenght !== 0 && <div
                     className={`PatternAssociati ${
                         isExpanded ? "open" : "closed"
                     }`}
@@ -70,7 +70,7 @@ function VulnerabilitaPage() {
                                 </div>
                             ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

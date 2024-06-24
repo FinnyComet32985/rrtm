@@ -1,0 +1,60 @@
+.inserisciNotifica {
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    background-color: #131921; /* Sfondo blu scuro */
+    border-radius: 10px; /* Arrotonda i bordi */
+    padding: 2em;
+}
+.inserisciNotifica> h1 {
+    color: white;
+}
+
+.inserisciNotifica > div {
+    margin-bottom: 1.5em;
+    width: 80%;
+}
+
+.inserisciNotifica label {
+    color: #6b8bb9;
+    font-size: 1.2rem;
+    margin-bottom: 0.5em;
+}
+
+.inserisciNotifica input[type="text"] {
+    width: 100%;
+    padding: 0.8em;
+    font-size: 1rem;
+    border: 4px solid #6b8bb9;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    color: #333; /* Colore testo */
+    transition: border-color 0.3s ease-in-out;
+}
+
+.inserisciNotifica input[type="text"]:focus {
+    outline: none;
+    border-color: #3f526d;
+}
+
+.buttonInsertNotifica {
+    padding: 0.8em 1.5em;
+    font-size: 1.1rem;
+    color: white;
+    background-color: #3f526d;
+    border: none;
+    border-radius: 5px;
+    border: 2.5px solid #6b8bb9;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+.buttonInsertNotifica:hover {
+    background-color: #6b8bb9;
+    color: white;
+    transition: 0.2;
+}
+
+
+

@@ -1,0 +1,84 @@
+.gestioneNotifiche {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    width: 80%;
+    top: 2vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+}
+.formNot {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.gestNoth3 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.notifica{
+    padding: 1em;
+    border-radius: 2em;
+    background-color: #3f526d;
+    color: white;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+    width: auto;
+    min-width: 50vh;
+    max-width: 65vh;
+}
+
+.testoNotifica {
+    padding: 2em;
+    border-radius: 2em;
+    background-color: #6b8bb9;
+    color: white;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+    width: calc(100% - 1vh); /* Adjust width based on parent container */
+}
+.AllNotificaTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: white;
+}
+
+.visioneNotifiche {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 5vh;
+    padding-right: 0.9vh;
+    max-width: 205vh;
+    top: 13vh;
+    gap: 2vh;
+    justify-content: center;
+    align-items: start;
+    background-color: #131921;
+    border-radius: 2vh;
+    width: 100%;
+    top: 2vh;
+}
+
+.check {
+    background-color: #6b8bb9;
+}

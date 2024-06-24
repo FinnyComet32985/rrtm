@@ -7,28 +7,26 @@ import { useAuth } from "../loginPage/AuthContext";
 function VulnerabilitaSegnalatePage() {
     const token = localStorage.getItem("token");
     const [vulnerabilities, setVulnerabilities] = useState([]);
-const navigate = useNavigate();
-const {logout} = useAuth();
-const [buttonStatus, setButtonStatus] = useState(null);
-const [notify, setNotify] = useState(false);
-const handleCheckboxChange = (event) => {
-    setNotify(event.target.checked);
-};
-const pubblicaVulnSegnForm = useRef(null);
-const handleUnauthorized = () => {
-    alert("C'è stato un problema di autenticazione. Riesegui il login.");
-    logout();
-    navigate("/login");
-};
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+    const [buttonStatus, setButtonStatus] = useState(null);
+    const pubblicaVulnSegnForm = useRef(null);
+    const handleUnauthorized = () => {
+        alert("C'è stato un problema di autenticazione. Riesegui il login.");
+        logout();
+        navigate("/login");
+    };
 
-const resetButtonStatus = () => {
-    setTimeout(() => {
-        setButtonStatus(null);
-    }, 2000);
-};
+    const resetButtonStatus = () => {
+        setTimeout(() => {
+            setButtonStatus(null);
+        }, 2000);
+    };
     const getVulnerabilita = useCallback(async () => {
         const handleUnauthorized = () => {
-            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            alert(
+                "C'è stato un problema di autenticazione. Riesegui il login."
+            );
             logout();
             navigate("/login");
         };
@@ -52,7 +50,10 @@ const resetButtonStatus = () => {
             const json = await response.json();
             setVulnerabilities(json);
         } catch (error) {
-            console.error("Errore durante il recupero delle vulnerabilita:", error);
+            console.error(
+                "Errore durante il recupero delle vulnerabilita:",
+                error
+            );
         }
     }, [token, navigate, logout]);
 
@@ -75,22 +76,21 @@ const resetButtonStatus = () => {
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
-            setButtonStatus('error');
+        if (!result.ok || result.status === 400) {
+            setButtonStatus("error");
             resetButtonStatus();
             return null;
         }
         const jsonResponse = await result.json();
         if (jsonResponse) {
-            setButtonStatus('success');
-            if (notify) {
-                navigate("/InserimentoNotifichePage");
-            }
+            setButtonStatus("success");
+
+            navigate("/InserimentoNotifichePage");
         } else {
-            setButtonStatus('error');
+            setButtonStatus("error");
         }
         resetButtonStatus();
-        
+
         return jsonResponse;
     };
 
@@ -103,55 +103,57 @@ const resetButtonStatus = () => {
             <Header />
             <div className="container">
                 <div className="visioneVulnerabilitaUt">
-                    <h1 className="AllVulnerabilitaUtTitle">Vulnerabilita Segnalate</h1>
+                    <h1 className="AllVulnerabilitaUtTitle">
+                        Vulnerabilita Segnalate
+                    </h1>
                     {vulnerabilities.length > 0 ? (
-                        vulnerabilities
-                            .map((vulnerabilita) => (
-                                <div key={vulnerabilita.Id} className="vulnerabilitaUtAmm">
-                                    <h3 className="titoloVulnerabilitaUt">
-                                        {vulnerabilita.titolo}
-                                    </h3>
-                                    <p className="usernameVulnIns">{vulnerabilita.usernameUt}</p>
-                                </div>
-                            ))
+                        vulnerabilities.map((vulnerabilita) => (
+                            <div
+                                key={vulnerabilita.Id}
+                                className="vulnerabilitaUtAmm"
+                            >
+                                <h3 className="titoloVulnerabilitaUt">
+                                    {vulnerabilita.titolo}
+                                </h3>
+                                <p className="usernameVulnIns">
+                                    {vulnerabilita.usernameUt}
+                                </p>
+                            </div>
+                        ))
                     ) : (
-                        <p style={{color: "white"}}>Nessuna vulnerabilità trovata.</p>
+                        <p style={{ color: "white" }}>
+                            Nessuna vulnerabilità trovata.
+                        </p>
                     )}
                 </div>
                 <div className="pubblicaVuln">
-                        <h1>Pubblica una Vulnerabilita Segnalata</h1>
-                        <form
-                            ref={pubblicaVulnSegnForm}
-                            onSubmit={handlePubblicaVulnerabilitaSubmit}
+                    <h1>Pubblica una Vulnerabilita Segnalata</h1>
+                    <form
+                        ref={pubblicaVulnSegnForm}
+                        onSubmit={handlePubblicaVulnerabilitaSubmit}
+                    >
+                        <label>Id della Vulnerabilita da pubblicare</label>
+                        <input type="text" name="Id" required></input>
+                        <label>
+                            Nuovo numero della CWE di cui si pubblicare
+                        </label>
+                        <input type="text" name="cwe" required></input>
+                        <label>Nuovo Titolo</label>
+                        <input type="text" name="titolo"></input>
+                        <button
+                            type="submit"
+                            className={
+                                buttonStatus === "success"
+                                    ? "success"
+                                    : buttonStatus === "error"
+                                    ? "error"
+                                    : "button"
+                            }
                         >
-                            <label>Id della Vulnerabilita da pubblicare</label>
-                            <input type="text" name="Id" required></input>
-                            <label>Nuovo numero della CWE di cui si pubblicare</label>
-                            <input type="text" name="cwe" required></input>
-                            <label>Nuovo Titolo</label>
-                            <input type="text" name="titolo"></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label>vuoi inserire una notifica?</label>
-                            </div>
-                            <button
-                                type="submit"
-                                className={
-                                    buttonStatus === "success"
-                                        ? "success"
-                                        : buttonStatus === "error"
-                                        ? "error"
-                                        : "button"
-                                }
-                            >
-                                Pubblica Vulnerabilita
-                            </button>
-                        </form>
-                    </div>
+                            Pubblica Vulnerabilita
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );

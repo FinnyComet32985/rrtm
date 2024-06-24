@@ -17,12 +17,14 @@ import VisualizzaFeedbackPage from './pages/InterfacciaAministratore/VisualizzaF
 import NotifichePage from "./pages/InterfacciaUtenteLoggato/NotifichePage";
 import InserimentoNotifichePage from "./pages/InterfacciaAministratore/InserisciNotifichePage"
 import ModificaPKBPage from './pages/InterfacciaAministratore/ModificaPKBPage';
+import RegisterPage from './pages/loginPage/RegisterPage';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage/>} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path='/patternPage/:patternId' element={<PatternPage />} />
         <Route path='/StrategiaPage/:strategiaId' element={<StrategiaPage/>}/>
         <Route path='/VulnerabilitaPage/:vulnerabilitaId' element={<VulnerabilitaPage/>}/>

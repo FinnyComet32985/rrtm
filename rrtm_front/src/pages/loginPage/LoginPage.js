@@ -1,6 +1,7 @@
+// LoginPage.js
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
 function LoginPage() {
@@ -34,18 +35,17 @@ function LoginPage() {
     };
 
     return (
-        <div className="login-page">
-            <div className="login-container">
-                <h2 className="titleLogin" onClick={handleTitleClick}>
-                    RRTM
-                </h2>
-                <form onSubmit={handleSubmit}>
+        <div className="log-page">
+            <div className="log-container">
+                <h2 onClick={handleTitleClick}>RRTM</h2>
+                <form className="login" onSubmit={handleSubmit}>
                     <div>
                         <label>Username:</label>
                         <input
                             type="text"
                             value={username}
                             onChange={handleUsernameChange}
+                            className={error ? "inputError" : ""}
                         />
                     </div>
                     <div>
@@ -54,22 +54,16 @@ function LoginPage() {
                             type="password"
                             value={password}
                             onChange={handlePasswordChange}
+                            className={error ? "inputError" : ""}
                         />
                     </div>
-                    {error && <div style={{ color: "red" }}>{error}</div>}
-                    <button type="submit">Login</button>
+                    {error && <div className="error-message">{error}</div>}
+                    <button type="submit" className="buttonInsertVulnerabilitaUt">Login</button>
+                    <div className="link">
+                        <p>Non hai ancora un account? <Link to="/register">Registrati ora</Link></p>
+                    </div>
                 </form>
             </div>
-            <p className="photo-credit">
-                Foto di{" "}
-                <a href="https://unsplash.com/it/@matthewhenry?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-                    Matthew Henry
-                </a>{" "}
-                su{" "}
-                <a href="https://unsplash.com/it/foto/due-donne-che-affrontano-la-telecamera-di-sicurezza-sopra-montata-sulla-struttura-fPxOowbR6ls?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-                    Unsplash
-                </a>
-            </p>
         </div>
     );
 }

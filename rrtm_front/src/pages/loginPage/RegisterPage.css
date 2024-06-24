@@ -1,13 +1,13 @@
 /* Stili generali per la pagina di login e registrazione */
-.log-page {
+.reg-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    padding: 5vh;
     background-color: #131921; /* Sfondo blu scuro */
 }
 
-.log-container {
+.reg-container {
     background-color: #232f3e; /* Sfondo del contenitore */
     padding: 2em;
     border-radius: 10px;
@@ -20,14 +20,14 @@
     flex-direction: column;
 }
 
-.log-container h2 {
+.reg-container h2 {
     color: white;
     margin-bottom: 1.5em;
     cursor: pointer;
 }
 
 
-.log-container label {
+.reg-container label {
     color: #6b8bb9;
     font-size: 1.2rem;
     margin-bottom: 0.5em;
@@ -35,7 +35,29 @@
     text-align: left;
 }
 
-.log-container input {
+.reg-container input[type=text] {
+    width: 100%;
+    padding: 0.8em;
+    font-size: 1rem;
+    border: 4px solid #6b8bb9;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    color: #333;
+    margin-bottom: 1em;
+    transition: border-color 0.3s ease-in-out;
+}
+.reg-container input[type=email] {
+    width: 100%;
+    padding: 0.8em;
+    font-size: 1rem;
+    border: 4px solid #6b8bb9;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    color: #333;
+    margin-bottom: 1em;
+    transition: border-color 0.3s ease-in-out;
+}
+.reg-container input[type=password] {
     width: 100%;
     padding: 0.8em;
     font-size: 1rem;
@@ -47,12 +69,12 @@
     transition: border-color 0.3s ease-in-out;
 }
 
-.log-container input:focus {
+.reg-container input:focus {
     outline: none;
     border-color: #3f526d;
 }
 
-.log-container button {
+.reg-container button {
     padding: 0.8em 1.5em;
     font-size: 1.1rem;
     color: white;
@@ -65,22 +87,22 @@
     width: 100%;
 }
 
-.log-container button:hover {
+.reg-container button:hover {
     background-color: #6b8bb9;
     color: white;
 }
 
-.log-container .link {
+.reg-container .link {
     color: #6b8bb9;
     margin-top: 1em;
 }
 
-.log-container .link a {
+.reg-container .link a {
     color: #6b8bb9;
     text-decoration: none;
 }
 
-.log-container .link a:hover {
+.reg-container .link a:hover {
     text-decoration: underline;
 }
 
@@ -91,8 +113,12 @@
     text-align: center;
 }
 
+.photo-credit a {
+    color: #6b8bb9;
+    text-decoration: none;
+}
 
-.log-container .error-message, .log-container .success-message {
+.reg-container .error-message, .reg-container .success-message {
     color: white;
     padding: 0.8em 1.5em;
     font-size: 1rem;
@@ -102,13 +128,13 @@
     text-align: center;
 }
 
-.log-container .error-message {
+.reg-container .error-message {
     background-color: #da373c; /* Rosso */
     border: 2.5px solid #da373c;
     animation: shake 0.3s linear;
 }
 
-.log-container .success-message {
+.reg-container .success-message {
     background-color: #4caf50; /* Verde */
     border: 2.5px solid #4caf50;
 }
@@ -121,17 +147,26 @@
     100% { transform: translateX(0); }
 }
 
-.login{
+.register{
     display: flex;
     flex-direction: column;
     width: 60%;
     justify-content: center;
     align-items: center;
-    gap: 4vh;
 }
-.login div {
+.register div {
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 70%;
+}
+
+.notPref {
+    width: 100% !important; 
+}
+.notPref label {
+    width: 45% !important; 
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1vh !important;
 }

@@ -60,7 +60,7 @@ class CategoriaOWASP {
                         this.pattern = results.map((row: any) => row.patternId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        resolve();
                     }
                 }
             );

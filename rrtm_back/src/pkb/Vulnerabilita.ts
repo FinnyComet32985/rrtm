@@ -105,7 +105,7 @@ class Vulnerabilita {
                         this.pattern = results.map((row: any) => row.patternId);
                         resolve();
                     } else {
-                        reject(new Error("nessun risultato"));
+                        resolve();
                     }
                 }
             );
@@ -126,7 +126,7 @@ class Vulnerabilita {
                         );
                         resolve();
                     } else {
-                        reject(new Error("nessun risultato"));
+                        resolve();
                     }
                 }
             );

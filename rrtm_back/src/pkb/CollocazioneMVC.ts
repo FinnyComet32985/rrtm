@@ -69,7 +69,7 @@ class CollocazioneMVC {
                         this.pattern = results.map((row: any) => row.patternId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        resolve();
                     }
                 }
             );
@@ -87,7 +87,7 @@ class CollocazioneMVC {
                         this.ISO = results.map((row: any) => row.IsoId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        resolve();
                     }
                 }
             );

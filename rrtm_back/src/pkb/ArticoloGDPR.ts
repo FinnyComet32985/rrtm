@@ -85,7 +85,7 @@ class ArticoloGDPR {
                         this.pattern = results.map((row: any) => row.patternId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        resolve();
                     }
                 }
             );
@@ -106,7 +106,7 @@ class ArticoloGDPR {
                         );
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        resolve();
                     }
                 }
             );
@@ -127,7 +127,7 @@ class ArticoloGDPR {
                         );
                         resolve();
                     } else {
-                        reject(new Error("Articolo not found"));
+                        resolve();
                     }
                 }
             );

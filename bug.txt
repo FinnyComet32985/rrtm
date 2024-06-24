@@ -1,4 +1,2 @@
-Onion Routing non parte (Probabilmente più della metà)
-Pattern View
-ISO View
+Fixare le view degli elementi associati
 Home (PDB e ISO)

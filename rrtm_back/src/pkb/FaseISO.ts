@@ -84,7 +84,7 @@ class FaseISO {
                         this.pattern = results.map((row: any) => row.patternId);
                         resolve();
                     } else {
-                        reject(new Error("Pattern not found"));
+                        resolve();
                     }
                 }
             );
@@ -102,7 +102,7 @@ class FaseISO {
                         this.MVC = results.map((row: any) => row.MvcId);
                         resolve();
                     } else {
-                        reject(new Error("ISO not found"));
+                        resolve();
                     }
                 }
             );
@@ -120,7 +120,7 @@ class FaseISO {
                         this.PbD = results.map((row: any) => row.PbDId);
                         resolve();
                     } else {
-                        reject(new Error("PbD not found"));
+                        resolve();
                     }
                 }
             );

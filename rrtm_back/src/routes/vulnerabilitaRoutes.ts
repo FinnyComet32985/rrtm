@@ -17,6 +17,7 @@ router.get(
         }
     }
 );
+
 router.get("/findVulnerabilita/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); // Converti l'ID in un numero
     if (isNaN(id)) {

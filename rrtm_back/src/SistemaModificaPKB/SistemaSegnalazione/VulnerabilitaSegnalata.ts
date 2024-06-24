@@ -109,5 +109,36 @@ class VulnerabilitaSegnalata extends Vulnerabilita {
             );
         });
     }
+
+    public async pubblica(): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
+            let query = "UPDATE vulnerabilita SET";
+            const params: (string | number)[] = [];
+
+            if (this.titolo !== "") {
+                query += " titolo=?,";
+                params.push(this.titolo);
+            }
+
+            query += " cwe=?, stato='pubblicata' WHERE Id=?";
+            params.push(this.cwe, this.Id);
+
+            // Remove the last comma if titolo was included
+            query = query.replace("SET,", "SET");
+
+            connection.query(
+                query,
+                params,
+                (err: mysql.MysqlError | null, results: any) => {
+                    if (err) {
+                        console.error(err.message);
+                        resolve(false);
+                    } else {
+                        resolve(results.affectedRows > 0); // Resolve the promise with true if rows were affected, otherwise false
+                    }
+                }
+            );
+        });
+    }
 }
 export default VulnerabilitaSegnalata;

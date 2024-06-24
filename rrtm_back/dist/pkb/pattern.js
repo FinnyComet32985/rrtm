@@ -1,17 +1,51 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+var __awaiter =
+    (this && this.__awaiter) ||
+    function (thisArg, _arguments, P, generator) {
+        function adopt(value) {
+            return value instanceof P
+                ? value
+                : new P(function (resolve) {
+                      resolve(value);
+                  });
+        }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) {
+                try {
+                    step(generator.next(value));
+                } catch (e) {
+                    reject(e);
+                }
+            }
+            function rejected(value) {
+                try {
+                    step(generator["throw"](value));
+                } catch (e) {
+                    reject(e);
+                }
+            }
+            function step(result) {
+                result.done
+                    ? resolve(result.value)
+                    : adopt(result.value).then(fulfilled, rejected);
+            }
+            step(
+                (generator = generator.apply(thisArg, _arguments || [])).next()
+            );
+        });
+    };
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection = require("../../index.js");
 class Pattern {
-    constructor(Id, titolo, sommario, descrizione, problema, soluzione, esempio) {
+    constructor(
+        Id,
+        titolo,
+        sommario,
+        descrizione,
+        problema,
+        soluzione,
+        esempio
+    ) {
         this.Id = Id;
         this.titolo = titolo;
         this.sommario = sommario;
@@ -70,16 +104,17 @@ class Pattern {
             const query = "SELECT * FROM pattern WHERE id = ?";
             return new Promise((resolve, reject) => {
                 connection.query(query, [Id], (err, results) => {
-                    if (err)
-                        return reject(err);
+                    if (err) console.error(err.message);
+                    return reject(err);
                     if (results.length > 0) {
                         const patternData = results[0];
                         filtro.filtroPattern.setId(patternData.Id);
-                        filtro.filtroPattern.setDescrizione(patternData.descrizione);
+                        filtro.filtroPattern.setDescrizione(
+                            patternData.descrizione
+                        );
                         filtro.filtroPattern.setEsempio(patternData.esempio);
                         resolve();
-                    }
-                    else {
+                    } else {
                         reject(new Error("Pattern not found"));
                     }
                 });
@@ -90,12 +125,10 @@ class Pattern {
         return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM pattern WHERE titolo = ?";
             connection.query(query, [Id], (err, results) => {
-                if (err)
-                    return reject(err);
+                if (err) return reject(err);
                 if (results.length > 0) {
                     resolve(results[0].titolo);
-                }
-                else {
+                } else {
                     reject(new Error("Pattern not found"));
                 }
             });
@@ -105,14 +138,20 @@ class Pattern {
         return new Promise((resolve, reject) => {
             const query = "SELECT * FROM pattern WHERE id=?";
             connection.query(query, [Id], (err, results) => {
-                if (err)
-                    return reject(err);
+                if (err) return reject(err);
                 if (results.length > 0) {
                     const patternData = results[0];
-                    const pattern = new Pattern(patternData.id, patternData.titolo, "", patternData.descrizione, "", "", patternData.esempio);
+                    const pattern = new Pattern(
+                        patternData.id,
+                        patternData.titolo,
+                        "",
+                        patternData.descrizione,
+                        "",
+                        "",
+                        patternData.esempio
+                    );
                     resolve(pattern);
-                }
-                else {
+                } else {
                     reject(new Error("Pattern not found"));
                 }
             });
@@ -122,12 +161,10 @@ class Pattern {
         return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM pattern WHERE titolo = ?";
             connection.query(query, [titolo], (err, results) => {
-                if (err)
-                    return reject(err);
+                if (err) return reject(err);
                 if (results.length > 0) {
                     resolve(results[0].Id);
-                }
-                else {
+                } else {
                     reject(new Error("Pattern not found"));
                 }
             });

@@ -261,4 +261,22 @@ router.post("/inserisciNotifica", verificaTokenAmm, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+router.post("/pubblicaVulnerabilita", verificaTokenAmm, async (req, res) => {
+    try {
+        const { Id, cwe, titolo } = req.body;
+        if (!Id || !cwe || isNaN(parseInt(Id)) || isNaN(parseInt(cwe))) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+        const vulnSegn = await InterfacciaModifica.pubblicaVulnerabilita(
+            parseInt(Id),
+            parseInt(cwe),
+            titolo
+        );
+        res.json(vulnSegn);
+    } catch (error) {
+        console.error("Error sending notification:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router;

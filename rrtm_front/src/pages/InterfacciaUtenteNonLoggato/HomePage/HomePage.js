@@ -76,7 +76,7 @@ function HomePage() {
     const handleToggleOWASP = () => {
         setShowAllOWASP(!showAllOWASP);
     };
-    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7 || loading8 ) {
+    if (loading || loading2 || loading3 || loading4 || loading5 || loading6 || loading7 || loading8) {
         return (
             <div>
                 <Header></Header>
@@ -110,7 +110,7 @@ function HomePage() {
         return <div>Error7: {error7.message}</div>;
     }
     if (error8) {
-        return <div>Error7: {error7.message}</div>;
+        return <div>Error8: {error8.message}</div>;
     }
 
     return (

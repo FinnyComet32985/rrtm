@@ -242,7 +242,7 @@ class Vulnerabilita {
         return new Promise((resolve, reject) => {
             let query = "INSERT INTO vulnerabilita (";
             const fields: string[] = ["id", "tipo"];
-            const values: any[] = [this.Id, "inserita"];
+            const values: any[] = [this.Id];
             const placeholders: string[] = ["?", "?"];
 
             if (this.titolo !== "") {

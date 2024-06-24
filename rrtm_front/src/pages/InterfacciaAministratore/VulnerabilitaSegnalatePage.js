@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import Header from "../../components/Header/Header";
 import "./VulnerabilitaSegnalatePage.css";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,23 @@ function VulnerabilitaSegnalatePage() {
     const [vulnerabilities, setVulnerabilities] = useState([]);
 const navigate = useNavigate();
 const {logout} = useAuth();
+const [buttonStatus, setButtonStatus] = useState(null);
+const [notify, setNotify] = useState(false);
+const handleCheckboxChange = (event) => {
+    setNotify(event.target.checked);
+};
+const pubblicaVulnSegnForm = useRef(null);
+const handleUnauthorized = () => {
+    alert("C'è stato un problema di autenticazione. Riesegui il login.");
+    logout();
+    navigate("/login");
+};
 
-    
+const resetButtonStatus = () => {
+    setTimeout(() => {
+        setButtonStatus(null);
+    }, 2000);
+};
     const getVulnerabilita = useCallback(async () => {
         const handleUnauthorized = () => {
             alert("C'è stato un problema di autenticazione. Riesegui il login.");
@@ -41,6 +56,44 @@ const {logout} = useAuth();
         }
     }, [token, navigate, logout]);
 
+    const handlePubblicaVulnerabilitaSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(pubblicaVulnSegnForm.current);
+        const data = Object.fromEntries(formData.entries());
+        const result = await fetch(
+            "http://localhost:1337/api/pubblicaVulnerabilita",
+            {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (result.status === 401) {
+            handleUnauthorized();
+            return null;
+        }
+        if (!result.ok || result.status===400) {
+            setButtonStatus('error');
+            resetButtonStatus();
+            return null;
+        }
+        const jsonResponse = await result.json();
+        if (jsonResponse) {
+            setButtonStatus('success');
+            if (notify) {
+                navigate("/InserimentoNotifichePage");
+            }
+        } else {
+            setButtonStatus('error');
+        }
+        resetButtonStatus();
+        
+        return jsonResponse;
+    };
+
     useEffect(() => {
         getVulnerabilita();
     }, [getVulnerabilita]);
@@ -65,6 +118,40 @@ const {logout} = useAuth();
                         <p style={{color: "white"}}>Nessuna vulnerabilità trovata.</p>
                     )}
                 </div>
+                <div className="pubblicaVuln">
+                        <h1>Pubblica una Vulnerabilita Segnalata</h1>
+                        <form
+                            ref={pubblicaVulnSegnForm}
+                            onSubmit={handlePubblicaVulnerabilitaSubmit}
+                        >
+                            <label>Id della Vulnerabilita da pubblicare</label>
+                            <input type="text" name="Id" required></input>
+                            <label>Nuovo numero della CWE di cui si pubblicare</label>
+                            <input type="text" name="cwe" required></input>
+                            <label>Nuovo Titolo</label>
+                            <input type="text" name="titolo"></input>
+                            <div className="notificaCk">
+                                <input
+                                    type="checkbox"
+                                    checked={notify}
+                                    onChange={handleCheckboxChange}
+                                ></input>
+                                <label>vuoi inserire una notifica?</label>
+                            </div>
+                            <button
+                                type="submit"
+                                className={
+                                    buttonStatus === "success"
+                                        ? "success"
+                                        : buttonStatus === "error"
+                                        ? "error"
+                                        : "button"
+                                }
+                            >
+                                Pubblica Vulnerabilita
+                            </button>
+                        </form>
+                    </div>
             </div>
         </div>
     );

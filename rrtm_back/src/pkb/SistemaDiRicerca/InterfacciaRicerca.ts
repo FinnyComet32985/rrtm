@@ -309,7 +309,7 @@ class InterfacciaRicerca {
     public static async showVulnerabilitaInserite(): Promise<Vulnerabilita[]> {
         return new Promise(async (resolve, reject) => {
             const query =
-                "SELECT Id FROM Vulnerabilita WHERE stato='Pubblicata' AND tipo='inserita'";
+                "SELECT Id FROM Vulnerabilita WHERE stato='Pubblicata'";
             connection.query(
                 query,
                 async (err: mysql.MysqlError | null, results: any) => {

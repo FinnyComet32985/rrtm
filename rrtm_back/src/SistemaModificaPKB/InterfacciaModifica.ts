@@ -2,7 +2,6 @@ import ModificaPKB from "./ModificaPKB";
 import Feedback from "./SistemaSegnalazione/Feedback";
 import connection from "..";
 import * as mysql from "mysql";
-import { promises } from "dns";
 import VulnerabilitaSegnalata from "./SistemaSegnalazione/VulnerabilitaSegnalata";
 import Notifica from "./SistemaNotifica/Notifica";
 class InterfacciaModifica {
@@ -229,6 +228,15 @@ class InterfacciaModifica {
         const not = new Notifica(idMax + 1, titolo, oggetto, testo);
         not.insertDB();
         return not.send();
+    }
+
+    public static async pubblicaVulnerabilita(
+        Id: number,
+        cwe: number,
+        titolo: string
+    ) {
+        const vulnSegn = new VulnerabilitaSegnalata(Id, titolo, cwe);
+        return vulnSegn.pubblica();
     }
 }
 export default InterfacciaModifica;

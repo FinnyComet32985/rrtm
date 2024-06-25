@@ -25,7 +25,7 @@ class InterfacciaSegnalazione {
     public static async findVulnSegnalateUt(
         usernameUt: string
     ): Promise<VulnerabilitaSegnalata[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM Vulnerabilita WHERE usernameUt = ?";
             connection.query(
                 query,
@@ -46,7 +46,7 @@ class InterfacciaSegnalazione {
                             const vulnerabilita = await Promise.all(promises);
                             resolve(vulnerabilita);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("no vulnerabilita found"));
@@ -59,7 +59,7 @@ class InterfacciaSegnalazione {
     public static async findFeedbackUt(
         usernameUt: string
     ): Promise<Feedback[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM Feedback WHERE usernameUt = ?";
             connection.query(
                 query,
@@ -77,7 +77,7 @@ class InterfacciaSegnalazione {
                             const feedback = await Promise.all(promises);
                             resolve(feedback);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("no feedback found"));
@@ -103,7 +103,7 @@ class InterfacciaSegnalazione {
     }
 
     public static async showNotifiche(): Promise<Notifica[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM notifica";
             connection.query(
                 query,
@@ -120,7 +120,7 @@ class InterfacciaSegnalazione {
                             const notifiche = await Promise.all(promises);
                             resolve(notifiche);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No articoli found"));

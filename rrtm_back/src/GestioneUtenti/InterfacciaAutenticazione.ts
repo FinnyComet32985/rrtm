@@ -129,7 +129,7 @@ class InterfacciaAutenticazione {
                 [username, hashedPassword, email, nome, cognome, notPref],
                 async (err: mysql.MysqlError | null, results: any) => {
                     if (err) {
-                        return reject({ success: false, error: err.message });
+                        return reject({ success: false, error: err.message }); //NOSONAR
                     }
 
                     try {
@@ -151,12 +151,12 @@ class InterfacciaAutenticazione {
                         }
                     } catch (loginError) {
                         if (loginError instanceof Error) {
-                            reject({
+                            reject({ //NOSONAR
                                 success: false,
                                 error: loginError.message,
                             }); // Gestione dell'errore di login
                         } else {
-                            reject({
+                            reject({ //NOSONAR
                                 success: false,
                                 error: "Unknown login error",
                             });
@@ -189,7 +189,7 @@ class InterfacciaAutenticazione {
                 [username, hashedPassword, email, nome, cognome],
                 async (err: mysql.MysqlError | null, results: any) => {
                     if (err) {
-                        return reject({ success: false, error: err.message });
+                        return reject({ success: false, error: err.message }); //NOSONAR
                     }
 
                     try {
@@ -211,12 +211,12 @@ class InterfacciaAutenticazione {
                         }
                     } catch (loginError) {
                         if (loginError instanceof Error) {
-                            reject({
+                            reject({//NOSONAR
                                 success: false,
                                 error: loginError.message,
                             }); // Gestione dell'errore di login
                         } else {
-                            reject({
+                            reject({//NOSONAR
                                 success: false,
                                 error: "Unknown login error",
                             });

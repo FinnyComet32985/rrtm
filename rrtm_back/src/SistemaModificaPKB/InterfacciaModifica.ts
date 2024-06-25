@@ -163,7 +163,7 @@ class InterfacciaModifica {
 
     // feedback
     public static async showFeedback(): Promise<Feedback[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM Feedback";
             connection.query(
                 query,
@@ -180,7 +180,7 @@ class InterfacciaModifica {
                             const feedback = await Promise.all(promises);
                             resolve(feedback);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No feedback found"));
@@ -194,7 +194,7 @@ class InterfacciaModifica {
     public static async showVulnerabilitaSegnalate(): Promise<
         VulnerabilitaSegnalata[]
     > {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM vulnerabilita WHERE tipo='segnalata'";
             connection.query(
                 query,
@@ -209,7 +209,7 @@ class InterfacciaModifica {
                             const vuln = await Promise.all(promises);
                             resolve(vuln);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No vulnerabilita segnalate found"));

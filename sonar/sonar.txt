@@ -1,2 +1,2 @@
-comando per avviare sonar (sostituire il token con il vostro token generato)
-sonar-scanner.bat -D"sonar.projectKey=rrtm" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_714c743e1c16359f06da28569d110948c34016bc"
+comando per avviare lo scan sonar (sostituire il token con il vostro token generato)
+sonar-scanner.bat -D"sonar.projectKey=rrtm" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token="

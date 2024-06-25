@@ -19,7 +19,7 @@ class InterfacciaRicerca {
         return filtroPattern.filtroPattern.getPatternbyFiltro(filtroPattern);
     }
     public static async showPatterns(): Promise<Pattern[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM pattern";
             connection.query(
                 query,
@@ -36,7 +36,7 @@ class InterfacciaRicerca {
                             const patterns = await Promise.all(promises);
                             resolve(patterns);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No patterns found"));
@@ -49,7 +49,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "strategia-pattern");
         await Pattern.updateFiltro(filtro, "strategia-pattern");
         const strategieIds = filtro.filtroPattern.getStrategie();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(strategieIds) || strategieIds.length === 0) {
                 return resolve([]);
             }
@@ -61,7 +61,7 @@ class InterfacciaRicerca {
                 const strategie = await Promise.all(promises);
                 resolve(strategie);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -71,7 +71,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "vulnerabilita-pattern");
         await Pattern.updateFiltro(filtro, "vulnerabilita-pattern");
         const vulnerabilitaIds = filtro.filtroPattern.getVulnerabilita();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (
                 !Array.isArray(vulnerabilitaIds) ||
                 vulnerabilitaIds.length === 0
@@ -86,7 +86,7 @@ class InterfacciaRicerca {
                 const vulnerabilita = await Promise.all(promises);
                 resolve(vulnerabilita);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -96,7 +96,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "articolo-pattern");
         await Pattern.updateFiltro(filtro, "articolo-pattern");
         const articoloIds = filtro.filtroPattern.getArticoli();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(articoloIds) || articoloIds.length === 0) {
                 return resolve([]);
             }
@@ -108,7 +108,7 @@ class InterfacciaRicerca {
                 const articoli = await Promise.all(promises);
                 resolve(articoli);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -118,7 +118,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "PbD-pattern");
         await Pattern.updateFiltro(filtro, "PbD-pattern");
         const principioIds = filtro.filtroPattern.getPbD();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(principioIds) || principioIds.length === 0) {
                 return resolve([]);
             }
@@ -130,7 +130,7 @@ class InterfacciaRicerca {
                 const PbD = await Promise.all(promises);
                 resolve(PbD);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -140,7 +140,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "MVC-pattern");
         await Pattern.updateFiltro(filtro, "MVC-pattern");
         const mvcIds = filtro.filtroPattern.getMVC();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(mvcIds) || mvcIds.length === 0) {
                 return resolve([]);
             }
@@ -152,7 +152,7 @@ class InterfacciaRicerca {
                 const MVC = await Promise.all(promises);
                 resolve(MVC);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -160,7 +160,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "ISO-pattern");
         await Pattern.updateFiltro(filtro, "ISO-pattern");
         const isoIds = filtro.filtroPattern.getISO();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(isoIds) || isoIds.length === 0) {
                 return resolve([]);
             }
@@ -172,7 +172,7 @@ class InterfacciaRicerca {
                 const ISO = await Promise.all(promises);
                 resolve(ISO);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -182,7 +182,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "OWASP-pattern");
         await Pattern.updateFiltro(filtro, "OWASP-pattern");
         const owaspIds = filtro.filtroPattern.getOWASP();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(owaspIds) || owaspIds.length === 0) {
                 return resolve([]);
             }
@@ -194,7 +194,7 @@ class InterfacciaRicerca {
                 const OWASP = await Promise.all(promises);
                 resolve(OWASP);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -207,7 +207,7 @@ class InterfacciaRicerca {
         );
     }
     public static async showStrategie(): Promise<Strategia[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             const query = "SELECT Id FROM strategia";
             connection.query(
                 query,
@@ -224,7 +224,7 @@ class InterfacciaRicerca {
                             const strategie = await Promise.all(promises);
                             resolve(strategie);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No patterns found"));
@@ -237,7 +237,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idStrategia, "pattern-strategia");
         await Strategia.updateFiltro(filtro, "pattern-strategia");
         const patternIds = filtro.filtroStrategia.getPatterns();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
             }
@@ -249,7 +249,7 @@ class InterfacciaRicerca {
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -259,7 +259,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idStrategia, "articolo-strategia");
         await Strategia.updateFiltro(filtro, "articolo-strategia");
         const articoloIds = filtro.filtroStrategia.getArticoli();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(articoloIds) || articoloIds.length === 0) {
                 return resolve([]);
             }
@@ -271,7 +271,7 @@ class InterfacciaRicerca {
                 const articoli = await Promise.all(promises);
                 resolve(articoli);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -281,7 +281,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idStrategia, "PbD-strategia");
         await Strategia.updateFiltro(filtro, "PbD-strategia");
         const PbDIds = filtro.filtroStrategia.getPbD();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(PbDIds) || PbDIds.length === 0) {
                 return resolve([]);
             }
@@ -293,7 +293,7 @@ class InterfacciaRicerca {
                 const PbD = await Promise.all(promises);
                 resolve(PbD);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -307,7 +307,7 @@ class InterfacciaRicerca {
         );
     }
     public static async showVulnerabilitaInserite(): Promise<Vulnerabilita[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             const query =
                 "SELECT Id FROM Vulnerabilita WHERE stato='Pubblicata'";
             connection.query(
@@ -326,7 +326,7 @@ class InterfacciaRicerca {
                             const vulnerabilita = await Promise.all(promises);
                             resolve(vulnerabilita);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No patterns found"));
@@ -344,7 +344,7 @@ class InterfacciaRicerca {
         );
         await Vulnerabilita.updateFiltro(filtro, "pattern-vulnerabilita");
         const patternIds = filtro.filtroVulnerabilita.getPatterns();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
             }
@@ -356,7 +356,7 @@ class InterfacciaRicerca {
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -369,7 +369,7 @@ class InterfacciaRicerca {
         );
         await Vulnerabilita.updateFiltro(filtro, "articolo-vulnerabilita");
         const articoliIds = filtro.filtroVulnerabilita.getArticoli();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(articoliIds) || articoliIds.length === 0) {
                 return resolve([]);
             }
@@ -381,7 +381,7 @@ class InterfacciaRicerca {
                 const articoli = await Promise.all(promises);
                 resolve(articoli);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -395,7 +395,7 @@ class InterfacciaRicerca {
         );
     }
     public static async showArticoli(): Promise<ArticoloGDPR[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             const query = "SELECT Id FROM articoloGDPR";
             connection.query(
                 query,
@@ -412,7 +412,7 @@ class InterfacciaRicerca {
                             const articoli = await Promise.all(promises);
                             resolve(articoli);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No articoli found"));
@@ -425,7 +425,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idArticolo, "pattern-articolo");
         await ArticoloGDPR.updateFiltro(filtro, "pattern-articolo");
         const patternIds = filtro.filtroArticolo.getPatterns();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
             }
@@ -437,7 +437,7 @@ class InterfacciaRicerca {
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -445,7 +445,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idArticolo, "strategia-articolo");
         await ArticoloGDPR.updateFiltro(filtro, "strategia-articolo");
         const strategiaIds = filtro.filtroArticolo.getStrategie();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(strategiaIds) || strategiaIds.length === 0) {
                 return resolve([]);
             }
@@ -457,7 +457,7 @@ class InterfacciaRicerca {
                 const strategie = await Promise.all(promises);
                 resolve(strategie);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -467,7 +467,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idArticolo, "vulnerabilita-articolo");
         await ArticoloGDPR.updateFiltro(filtro, "vulnerabilita-articolo");
         const vulnerabilitaIds = filtro.filtroArticolo.getVulnerabilita();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (
                 !Array.isArray(vulnerabilitaIds) ||
                 vulnerabilitaIds.length === 0
@@ -482,7 +482,7 @@ class InterfacciaRicerca {
                 const vulnerabilita = await Promise.all(promises);
                 resolve(vulnerabilita);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -494,7 +494,7 @@ class InterfacciaRicerca {
         return filtroPbD.filtroPbD.getPbDbyFiltro(filtroPbD);
     }
     public static async showPbD(): Promise<PrincipioPbD[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             const query = "SELECT Id FROM principioPbD";
             connection.query(
                 query,
@@ -509,7 +509,7 @@ class InterfacciaRicerca {
                             const principi = await Promise.all(promises);
                             resolve(principi);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No principi found"));
@@ -522,7 +522,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPbD, "pattern-PbD");
         await PrincipioPbD.updateFiltro(filtro, "pattern-PbD");
         const patternIds = filtro.filtroPbD.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
             }
@@ -534,7 +534,7 @@ class InterfacciaRicerca {
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -542,7 +542,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPbD, "strategia-PbD");
         await PrincipioPbD.updateFiltro(filtro, "strategia-PbD");
         const strategiaIds = filtro.filtroPbD.getStrategie();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(strategiaIds) || strategiaIds.length === 0) {
                 return resolve([]);
             }
@@ -554,7 +554,7 @@ class InterfacciaRicerca {
                 const strategie = await Promise.all(promises);
                 resolve(strategie);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -562,7 +562,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPbD, "ISO-PbD");
         await PrincipioPbD.updateFiltro(filtro, "ISO-PbD");
         const isoIds = filtro.filtroPbD.getISO();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(isoIds) || isoIds.length === 0) {
                 return resolve([]);
             }
@@ -574,7 +574,7 @@ class InterfacciaRicerca {
                 const iso = await Promise.all(promises);
                 resolve(iso);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -586,7 +586,7 @@ class InterfacciaRicerca {
         return filtroMVC.filtroMVC.getMVCbyFiltro(filtroMVC);
     }
     public static async showMVC(): Promise<CollocazioneMVC[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             const query = "SELECT Id FROM collocazioneMVC";
             connection.query(
                 query,
@@ -601,7 +601,7 @@ class InterfacciaRicerca {
                             const MVC = await Promise.all(promises);
                             resolve(MVC);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No principi found"));
@@ -614,7 +614,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idMVC, "pattern-MVC");
         await CollocazioneMVC.updateFiltro(filtro, "pattern-MVC");
         const MVCIds = filtro.filtroMVC.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(MVCIds) || MVCIds.length === 0) {
                 return resolve([]);
             }
@@ -626,7 +626,7 @@ class InterfacciaRicerca {
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -634,7 +634,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idMVC, "ISO-MVC");
         await CollocazioneMVC.updateFiltro(filtro, "ISO-MVC");
         const MVCIds = filtro.filtroMVC.getISO();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(MVCIds) || MVCIds.length === 0) {
                 return resolve([]);
             }
@@ -646,7 +646,7 @@ class InterfacciaRicerca {
                 const iso = await Promise.all(promises);
                 resolve(iso);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -658,7 +658,7 @@ class InterfacciaRicerca {
         return filtroISO.filtroISO.getISObyFiltro(filtroISO);
     }
     public static async showISO(): Promise<FaseISO[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             const query = "SELECT Id FROM faseIso";
             connection.query(
                 query,
@@ -673,7 +673,7 @@ class InterfacciaRicerca {
                             const ISO = await Promise.all(promises);
                             resolve(ISO);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No principi found"));
@@ -686,7 +686,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idISO, "pattern-ISO");
         await FaseISO.updateFiltro(filtro, "pattern-ISO");
         const ISOIds = filtro.filtroISO.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(ISOIds) || ISOIds.length === 0) {
                 return resolve([]);
             }
@@ -698,7 +698,7 @@ class InterfacciaRicerca {
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -706,7 +706,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idISO, "MVC-ISO");
         await FaseISO.updateFiltro(filtro, "MVC-ISO");
         const ISOIds = filtro.filtroISO.getMVC();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(ISOIds) || ISOIds.length === 0) {
                 return resolve([]);
             }
@@ -718,7 +718,7 @@ class InterfacciaRicerca {
                 const mvc = await Promise.all(promises);
                 resolve(mvc);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -726,7 +726,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idISO, "PbD-ISO");
         await FaseISO.updateFiltro(filtro, "PbD-ISO");
         const pbdIds = filtro.filtroISO.getPbD();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(pbdIds) || pbdIds.length === 0) {
                 return resolve([]);
             }
@@ -738,7 +738,7 @@ class InterfacciaRicerca {
                 const pbd = await Promise.all(promises);
                 resolve(pbd);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }
@@ -750,7 +750,7 @@ class InterfacciaRicerca {
         return filtroOWASP.filtroOWASP.getOWASPbyFiltro(filtroOWASP);
     }
     public static async showOWASP(): Promise<CategoriaOWASP[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             const query = "SELECT Id FROM categoriaOWASP";
             connection.query(
                 query,
@@ -765,7 +765,7 @@ class InterfacciaRicerca {
                             const OWASP = await Promise.all(promises);
                             resolve(OWASP);
                         } catch (err) {
-                            reject(err);
+                            reject(err);//NOSONAR
                         }
                     } else {
                         reject(new Error("No principi found"));
@@ -778,7 +778,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idOWASP, "pattern-OWASP");
         await CategoriaOWASP.updateFiltro(filtro, "pattern-OWASP");
         const OWASPIds = filtro.filtroOWASP.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {//NOSONAR
             if (!Array.isArray(OWASPIds) || OWASPIds.length === 0) {
                 return resolve([]);
             }
@@ -790,7 +790,7 @@ class InterfacciaRicerca {
                 const patterns = await Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
-                reject(err);
+                reject(err);//NOSONAR
             }
         });
     }

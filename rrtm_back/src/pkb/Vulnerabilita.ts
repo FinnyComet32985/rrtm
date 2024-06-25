@@ -201,7 +201,7 @@ class Vulnerabilita {
     }
 
     public async updateVulnerabilitaDB(): Promise<boolean> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             let query = "UPDATE vulnerabilita SET ";
             const fields: string[] = [];
             const values: any[] = [];

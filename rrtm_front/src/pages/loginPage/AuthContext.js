@@ -6,7 +6,7 @@ export function useAuth() {
     return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children }) { //NOSONAR
     const [user, setUser] = useState({ isLoggedIn: false, isAdmin: false });
 
     useEffect(() => {
@@ -115,7 +115,7 @@ export function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider
-            value={{ user, login, logout, register, isAuthenticated, isAdmin }}
+            value={{ user, login, logout, register, isAuthenticated, isAdmin }} //NOSONAR
         >
             {children}
         </AuthContext.Provider>

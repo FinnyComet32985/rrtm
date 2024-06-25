@@ -29,50 +29,41 @@ class ModificaPKB {
         statoVul?: string
     ) {
         this.Id = Id;
+        this.statoVul = "";
+        this.titolo = "";
+        this.nome = "";
+        this.sommario = "";
+        this.contesto = "";
+        this.problema = "";
+        this.soluzione = "";
+        this.esempio = "";
+        this.cwe = 0;
         if (titolo !== undefined) {
             this.titolo = titolo;
-        } else {
-            this.titolo = "";
         }
         if (nome !== undefined) {
             this.nome = nome;
-        } else {
-            this.nome = "";
-        }
+        } 
         if (sommario !== undefined) {
             this.sommario = sommario;
-        } else {
-            this.sommario = "";
-        }
+        } 
         if (contesto !== undefined) {
             this.contesto = contesto;
-        } else {
-            this.contesto = "";
         }
         if (problema !== undefined) {
             this.problema = problema;
-        } else {
-            this.problema = "";
         }
         if (soluzione !== undefined) {
             this.soluzione = soluzione;
-        } else {
-            this.soluzione = "";
         }
         if (esempio !== undefined) {
             this.esempio = esempio;
-        } else {
-            this.esempio = "";
         }
         if (cwe !== undefined) {
             this.cwe = cwe;
-        } else {
-            this.cwe = 0;
         }
         if (statoVul !== undefined) {
             this.statoVul = statoVul;
-        } else {
-            this.statoVul = "";
         }
     }
 

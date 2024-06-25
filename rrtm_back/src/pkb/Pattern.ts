@@ -17,7 +17,7 @@ class Pattern {
     private collocazioneMVC: number[];
     private faseISO: number[];
     private categoriaOWASP: number[];
-    constructor(
+    constructor( //NOSONAR
         Id: number,
         titolo?: string,
         sommario?: string,
@@ -34,70 +34,57 @@ class Pattern {
         categoriaOWASP?: number[]
     ) {
         this.Id = Id;
+        this.titolo = "";
+        this.sommario = "";
+        this.contesto = "";
+        this.problema = "";
+        this.soluzione = "";
+        this.esempio = "";
+        this.strategie = [];
+        this.vulnerabilita = [];
+        this.articoli = [];
+        this.principiPbD = [];
+        this.collocazioneMVC = [];
+        this.faseISO = [];
+        this.categoriaOWASP = [];
         if (titolo !== undefined) {
             this.titolo = titolo;
-        } else {
-            this.titolo = "";
         }
         if (sommario !== undefined) {
             this.sommario = sommario;
-        } else {
-            this.sommario = "";
         }
         if (contesto !== undefined) {
             this.contesto = contesto;
-        } else {
-            this.contesto = "";
         }
         if (problema !== undefined) {
             this.problema = problema;
-        } else {
-            this.problema = "";
         }
         if (soluzione !== undefined) {
             this.soluzione = soluzione;
-        } else {
-            this.soluzione = "";
         }
         if (esempio !== undefined) {
             this.esempio = esempio;
-        } else {
-            this.esempio = "";
         }
         if (strategie !== undefined) {
             this.strategie = strategie;
-        } else {
-            this.strategie = [];
         }
         if (vulnerabilita !== undefined) {
             this.vulnerabilita = vulnerabilita;
-        } else {
-            this.vulnerabilita = [];
         }
         if (articoli !== undefined) {
             this.articoli = articoli;
-        } else {
-            this.articoli = [];
         }
         if (principiPbD !== undefined) {
             this.principiPbD = principiPbD;
-        } else {
-            this.principiPbD = [];
         }
         if (collocazioneMVC !== undefined) {
             this.collocazioneMVC = collocazioneMVC;
-        } else {
-            this.collocazioneMVC = [];
         }
         if (faseISO !== undefined) {
             this.faseISO = faseISO;
-        } else {
-            this.faseISO = [];
         }
         if (categoriaOWASP !== undefined) {
             this.categoriaOWASP = categoriaOWASP;
-        } else {
-            this.categoriaOWASP = [];
         }
     }
     // get Pattern by ID
@@ -333,7 +320,7 @@ class Pattern {
             connection.query(
                 query,
                 [Id],
-                async (err: mysql.MysqlError | null, results: any) => {
+                async (err: mysql.MysqlError | null, results: any) => { //NOSONAR
                     if (err) return reject(err);
                     if (results.length > 0) {
                         const patternData = results[0];

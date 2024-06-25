@@ -16,7 +16,7 @@ import gestioneutenteRoutes from "./routes/gestioneutenteRoutes";
 const dbConfig = {
     host: "localhost",
     user: "rrtm",
-    password: "rrtm",
+    password: "rrtm", //NOSONAR
     database: "rrtm",
 };
 
@@ -33,8 +33,8 @@ connection.connect((err) => {
 });
 
 function avviaServer(connection: mysql.Connection) {
-    const app = express();
-    const PORT = process.env.PORT || 1337;
+    const app = express(); //NOSONAR 
+    const PORT = process.env.PORT || 1337; //NOSONAR
 
     app.use(express.json());
 

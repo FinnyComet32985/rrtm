@@ -142,7 +142,7 @@ router.post("/creaAmministratore", async (req: Request, res: Response) => {
 
 router.post("/logout", verificaToken, async (req: Request, res: Response) => {
     const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = authHeader?.split(" ")[1];
     const tipo = req.body.tipo;
     if (!token || !tipo) {
         return res.status(400).json({ message: "Missing token or tipo" });
@@ -175,12 +175,12 @@ router.post(
     verificaTokenUt,
     async (req: Request, res: Response) => {
         const authHeader = req.headers["authorization"];
-        const token = authHeader && authHeader.split(" ")[1];
+        const token = authHeader?.split(" ")[1];
         if (!token) {
             return res.status(400).json({ message: "Missing token" });
         } else {
             const result = InterfacciaGestioneUtente.aggiungiConsenso(token);
-            if (!result) {
+            if (!await result) {
                 return res.status(500).json({ message: "unnkown error" });
             }
             return res
@@ -194,12 +194,12 @@ router.post(
     verificaTokenUt,
     async (req: Request, res: Response) => {
         const authHeader = req.headers["authorization"];
-        const token = authHeader && authHeader.split(" ")[1];
+        const token = authHeader?.split(" ")[1];
         if (!token) {
             return res.status(400).json({ message: "Missing token" });
         } else {
             const result = InterfacciaGestioneUtente.rimuoviConsenso(token);
-            if (!result) {
+            if (!await result) {
                 return res.status(500).json({ message: "unnkown error" });
             }
             return res

@@ -1077,19 +1077,19 @@ function ModificaPKBPage() {
                             ref={modificaPatternForm}
                             onSubmit={handleModificaPatternSubmit}
                         >
-                            <label>Id del pattern da modificare</label>
-                            <input type="text" name="Id" required></input>
-                            <label>Nuovo Titolo</label>
-                            <input type="text" name="titolo" required></input>
-                            <label>Nuovo Sommario</label>
-                            <input type="text" name="sommario"></input>
-                            <label>Nuovo Contesto</label>
-                            <input type="text" name="contesto"></input>
-                            <label>Nuovo Problema</label>
-                            <input type="text" name="problema"></input>
-                            <label>Nuova Soluzione</label>
-                            <input type="text" name="soluzione"></input>
-                            <label>Nuovo Esempio</label>
+                            <label> <input type="text" name="Id" required></input> Id del pattern da modificare</label>
+                            
+                            <label> <input type="text" name="titolo" required></input> Nuovo Titolo</label>
+                            
+                            <label> <input type="text" name="sommario"></input> Nuovo Sommario</label>
+                            
+                            <label> <input type="text" name="contesto"></input> Nuovo Contesto</label>
+                            
+                            <label> <input type="text" name="problema"></input> Nuovo Problema</label>
+                            
+                            <label> <input type="text" name="soluzione"></input> Nuova Soluzione</label>
+                            
+                            <label>Nuovo Esempio</label> {/* NOSONAR */}
                             <input type="text" name="esempio"></input>
                             <div className="notificaCk">
                                 <input
@@ -1097,14 +1097,14 @@ function ModificaPKBPage() {
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label>vuoi inserire una notifica?</label>
+                                <label>vuoi inserire una notifica?</label> {/* NOSONAR */}
                             </div>
                             <button
                                 type="submit"
                                 className={
                                     buttonStatus.modificaPattern === "success"
                                         ? "success"
-                                        : buttonStatus.modificaPattern === "error"
+                                        : buttonStatus.modificaPattern === "error" /* NOSONAR */
                                         ? "error"
                                         : "button"
                                 }

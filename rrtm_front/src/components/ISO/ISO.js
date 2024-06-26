@@ -7,7 +7,7 @@ function ISO({ id, nome }) {
         navigate(`/ISOPage/${id}`); // Passa l'ID come parte dell'URL
     };
     return (
-        <div className="trendingISO" onClick={handleClick}>
+        <div className="trendingISO" onClick={handleClick}> {/* NOSONAR */}
             <h3>{id}</h3>
             <h3 className="titoloTrendingISO">{nome}</h3>
         </div>

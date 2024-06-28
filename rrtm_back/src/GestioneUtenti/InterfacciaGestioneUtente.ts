@@ -1,4 +1,3 @@
-import Utente from "./Utente";
 import InterfacciaAutenticazione from "./InterfacciaAutenticazione";
 import connection from "..";
 import * as mysql from "mysql";

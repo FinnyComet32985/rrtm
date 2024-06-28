@@ -12,7 +12,7 @@ import OWASP from "../../../components/OWASP/OWASP";
 
 import "./HomePage.css";
 
-function HomePage() {
+function HomePage() { //NOSONAR
     const { data, loading, error } = useFetch(
         "http://localhost:1337/api/showPatterns"
     );

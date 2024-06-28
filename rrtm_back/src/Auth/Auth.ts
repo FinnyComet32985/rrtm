@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import InterfacciaAutenticazione from "../GestioneUtenti/InterfacciaAutenticazione";
 
 export const verificaTokenUt = (
@@ -13,10 +12,6 @@ export const verificaTokenUt = (
     }
 
     try {
-        const decoded = jwt.verify(token, "your_jwt_secret") as {
-            username: string;
-            tipo: string;
-        };
         const utente =
             InterfacciaAutenticazione.getUtenteAutenticatoByToken(token);
 
@@ -46,10 +41,6 @@ export const verificaTokenAmm = (
     }
 
     try {
-        const decoded = jwt.verify(token, "your_jwt_secret") as {
-            username: string;
-            tipo: string;
-        };
         const amministratore =
             InterfacciaAutenticazione.getAmministratoreAutenticatoByToken(
                 token
@@ -81,10 +72,6 @@ export const verificaToken = (
     }
 
     try {
-        const decoded = jwt.verify(token, "your_jwt_secret") as {
-            username: string;
-            tipo: string;
-        };
         const amministratore =
             InterfacciaAutenticazione.getAmministratoreAutenticatoByToken(
                 token

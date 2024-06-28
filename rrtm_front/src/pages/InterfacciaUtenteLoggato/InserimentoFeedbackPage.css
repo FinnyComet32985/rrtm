@@ -5,7 +5,6 @@
     padding-bottom: 5vh;
     padding-right: 0.9vh;
     max-width: 205vh;
-    top: 13vh;
     gap: 2vh;
     justify-content: center;
     align-items: start;
@@ -159,7 +158,6 @@
     font-size: 1.1rem;
     color: white;
     background-color: #3f526d;
-    border: none;
     border-radius: 5px;
     border: 2.5px solid #6b8bb9;
     cursor: pointer;
@@ -183,7 +181,6 @@
     padding: 0.8em 1.5em;
     font-size: 1.1rem;
     color: white;
-    border: none;
     border-radius: 5px;
     background-color: #4caf50; /* Verde */
     border: 2.5px solid #4caf50;
@@ -195,7 +192,6 @@
     padding: 0.8em 1.5em;
     font-size: 1.1rem;
     color: white;
-    border: none;
     border-radius: 5px;
     border: 2.5px solid #da373c;
     cursor: pointer;

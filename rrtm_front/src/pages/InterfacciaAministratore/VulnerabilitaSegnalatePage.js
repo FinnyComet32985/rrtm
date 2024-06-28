@@ -23,7 +23,8 @@ function VulnerabilitaSegnalatePage() {
         }, 2000);
     };
     const getVulnerabilita = useCallback(async () => {
-        const handleUnauthorized = () => {
+        const handleUnauthorized = (error) => {
+            console.error(error);
             alert(
                 "C'è stato un problema di autenticazione. Riesegui il login."
             );
@@ -132,23 +133,17 @@ function VulnerabilitaSegnalatePage() {
                         ref={pubblicaVulnSegnForm}
                         onSubmit={handlePubblicaVulnerabilitaSubmit}
                     >
-                        <label>Id della Vulnerabilita da pubblicare</label>
+                        <label htmlFor="Id">Id della Vulnerabilita da pubblicare</label>
                         <input type="text" name="Id" required></input>
-                        <label>
+                        <label htmlFor="cwe">
                             Nuovo numero della CWE di cui si pubblicare
                         </label>
                         <input type="text" name="cwe" required></input>
-                        <label>Nuovo Titolo</label>
+                        <label htmlFor="titolo">Nuovo Titolo</label>
                         <input type="text" name="titolo"></input>
                         <button
                             type="submit"
-                            className={
-                                buttonStatus === "success"
-                                    ? "success"
-                                    : buttonStatus === "error"
-                                    ? "error"
-                                    : "button"
-                            }
+                            className={getButtonClass(buttonStatus)}
                         >
                             Pubblica Vulnerabilita
                         </button>
@@ -157,6 +152,15 @@ function VulnerabilitaSegnalatePage() {
             </div>
         </div>
     );
+    function getButtonClass(status) {
+        if (status === "success") {
+            return "success";
+        } else if (status === "error") {
+            return "error";
+        } else {
+            return "button";
+        }
+    }
 }
 
 export default VulnerabilitaSegnalatePage;

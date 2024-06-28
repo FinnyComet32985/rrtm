@@ -1,7 +1,6 @@
 import Pattern from "../pkb/Pattern";
 import ArticoloGDPR from "../pkb/ArticoloGDPR";
 import CategoriaOWASP from "../pkb/CategoriaOWASP";
-import CollocazioneMVC from "../pkb/CollocazioneMVC";
 import FaseISO from "../pkb/FaseISO";
 import PrincipioPbD from "../pkb/PrincipioPbD";
 import Strategia from "../pkb/Strategia";

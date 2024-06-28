@@ -21,83 +21,23 @@ class FiltroApplicato {
 
     constructor(id: number, tipoRicerca: string, nome?: string) {
         this.tipoRicerca = tipoRicerca;
-        if (
-            tipoRicerca === "pattern" ||
-            tipoRicerca === "strategia-pattern" ||
-            tipoRicerca === "vulnerabilita-pattern" ||
-            tipoRicerca === "articolo-pattern" ||
-            tipoRicerca === "PbD-pattern" ||
-            tipoRicerca === "MVC-pattern" ||
-            tipoRicerca === "ISO-pattern" ||
-            tipoRicerca === "OWASP-pattern"
-        ) {
-            this.filtroPattern = new Pattern(id);
-        } else {
-            this.filtroPattern = new Pattern(0);
-        }
-        if (
-            tipoRicerca === "strategia" ||
-            tipoRicerca === "pattern-strategia" ||
-            tipoRicerca === "articolo-strategia" ||
-            tipoRicerca === "PbD-strategia"
-        ) {
-            this.filtroStrategia = new Strategia(id);
-        } else {
-            this.filtroStrategia = new Strategia(0);
-        }
-        if (
-            tipoRicerca === "vulnerabilita" ||
-            tipoRicerca === "pattern-vulnerabilita" ||
-            tipoRicerca === "articolo-vulnerabilita"
-        ) {
-            this.filtroVulnerabilita = new Vulnerabilita(id);
-        } else {
-            this.filtroVulnerabilita = new Vulnerabilita(0);
-        }
-        if (
-            tipoRicerca === "articolo" ||
-            tipoRicerca === "pattern-articolo" ||
-            tipoRicerca === "strategia-articolo" ||
-            tipoRicerca === "vulnerabilita-articolo"
-        ) {
-            this.filtroArticolo = new ArticoloGDPR(id);
-        } else {
-            this.filtroArticolo = new ArticoloGDPR(0);
-        }
-        if (
-            tipoRicerca === "PbD" ||
-            tipoRicerca === "pattern-PbD" ||
-            tipoRicerca === "strategia-PbD" ||
-            tipoRicerca === "ISO-PbD"
-        ) {
-            this.filtroPbD = new PrincipioPbD(id);
-        } else {
-            this.filtroPbD = new PrincipioPbD(0);
-        }
-        if (
-            tipoRicerca === "MVC" ||
-            tipoRicerca === "pattern-MVC" ||
-            tipoRicerca === "ISO-MVC"
-        ) {
-            this.filtroMVC = new CollocazioneMVC(id);
-        } else {
-            this.filtroMVC = new CollocazioneMVC(0);
-        }
-        if (
-            tipoRicerca === "ISO" ||
-            tipoRicerca === "pattern-ISO" ||
-            tipoRicerca === "MVC-ISO" ||
-            tipoRicerca === "PbD-ISO"
-        ) {
-            this.filtroISO = new FaseISO(id);
-        } else {
-            this.filtroISO = new FaseISO(0);
-        }
-        if (tipoRicerca === "OWASP" || tipoRicerca === "pattern-OWASP") {
-            this.filtroOWASP = new CategoriaOWASP(id);
-        } else {
-            this.filtroOWASP = new CategoriaOWASP(0);
-        }
+        const patternId = tipoRicerca.startsWith("pattern") ? id : 0;
+        const strategiaId = tipoRicerca.includes("strategia") ? id : 0;
+        const vulnerabilitaId = tipoRicerca.includes("vulnerabilita") ? id : 0;
+        const articoloId = tipoRicerca.includes("articolo") ? id : 0;
+        const PbDId = tipoRicerca.includes("PbD") ? id : 0;
+        const MVCId = tipoRicerca.includes("MVC") ? id : 0;
+        const ISOId = tipoRicerca.includes("ISO") ? id : 0;
+        const OWASPId = tipoRicerca.includes("OWASP") ? id : 0;
+
+        this.filtroPattern = new Pattern(patternId);
+        this.filtroStrategia = new Strategia(strategiaId);
+        this.filtroVulnerabilita = new Vulnerabilita(vulnerabilitaId);
+        this.filtroArticolo = new ArticoloGDPR(articoloId);
+        this.filtroPbD = new PrincipioPbD(PbDId);
+        this.filtroMVC = new CollocazioneMVC(MVCId);
+        this.filtroISO = new FaseISO(ISOId);
+        this.filtroOWASP = new CategoriaOWASP(OWASPId);
     }
 }
 

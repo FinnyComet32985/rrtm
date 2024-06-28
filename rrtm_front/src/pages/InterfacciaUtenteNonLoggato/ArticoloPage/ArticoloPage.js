@@ -1,6 +1,5 @@
 import useFetch from "../../../hooks/useFetch";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../../../components/Header/Header";
 import "./ArticoloPage.css";

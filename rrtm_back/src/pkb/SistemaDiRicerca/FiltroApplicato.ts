@@ -21,46 +21,83 @@ class FiltroApplicato {
 
     constructor(id: number, tipoRicerca: string, nome?: string) {
         this.tipoRicerca = tipoRicerca;
-        
-        this.filtroPattern = this.createFiltro(tipoRicerca, id, [
-            "pattern", "strategia-pattern", "vulnerabilita-pattern", 
-            "articolo-pattern", "PbD-pattern", "MVC-pattern", 
-            "ISO-pattern", "OWASP-pattern"
-        ], Pattern);
-        
-        this.filtroStrategia = this.createFiltro(tipoRicerca, id, [
-            "strategia", "pattern-strategia", "articolo-strategia", 
-            "PbD-strategia"
-        ], Strategia);
-        
-        this.filtroVulnerabilita = this.createFiltro(tipoRicerca, id, [
-            "vulnerabilita", "pattern-vulnerabilita", "articolo-vulnerabilita"
-        ], Vulnerabilita);
-        
-        this.filtroArticolo = this.createFiltro(tipoRicerca, id, [
-            "articolo", "pattern-articolo", "strategia-articolo", 
-            "vulnerabilita-articolo"
-        ], ArticoloGDPR);
-        
-        this.filtroPbD = this.createFiltro(tipoRicerca, id, [
-            "PbD", "pattern-PbD", "strategia-PbD", "ISO-PbD"
-        ], PrincipioPbD);
-        
-        this.filtroMVC = this.createFiltro(tipoRicerca, id, [
-            "MVC", "pattern-MVC", "ISO-MVC"
-        ], CollocazioneMVC);
-        
-        this.filtroISO = this.createFiltro(tipoRicerca, id, [
-            "ISO", "pattern-ISO", "MVC-ISO", "PbD-ISO"
-        ], FaseISO);
-        
-        this.filtroOWASP = this.createFiltro(tipoRicerca, id, [
-            "OWASP", "pattern-OWASP"
-        ], CategoriaOWASP);
-    }
-    
-    private createFiltro<T>(tipoRicerca: string, id: number, validTypes: string[], FiltroClass: new (id: number) => T): T {
-        return validTypes.includes(tipoRicerca) ? new FiltroClass(id) : new FiltroClass(0);
+        if (
+            tipoRicerca === "pattern" ||
+            tipoRicerca === "strategia-pattern" ||
+            tipoRicerca === "vulnerabilita-pattern" ||
+            tipoRicerca === "articolo-pattern" ||
+            tipoRicerca === "PbD-pattern" ||
+            tipoRicerca === "MVC-pattern" ||
+            tipoRicerca === "ISO-pattern" ||
+            tipoRicerca === "OWASP-pattern"
+        ) {
+            this.filtroPattern = new Pattern(id);
+        } else {
+            this.filtroPattern = new Pattern(0);
+        }
+        if (
+            tipoRicerca === "strategia" ||
+            tipoRicerca === "pattern-strategia" ||
+            tipoRicerca === "articolo-strategia" ||
+            tipoRicerca === "PbD-strategia"
+        ) {
+            this.filtroStrategia = new Strategia(id);
+        } else {
+            this.filtroStrategia = new Strategia(0);
+        }
+        if (
+            tipoRicerca === "vulnerabilita" ||
+            tipoRicerca === "pattern-vulnerabilita" ||
+            tipoRicerca === "articolo-vulnerabilita"
+        ) {
+            this.filtroVulnerabilita = new Vulnerabilita(id);
+        } else {
+            this.filtroVulnerabilita = new Vulnerabilita(0);
+        }
+        if (
+            tipoRicerca === "articolo" ||
+            tipoRicerca === "pattern-articolo" ||
+            tipoRicerca === "strategia-articolo" ||
+            tipoRicerca === "vulnerabilita-articolo"
+        ) {
+            this.filtroArticolo = new ArticoloGDPR(id);
+        } else {
+            this.filtroArticolo = new ArticoloGDPR(0);
+        }
+        if (
+            tipoRicerca === "PbD" ||
+            tipoRicerca === "pattern-PbD" ||
+            tipoRicerca === "strategia-PbD" ||
+            tipoRicerca === "ISO-PbD"
+        ) {
+            this.filtroPbD = new PrincipioPbD(id);
+        } else {
+            this.filtroPbD = new PrincipioPbD(0);
+        }
+        if (
+            tipoRicerca === "MVC" ||
+            tipoRicerca === "pattern-MVC" ||
+            tipoRicerca === "ISO-MVC"
+        ) {
+            this.filtroMVC = new CollocazioneMVC(id);
+        } else {
+            this.filtroMVC = new CollocazioneMVC(0);
+        }
+        if (
+            tipoRicerca === "ISO" ||
+            tipoRicerca === "pattern-ISO" ||
+            tipoRicerca === "MVC-ISO" ||
+            tipoRicerca === "PbD-ISO"
+        ) {
+            this.filtroISO = new FaseISO(id);
+        } else {
+            this.filtroISO = new FaseISO(0);
+        }
+        if (tipoRicerca === "OWASP" || tipoRicerca === "pattern-OWASP") {
+            this.filtroOWASP = new CategoriaOWASP(id);
+        } else {
+            this.filtroOWASP = new CategoriaOWASP(0);
+        }
     }
 }
 

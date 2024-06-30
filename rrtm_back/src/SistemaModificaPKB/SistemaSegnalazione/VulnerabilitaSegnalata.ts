@@ -110,7 +110,7 @@ class VulnerabilitaSegnalata extends Vulnerabilita {
         });
     }
 
-    public async pubblica(): Promise<boolean> {
+    public async pubblica(usernameAmm: string): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
             let query = "UPDATE vulnerabilita SET";
             const params: (string | number)[] = [];
@@ -120,8 +120,8 @@ class VulnerabilitaSegnalata extends Vulnerabilita {
                 params.push(this.titolo);
             }
 
-            query += " cwe=?, stato='pubblicata' WHERE Id=?";
-            params.push(this.cwe, this.Id);
+            query += " cwe=?, usernameAmm=?, stato='pubblicata' WHERE Id=?";
+            params.push(this.cwe, usernameAmm, this.Id);
 
             // Remove the last comma if titolo was included
             query = query.replace("SET,", "SET");

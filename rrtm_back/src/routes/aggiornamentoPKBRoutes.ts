@@ -249,11 +249,12 @@ router.get(
 
 router.post("/inserisciNotifica", verificaTokenAmm, async (req, res) => {
     try {
-        const { titolo, oggetto, testo } = req.body;
+        const { titolo, oggetto, testo, usernameAmm } = req.body;
         const not = await InterfacciaModifica.inserisciNotifica(
             titolo,
             oggetto,
-            testo
+            testo,
+            usernameAmm
         );
         res.json(not);
     } catch (error) {
@@ -264,14 +265,15 @@ router.post("/inserisciNotifica", verificaTokenAmm, async (req, res) => {
 
 router.post("/pubblicaVulnerabilita", verificaTokenAmm, async (req, res) => {
     try {
-        const { Id, cwe, titolo } = req.body;
+        const { Id, cwe, titolo, usernameAmm } = req.body;
         if (!Id || !cwe || isNaN(parseInt(Id)) || isNaN(parseInt(cwe))) {
             return res.status(400).json({ message: "Missing required fields" });
         }
         const vulnSegn = await InterfacciaModifica.pubblicaVulnerabilita(
             parseInt(Id),
             parseInt(cwe),
-            titolo
+            titolo,
+            usernameAmm
         );
         res.json(vulnSegn);
     } catch (error) {

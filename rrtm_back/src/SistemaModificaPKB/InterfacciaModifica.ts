@@ -180,7 +180,7 @@ class InterfacciaModifica {
                             const feedback = await Promise.all(promises);
                             resolve(feedback);
                         } catch (err) {
-                            reject(err);//NOSONAR
+                            reject(err); //NOSONAR
                         }
                     } else {
                         reject(new Error("No feedback found"));
@@ -209,7 +209,7 @@ class InterfacciaModifica {
                             const vuln = await Promise.all(promises);
                             resolve(vuln);
                         } catch (err) {
-                            reject(err);//NOSONAR
+                            reject(err); //NOSONAR
                         }
                     } else {
                         reject(new Error("No vulnerabilita segnalate found"));
@@ -222,10 +222,17 @@ class InterfacciaModifica {
     public static async inserisciNotifica(
         titolo: string,
         oggetto: string,
-        testo: string
+        testo: string,
+        usernameAmm: string
     ) {
         const idMax = await Notifica.getIdMax();
-        const not = new Notifica(idMax + 1, titolo, oggetto, testo);
+        const not = new Notifica(
+            idMax + 1,
+            titolo,
+            oggetto,
+            testo,
+            usernameAmm
+        );
         not.insertDB();
         return not.send();
     }
@@ -233,10 +240,11 @@ class InterfacciaModifica {
     public static async pubblicaVulnerabilita(
         Id: number,
         cwe: number,
-        titolo: string
+        titolo: string,
+        usernameAmm: string
     ) {
         const vulnSegn = new VulnerabilitaSegnalata(Id, titolo, cwe);
-        return vulnSegn.pubblica();
+        return vulnSegn.pubblica(usernameAmm);
     }
 }
 export default InterfacciaModifica;

@@ -7,8 +7,6 @@ DROP TABLE IF EXISTS pattern;
 CREATE TABLE pattern( Id int not null primary key, titolo varchar(100), sommario text, contesto text, problema text, soluzione text, esempio text);
 DROP TABLE IF EXISTS strategia;
 CREATE TABLE strategia( Id int not null primary key, nome varchar(100) );
-DROP TABLE IF EXISTS vulnerabilita;
-CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300), tipo varchar(300), usernameUt varchar(300));
 DROP TABLE IF EXISTS articoloGDPR;
 CREATE TABLE articoloGDPR( Id int not null primary key, titolo varchar(500));
 DROP TABLE IF EXISTS principioPbD;
@@ -19,14 +17,16 @@ DROP TABLE IF EXISTS faseIso;
 CREATE TABLE faseIso( Id decimal(10,2) not null primary key, nome varchar(500));
 DROP TABLE IF EXISTS categoriaOWASP;
 CREATE TABLE categoriaOWASP( Id int not null primary key, nome varchar(500));
-DROP TABLE IF EXISTS feedback;
-CREATE TABLE feedback( Id int not null primary key, titolo varchar(500), descrizione text, usernameUt varchar(500));
 DROP TABLE IF EXISTS utente;
 CREATE TABLE utente( username VARCHAR(50) NOT NULL PRIMARY KEY, password VARCHAR(255) NOT NULL, email VARCHAR(100) NOT NULL UNIQUE, nome VARCHAR(50), cognome VARCHAR(50), notPref boolean);
 DROP TABLE IF EXISTS amministratore;
 CREATE TABLE amministratore( username VARCHAR(50) NOT NULL PRIMARY KEY, password VARCHAR(255) NOT NULL, email VARCHAR(100) NOT NULL UNIQUE, nome VARCHAR(50), cognome VARCHAR(50));
 DROP TABLE IF EXISTS notifica;
-CREATE TABLE notifica( Id int not null primary key, titolo varchar(500) not null, oggetto varchar(1000) not null, testo text not null);
+CREATE TABLE notifica( Id int not null primary key, titolo varchar(500) not null, oggetto varchar(1000) not null, testo text not null, usernameAmm varchar(50), FOREIGN KEY (usernameAmm) REFERENCES amministratore(username));
+DROP TABLE IF EXISTS vulnerabilita;
+CREATE TABLE vulnerabilita( Id int not null primary key, cwe int, titolo varchar(500), stato varchar(300), tipo varchar(300), usernameUt varchar(300), usernameAmm varchar(50), FOREIGN KEY (usernameUt) REFERENCES utente(username), FOREIGN KEY (usernameAmm) REFERENCES amministratore(username));
+DROP TABLE IF EXISTS feedback;
+CREATE TABLE feedback( Id int not null primary key, titolo varchar(500), descrizione text, usernameUt varchar(500), FOREIGN KEY (usernameUt) REFERENCES utente(username));
 
 /* creazione tabelle relazioni */
 DROP TABLE IF EXISTS StrategiaPattern;

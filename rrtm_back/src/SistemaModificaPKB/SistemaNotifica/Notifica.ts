@@ -7,19 +7,27 @@ class Notifica {
     private titolo: string;
     private oggetto: string;
     private testo: string;
+    private usernameAmm: string;
 
-    constructor(Id: number, titolo: string, oggetto: string, testo: string) {
+    constructor(
+        Id: number,
+        titolo: string,
+        oggetto: string,
+        testo: string,
+        usernameAmm: string
+    ) {
         this.Id = Id;
         this.titolo = titolo;
         this.oggetto = oggetto;
         this.testo = testo;
+        this.usernameAmm = usernameAmm;
     }
     public async insertDB(): Promise<void> {
         const query =
-            "INSERT INTO notifica (Id, titolo, oggetto, testo) VALUES (?, ?, ?, ?)";
+            "INSERT INTO notifica (Id, titolo, oggetto, testo, usernameAmm) VALUES (?, ?, ?, ?, ?)";
         connection.query(
             query,
-            [this.Id, this.titolo, this.oggetto, this.testo],
+            [this.Id, this.titolo, this.oggetto, this.testo, this.usernameAmm],
             (err: mysql.MysqlError | null) => {
                 if (err) {
                     console.error("Error inserting into database:", err);
@@ -68,7 +76,8 @@ class Notifica {
                             results[0].Id,
                             results[0].titolo,
                             results[0].oggetto,
-                            results[0].testo
+                            results[0].testo,
+                            results[0].usernameAmm
                         );
                         resolve(not);
                     } else {
@@ -120,7 +129,8 @@ class Notifica {
     }
 
     private async sendEmail(to: string): Promise<void> {
-        const transporter = nodemailer.createTransport({ //NOSONAR
+        const transporter = nodemailer.createTransport({
+            //NOSONAR
             host: "smtp.gmail.com",
             port: 587,
             secure: false,

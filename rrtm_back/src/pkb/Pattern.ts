@@ -17,7 +17,8 @@ class Pattern {
     private collocazioneMVC: number[];
     private faseISO: number[];
     private categoriaOWASP: number[];
-    constructor( //NOSONAR
+    constructor(
+        //NOSONAR
         Id: number,
         titolo?: string,
         sommario?: string,
@@ -313,18 +314,27 @@ class Pattern {
         filtro: FiltroApplicato,
         tipo: string
     ): Promise<void> {
-        let Id = filtro.filtroPattern.getId();
-        const query = "SELECT * FROM pattern WHERE id = ?";
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomePattern") {
+            query = "SELECT * FROM pattern WHERE titolo LIKE ?";
+            queryParams = [`%${filtro.filtroPattern.getTitolo()}%`];
+        } else {
+            query = "SELECT * FROM pattern WHERE id = ?";
+            queryParams = [filtro.filtroPattern.getId()];
+        }
 
         return new Promise<void>((resolve, reject) => {
             connection.query(
                 query,
-                [Id],
-                async (err: mysql.MysqlError | null, results: any) => { //NOSONAR
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
                     if (err) return reject(err);
                     if (results.length > 0) {
                         const patternData = results[0];
-                        filtro.filtroPattern.setId(patternData.Id);
+                        filtro.filtroPattern.setId(patternData.id);
                         filtro.filtroPattern.setTitolo(patternData.titolo);
                         filtro.filtroPattern.setSommario(patternData.sommario);
                         filtro.filtroPattern.setContesto(patternData.contesto);
@@ -333,27 +343,34 @@ class Pattern {
                             patternData.soluzione
                         );
                         filtro.filtroPattern.setEsempio(patternData.esempio);
-                        if (tipo === "strategia-pattern") {
-                            await filtro.filtroPattern.setStrategie();
+
+                        // Aggiunta delle altre condizioni per tipo se necessario
+                        switch (tipo) {
+                            case "strategia-pattern":
+                                await filtro.filtroPattern.setStrategie();
+                                break;
+                            case "vulnerabilita-pattern":
+                                await filtro.filtroPattern.setVulnerabilita();
+                                break;
+                            case "articolo-pattern":
+                                await filtro.filtroPattern.setArticoli();
+                                break;
+                            case "PbD-pattern":
+                                await filtro.filtroPattern.setPbD();
+                                break;
+                            case "MVC-pattern":
+                                await filtro.filtroPattern.setMVC();
+                                break;
+                            case "ISO-pattern":
+                                await filtro.filtroPattern.setISO();
+                                break;
+                            case "OWASP-pattern":
+                                await filtro.filtroPattern.setOWASP();
+                                break;
+                            default:
+                                break;
                         }
-                        if (tipo === "vulnerabilita-pattern") {
-                            await filtro.filtroPattern.setVulnerabilita();
-                        }
-                        if (tipo === "articolo-pattern") {
-                            await filtro.filtroPattern.setArticoli();
-                        }
-                        if (tipo === "PbD-pattern") {
-                            await filtro.filtroPattern.setPbD();
-                        }
-                        if (tipo === "MVC-pattern") {
-                            await filtro.filtroPattern.setMVC();
-                        }
-                        if (tipo === "ISO-pattern") {
-                            await filtro.filtroPattern.setISO();
-                        }
-                        if (tipo === "OWASP-pattern") {
-                            await filtro.filtroPattern.setOWASP();
-                        }
+
                         resolve();
                     } else {
                         reject(new Error("Pattern not found"));
@@ -552,6 +569,50 @@ class Pattern {
                         resolve(idMax);
                     } else {
                         reject(new Error("Error"));
+                    }
+                }
+            );
+        });
+    }
+
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<Pattern[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomePattern") {
+            query = "SELECT * FROM pattern WHERE titolo LIKE ?";
+            queryParams = [`%${filtro.filtroPattern.getTitolo()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+
+        return new Promise<Pattern[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const patterns = results.map((patternData: any) => {
+                            const pattern = new Pattern(
+                                patternData.Id,
+                                patternData.titolo,
+                                patternData.sommario,
+                                patternData.contesto,
+                                patternData.problema,
+                                patternData.soluzione,
+                                patternData.esempio
+                            );
+                            return pattern;
+                        });
+                        resolve(patterns);
+                    } else {
+                        reject(new Error("Pattern not found"));
                     }
                 }
             );

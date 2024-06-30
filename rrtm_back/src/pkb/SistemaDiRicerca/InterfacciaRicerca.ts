@@ -18,6 +18,10 @@ class InterfacciaRicerca {
         await Pattern.updateFiltro(filtroPattern, "pattern");
         return filtroPattern.filtroPattern.getPatternbyFiltro(filtroPattern);
     }
+    public static async findPatternFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomePattern", nome);
+        return await Pattern.getResult(filtro, "nomePattern");
+    }
     public static async showPatterns(): Promise<Pattern[]> {
         return new Promise((resolve, reject) => {
             const query = "SELECT Id FROM pattern";
@@ -212,6 +216,10 @@ class InterfacciaRicerca {
         return filtroStrategia.filtroStrategia.getStrategiabyFiltro(
             filtroStrategia
         );
+    }
+    public static async findStrategiaFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomeStartegia", nome);
+        return await Strategia.getResult(filtro, "nomeStrategia");
     }
     public static async showStrategie(): Promise<Strategia[]> {
         return new Promise(async (resolve, reject) => {

@@ -26,6 +26,19 @@ router.get("/findPattern/:id", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get(
+    "/findPatternFromName/:name",
+    async (req: Request, res: Response) => {
+        const name = req.params.name;
+        try {
+            const patterns = await InterfacciaRicerca.findPatternFromName(name);
+            res.json(patterns);
+        } catch (error) {
+            console.error("Error fetching patterns:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+);
 router.get("/findStratPatt/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); // Converti l'ID in un numero
     if (isNaN(id)) {

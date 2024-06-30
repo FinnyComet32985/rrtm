@@ -293,5 +293,44 @@ class Strategia {
             );
         });
     }
+
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<Strategia[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomeStrategia") {
+            query = "SELECT * FROM strategia WHERE nome LIKE ?";
+            queryParams = [`%${filtro.filtroStrategia.getNome()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+
+        return new Promise<Strategia[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const strategie = results.map((strategiaData: any) => {
+                            const strategie = new Strategia(
+                                strategiaData.Id,
+                                strategiaData.nome
+                            );
+                            return strategie;
+                        });
+                        resolve(strategie);
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
 }
 export default Strategia;

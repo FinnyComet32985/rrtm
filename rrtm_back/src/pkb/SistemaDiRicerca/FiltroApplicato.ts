@@ -30,14 +30,14 @@ class FiltroApplicato {
         const ISOId = tipoRicerca.endsWith("ISO") ? id : 0;
         const OWASPId = tipoRicerca.endsWith("OWASP") ? id : 0;
 
-        this.filtroPattern = new Pattern(patternId);
-        this.filtroStrategia = new Strategia(strategiaId);
-        this.filtroVulnerabilita = new Vulnerabilita(vulnerabilitaId);
-        this.filtroArticolo = new ArticoloGDPR(articoloId);
-        this.filtroPbD = new PrincipioPbD(PbDId);
-        this.filtroMVC = new CollocazioneMVC(MVCId);
-        this.filtroISO = new FaseISO(ISOId);
-        this.filtroOWASP = new CategoriaOWASP(OWASPId);
+        this.filtroPattern = new Pattern(id);
+        this.filtroStrategia = new Strategia(id);
+        this.filtroVulnerabilita = new Vulnerabilita(id);
+        this.filtroArticolo = new ArticoloGDPR(id);
+        this.filtroPbD = new PrincipioPbD(id);
+        this.filtroMVC = new CollocazioneMVC(id);
+        this.filtroISO = new FaseISO(id);
+        this.filtroOWASP = new CategoriaOWASP(id);
     }
 }
 

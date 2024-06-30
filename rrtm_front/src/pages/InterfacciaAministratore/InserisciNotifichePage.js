@@ -131,7 +131,7 @@ function InserisciNotifichePage() {
                             ? "success"
                             : buttonStatus === "error"
                             ? "error"
-                            : "buttonInsertNot"
+                            : "buttonInsertNotifica"
                     }
                 >
                     Inserisci

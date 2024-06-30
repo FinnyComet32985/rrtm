@@ -8,8 +8,9 @@ function VulnerabilitaSegnalatePage() {
     const token = localStorage.getItem("token");
     const [vulnerabilities, setVulnerabilities] = useState([]);
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
     const [buttonStatus, setButtonStatus] = useState(null);
+    const [progress, setProgress] = useState(0);
     const pubblicaVulnSegnForm = useRef(null);
     const handleUnauthorized = () => {
         alert("C'è stato un problema di autenticazione. Riesegui il login.");
@@ -22,6 +23,19 @@ function VulnerabilitaSegnalatePage() {
             setButtonStatus(null);
         }, 2000);
     };
+    const navNotifica = () => {
+        setProgress(100);
+        const interval = setInterval(() => {
+            setProgress(prevProgress => {
+                const newProgress = prevProgress - 0.8; // Riduce progressivamente la larghezza
+                if (newProgress <= 0) {
+                    clearInterval(interval);
+                    navigate("/InserimentoNotifichePage");
+                }
+                return newProgress;
+            });
+        }, 16);
+    }; 
     const getVulnerabilita = useCallback(async () => {
         const handleUnauthorized = (error) => {
             console.error(error);
@@ -66,7 +80,10 @@ function VulnerabilitaSegnalatePage() {
             "http://localhost:1337/api/pubblicaVulnerabilita",
             {
                 method: "POST",
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    ...data,
+                    usernameAmm: user.username,
+                }),
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -85,8 +102,7 @@ function VulnerabilitaSegnalatePage() {
         const jsonResponse = await result.json();
         if (jsonResponse) {
             setButtonStatus("success");
-
-            navigate("/InserimentoNotifichePage");
+            navNotifica();
         } else {
             setButtonStatus("error");
         }
@@ -102,7 +118,10 @@ function VulnerabilitaSegnalatePage() {
     return (
         <div>
             <Header />
-            <div className="container">
+            <div className="successBarDiv">
+                <div className="successBar" style={{ width: `${progress}%` }}></div>
+            </div>
+            <div className="containerMod">
                 <div className="visioneVulnerabilitaUt">
                     <h1 className="AllVulnerabilitaUtTitle">
                         Vulnerabilita Segnalate
@@ -130,6 +149,7 @@ function VulnerabilitaSegnalatePage() {
                 <div className="pubblicaVuln">
                     <h1>Pubblica una Vulnerabilita Segnalata</h1>
                     <form
+                    className="modificaContainer"
                         ref={pubblicaVulnSegnForm}
                         onSubmit={handlePubblicaVulnerabilitaSubmit}
                     >

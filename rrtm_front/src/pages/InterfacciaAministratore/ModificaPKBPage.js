@@ -4,11 +4,13 @@ import Header from "../../components/Header/Header";
 import { useAuth } from "../loginPage/AuthContext";
 import "./ModificaPKBPage.css";
 
-function ModificaPKBPage() { //NOSONAR
+function ModificaPKBPage() {
+    //NOSONAR
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const { logout } = useAuth();
     const [notify, setNotify] = useState(false);
+    const [progress, setProgress] = useState(0);
     const [buttonStatus, setButtonStatus] = useState({
         // Pattern
         modificaPattern: "wating",
@@ -40,6 +42,19 @@ function ModificaPKBPage() { //NOSONAR
         eliminaOWASP: "wating",
     });
 
+    const navNotifica = () => {
+        setProgress(100);
+        const interval = setInterval(() => {
+            setProgress(prevProgress => {
+                const newProgress = prevProgress - 0.8; // Riduce progressivamente la larghezza
+                if (newProgress <= 0) {
+                    clearInterval(interval);
+                    navigate("/InserimentoNotifichePage");
+                }
+                return newProgress;
+            });
+        }, 16);
+    }; 
     const resetButtonStatus = () => {
         setTimeout(() => {
             setButtonStatus({
@@ -72,7 +87,7 @@ function ModificaPKBPage() { //NOSONAR
                 inserisciOWASP: "wating",
                 eliminaOWASP: "wating",
             });
-        }, 2000); // Torna allo stato di partenza dopo 3 secondi
+        }, 2000); 
     };
 
     // Pattern
@@ -136,7 +151,7 @@ function ModificaPKBPage() { //NOSONAR
             return null;
         }
 
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 modificaPattern: "error",
@@ -151,7 +166,7 @@ function ModificaPKBPage() { //NOSONAR
                 modificaPattern: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -181,7 +196,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 insersciPattern: "error",
@@ -196,7 +211,7 @@ function ModificaPKBPage() { //NOSONAR
                 insersciPattern: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -205,7 +220,7 @@ function ModificaPKBPage() { //NOSONAR
             });
         }
         resetButtonStatus();
-        
+
         return jsonResponse;
     };
     const handleEliminaPatternSubmit = async (event) => {
@@ -226,14 +241,14 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 eliminaPattern: "error",
             });
             resetButtonStatus();
             return null;
-        } 
+        }
         const jsonResponse = await result.json();
         if (jsonResponse) {
             setButtonStatus({
@@ -241,7 +256,7 @@ function ModificaPKBPage() { //NOSONAR
                 eliminaPattern: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -274,7 +289,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 modificaStrategia: "error",
@@ -289,7 +304,7 @@ function ModificaPKBPage() { //NOSONAR
                 modificaStrategia: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -320,14 +335,13 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 inserisciStrategia: "error",
             });
             resetButtonStatus();
             return null;
-
         }
         const jsonResponse = await result.json();
         if (jsonResponse) {
@@ -336,7 +350,7 @@ function ModificaPKBPage() { //NOSONAR
                 inserisciStrategia: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -365,7 +379,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 eliminaStrategia: "error",
@@ -380,7 +394,7 @@ function ModificaPKBPage() { //NOSONAR
                 eliminaStrategia: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -413,7 +427,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 modificaVulnerabilita: "error",
@@ -428,7 +442,7 @@ function ModificaPKBPage() { //NOSONAR
                 modificaVulnerabilita: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -459,7 +473,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 inserisciVulnerabilita: "error",
@@ -474,7 +488,7 @@ function ModificaPKBPage() { //NOSONAR
                 inserisciVulnerabilita: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -503,7 +517,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 eliminaVulnerabilita: "error",
@@ -518,7 +532,7 @@ function ModificaPKBPage() { //NOSONAR
                 eliminaVulnerabilita: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -551,7 +565,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 modificaArticolo: "error",
@@ -566,7 +580,7 @@ function ModificaPKBPage() { //NOSONAR
                 modificaArticolo: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -597,7 +611,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 inserisciArticolo: "error",
@@ -612,7 +626,7 @@ function ModificaPKBPage() { //NOSONAR
                 inserisciArticolo: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -641,7 +655,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 eliminaArticolo: "error",
@@ -656,7 +670,7 @@ function ModificaPKBPage() { //NOSONAR
                 eliminaArticolo: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -686,7 +700,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 modificaPbD: "error",
@@ -701,7 +715,7 @@ function ModificaPKBPage() { //NOSONAR
                 modificaPbD: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -729,7 +743,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 inserisciPbD: "error",
@@ -744,7 +758,7 @@ function ModificaPKBPage() { //NOSONAR
                 inserisciPbD: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -773,7 +787,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 eliminaPbD: "error",
@@ -788,7 +802,7 @@ function ModificaPKBPage() { //NOSONAR
                 eliminaPbD: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -818,7 +832,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 modificaISO: "error",
@@ -833,7 +847,7 @@ function ModificaPKBPage() { //NOSONAR
                 modificaISO: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -861,7 +875,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 inserisciISO: "error",
@@ -876,7 +890,7 @@ function ModificaPKBPage() { //NOSONAR
                 inserisciISO: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -905,7 +919,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 eliminaISO: "error",
@@ -920,7 +934,7 @@ function ModificaPKBPage() { //NOSONAR
                 eliminaISO: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -950,7 +964,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 modificaOWASP: "error",
@@ -965,7 +979,7 @@ function ModificaPKBPage() { //NOSONAR
                 modificaOWASP: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -993,7 +1007,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 inserisciOWASP: "error",
@@ -1008,7 +1022,7 @@ function ModificaPKBPage() { //NOSONAR
                 inserisciOWASP: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -1037,7 +1051,7 @@ function ModificaPKBPage() { //NOSONAR
             handleUnauthorized();
             return null;
         }
-        if (!result.ok || result.status===400) {
+        if (!result.ok || result.status === 400) {
             setButtonStatus({
                 ...buttonStatus,
                 eliminaOWASP: "error",
@@ -1052,7 +1066,7 @@ function ModificaPKBPage() { //NOSONAR
                 eliminaOWASP: "success",
             });
             if (notify) {
-                navigate("/InserimentoNotifichePage");
+                navNotifica();
             }
         } else {
             setButtonStatus({
@@ -1067,44 +1081,78 @@ function ModificaPKBPage() { //NOSONAR
     return (
         <div>
             <Header />
-            <div className="container">
+            <div className="successBarDiv">
+                <div className="successBar" style={{ width: `${progress}%` }}></div>
+            </div>
+            <div className="containerMod">
                 {/* Pattern */}
                 <div className="modificaContainer">
                     <h1>Pattern</h1>
                     <div className="modifica">
                         <h3>Modifica Pattern Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={modificaPatternForm}
                             onSubmit={handleModificaPatternSubmit}
                         >
-                            <label> <input type="text" name="Id" required></input> Id del pattern da modificare</label>
-                            
-                            <label> <input type="text" name="titolo" required></input> Nuovo Titolo</label>
-                            
-                            <label> <input type="text" name="sommario"></input> Nuovo Sommario</label>
-                            
-                            <label> <input type="text" name="contesto"></input> Nuovo Contesto</label>
-                            
-                            <label> <input type="text" name="problema"></input> Nuovo Problema</label>
-                            
-                            <label> <input type="text" name="soluzione"></input> Nuova Soluzione</label>
-                            
-                            <label>Nuovo Esempio</label> {/* NOSONAR */}
-                            <input type="text" name="esempio"></input>
+                            <div className="input">
+                            <label>
+                                Id del pattern da modificare
+                                <input
+                                    type="text"
+                                    name="Id"
+                                    required
+                                ></input>{" "}
+                            </label>
+                            <label>
+                                Nuovo Titolo
+                                <input
+                                    type="text"
+                                    name="titolo"
+                                    required
+                                ></input>{" "}
+                            </label>
+                            <label>
+                                Nuovo Sommario
+                                <input type="text" name="sommario"></input>{" "}
+                            </label>
+                            <label>
+                                Nuovo Contesto
+                                <input type="text" name="contesto"></input>{" "}
+                            </label>
+                            <label>
+                                Nuovo Problema
+                                <input type="text" name="problema"></input>{" "}
+                            </label>
+                            <label>
+                                Nuova Soluzione
+                                <input
+                                    type="text"
+                                    name="soluzione"
+                                ></input>{" "}
+                            </label>
+                            <label>
+                                Nuovo Esempio
+                                <input type="text" name="esempio"></input>
+                            </label>{" "}
+                            {/* NOSONAR */}
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label>vuoi inserire una notifica?</label> {/* NOSONAR */}
+                                <label>vuoi inserire una notifica?</label>{" "}
+                                {/* NOSONAR */}
+                            </div>
                             </div>
                             <button
                                 type="submit"
                                 className={
                                     buttonStatus.modificaPattern === "success"
                                         ? "success"
-                                        : buttonStatus.modificaPattern === "error" /* NOSONAR */
+                                        : buttonStatus.modificaPattern ===
+                                          "error" /* NOSONAR */
                                         ? "error"
                                         : "button"
                                 }
@@ -1116,20 +1164,34 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Inserisci nuovo Pattern</h3>
                         <form
+                            className="formModifica"
                             ref={inserisciPatternForm}
                             onSubmit={handleInserisciPatternSubmit}
                         >
-                            <label htmlFor="titolo">Titolo del nuovo Pattern</label>
+                            <div className="input">
+                            <label htmlFor="titolo">
+                                Titolo del nuovo Pattern
+                            </label>
                             <input type="text" name="titolo" required></input>
-                            <label htmlFor="sommario">Sommario del nuovo Pattern</label>
+                            <label htmlFor="sommario">
+                                Sommario del nuovo Pattern
+                            </label>
                             <input type="text" name="sommario"></input>
-                            <label htmlFor="contesto">Contesto del nuovo Pattern</label>
+                            <label htmlFor="contesto">
+                                Contesto del nuovo Pattern
+                            </label>
                             <input type="text" name="contesto"></input>
-                            <label htmlFor="problema">Problema del nuovo Pattern</label>
+                            <label htmlFor="problema">
+                                Problema del nuovo Pattern
+                            </label>
                             <input type="text" name="problema"></input>
-                            <label htmlFor="soluzione">Soluzione del nuovo Pattern</label>
+                            <label htmlFor="soluzione">
+                                Soluzione del nuovo Pattern
+                            </label>
                             <input type="text" name="soluzione"></input>
-                            <label htmlFor="esempio">Esempio del nuovo Pattern</label>
+                            <label htmlFor="esempio">
+                                Esempio del nuovo Pattern
+                            </label>
                             <input type="text" name="esempio"></input>
                             <div className="notificaCk">
                                 <input
@@ -1137,11 +1199,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.inserisciPattern)}
+                                className={getButtonClass(
+                                    buttonStatus.inserisciPattern
+                                )}
                             >
                                 Inserisci Pattern
                             </button>
@@ -1150,10 +1217,14 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Elimina Pattern Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={eliminaPatternForm}
                             onSubmit={handleEliminaPatternSubmit}
                         >
-                            <label htmlFor="patternId">Id del pattern da eliminare</label>
+                            <div className="input">
+                            <label htmlFor="patternId">
+                                Id del pattern da eliminare
+                            </label>
                             <input
                                 type="text"
                                 name="patternId"
@@ -1165,11 +1236,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.eliminaPattern)}
+                                className={getButtonClass(
+                                    buttonStatus.eliminaPattern
+                                )}
                             >
                                 Elimina Pattern
                             </button>
@@ -1182,10 +1258,14 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Modifica Strategia Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={modificaStrategiaForm}
                             onSubmit={handleModificaStrategiaSubmit}
                         >
-                            <label htmlFor="Id">Id della strategia da modificare</label>
+                            <div className="input">
+                            <label htmlFor="Id">
+                                Id della strategia da modificare
+                            </label>
                             <input type="text" name="Id" required></input>
                             <label htmlFor="nome">Nuovo Nome</label>
                             <input type="text" name="nome" required></input>
@@ -1195,11 +1275,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.modificaStrategia)}
+                                className={getButtonClass(
+                                    buttonStatus.modificaStrategia
+                                )}
                             >
                                 Modifica Strategia
                             </button>
@@ -1208,10 +1293,14 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Inserisci nuova Strategia</h3>
                         <form
+                            className="formModifica"
                             ref={inserisciStrategiaForm}
                             onSubmit={handleInserisciStrategiaSubmit}
                         >
-                            <label htmlFor="nome">Nome della nuova Strategia</label>
+                            <div className="input">
+                            <label htmlFor="nome">
+                                Nome della nuova Strategia
+                            </label>
                             <input type="text" name="nome" required></input>
                             <div className="notificaCk">
                                 <input
@@ -1219,11 +1308,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.inserisciStrategia)}
+                                className={getButtonClass(
+                                    buttonStatus.inserisciStrategia
+                                )}
                             >
                                 Inserisci Strategia
                             </button>
@@ -1232,10 +1326,14 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Elimina Strategia Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={eliminaStrategiaForm}
                             onSubmit={handleEliminaStrategiaSubmit}
                         >
-                            <label htmlFor="strategyId">Id della strategia da eliminare</label>
+                            <div className="input">
+                            <label htmlFor="strategyId">
+                                Id della strategia da eliminare
+                            </label>
                             <input
                                 type="text"
                                 name="strategyId"
@@ -1247,11 +1345,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.eliminaStrategia)}
+                                className={getButtonClass(
+                                    buttonStatus.eliminaStrategia
+                                )}
                             >
                                 Elimina Strategia
                             </button>
@@ -1264,10 +1367,14 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Modifica Vulnerabilita Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={modificaVulnerabilitaForm}
                             onSubmit={handleModificaVulnerabilitaSubmit}
                         >
-                            <label htmlFor="Id">Id della Vulnerabilita da modificare</label>
+                            <div className="input">
+                            <label htmlFor="Id">
+                                Id della Vulnerabilita da modificare
+                            </label>
                             <input type="text" name="Id" required></input>
                             <label htmlFor="cwe">Nuovo numero CWE</label>
                             <input type="text" name="cwe" required></input>
@@ -1279,11 +1386,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.modificaVulnerabilita)}
+                                className={getButtonClass(
+                                    buttonStatus.modificaVulnerabilita
+                                )}
                             >
                                 Modifica Vulnerabilita
                             </button>
@@ -1292,12 +1404,18 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Inserisci nuova Vulnerabilita</h3>
                         <form
+                            className="formModifica"
                             ref={inserisciVulnerabilitaForm}
                             onSubmit={handleInserisciVulnerabilitaSubmit}
                         >
-                            <label htmlFor="cwe">Numero CWE della nuova Vulnerabilita</label>
+                            <div className="input">
+                            <label htmlFor="cwe">
+                                Numero CWE della nuova Vulnerabilita
+                            </label>
                             <input type="text" name="cwe" required></input>
-                            <label htmlFor="titolo">Titolo della nuova Vulnerabilita</label>
+                            <label htmlFor="titolo">
+                                Titolo della nuova Vulnerabilita
+                            </label>
                             <input type="text" name="titolo" required></input>
                             <div className="notificaCk">
                                 <input
@@ -1305,11 +1423,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.inserisciVulnerabilita)}
+                                className={getButtonClass(
+                                    buttonStatus.inserisciVulnerabilita
+                                )}
                             >
                                 Inserisci Vulnerabilita
                             </button>
@@ -1318,10 +1441,14 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Elimina Vulnerabilita Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={eliminaVulnerabilitaForm}
                             onSubmit={handleEliminaVulnerabilitaSubmit}
                         >
-                            <label htmlFor="vulnerabilityId">Id della vulnerabilita da eliminare</label>
+                            <div className="input">
+                            <label htmlFor="vulnerabilityId">
+                                Id della vulnerabilita da eliminare
+                            </label>
                             <input
                                 type="text"
                                 name="vulnerabilityId"
@@ -1333,11 +1460,16 @@ function ModificaPKBPage() { //NOSONAR
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 ></input>
-                                <label htmlFor="notifica">vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.eliminaVulnerabilita)}
+                                className={getButtonClass(
+                                    buttonStatus.eliminaVulnerabilita
+                                )}
                             >
                                 Elimina Vulnerabilita
                             </button>
@@ -1351,24 +1483,43 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Modifica Articolo Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={modificaArticoloForm}
                             onSubmit={handleModificaArticoloSubmit}
                         >
-                            <label htmlFor="modificaId">ID dell'articolo da modificare</label>
-                            <input type="text" id="modificaId" name="Id" required />
+                            <div className="input">
+                            <label htmlFor="modificaId">
+                                ID dell'articolo da modificare
+                            </label>
+                            <input
+                                type="text"
+                                id="modificaId"
+                                name="Id"
+                                required
+                            />
                             <label htmlFor="modificaTitolo">Nuovo Titolo</label>
-                            <input type="text" id="modificaTitolo" name="titolo" required />
+                            <input
+                                type="text"
+                                id="modificaTitolo"
+                                name="titolo"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.modificaArticolo)}
+                                className={getButtonClass(
+                                    buttonStatus.modificaArticolo
+                                )}
                             >
                                 Modifica Articolo
                             </button>
@@ -1377,24 +1528,45 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Inserisci nuovo Articolo</h3>
                         <form
+                            className="formModifica"
                             ref={inserisciArticoloForm}
                             onSubmit={handleInserisciArticoloSubmit}
                         >
-                            <label htmlFor="inserisciId">ID del nuovo Articolo</label>
-                            <input type="text" id="inserisciId" name="Id" required />
-                            <label htmlFor="inserisciTitolo">Titolo del nuovo Articolo</label>
-                            <input type="text" id="inserisciTitolo" name="titolo" required />
+                            <div className="input">
+                            <label htmlFor="inserisciId">
+                                ID del nuovo Articolo
+                            </label>
+                            <input
+                                type="text"
+                                id="inserisciId"
+                                name="Id"
+                                required
+                            />
+                            <label htmlFor="inserisciTitolo">
+                                Titolo del nuovo Articolo
+                            </label>
+                            <input
+                                type="text"
+                                id="inserisciTitolo"
+                                name="titolo"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.inserisciArticolo)}
+                                className={getButtonClass(
+                                    buttonStatus.inserisciArticolo
+                                )}
                             >
                                 Inserisci Articolo
                             </button>
@@ -1403,22 +1575,36 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Elimina Articolo Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={eliminaArticoloForm}
                             onSubmit={handleEliminaArticoloSubmit}
                         >
-                            <label htmlFor="eliminaId">ID dell'articolo da eliminare</label>
-                            <input type="text" id="eliminaId" name="Id" required />
+                            <div className="input">
+                            <label htmlFor="eliminaId">
+                                ID dell'articolo da eliminare
+                            </label>
+                            <input
+                                type="text"
+                                id="eliminaId"
+                                name="Id"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.eliminaArticolo)}
+                                className={getButtonClass(
+                                    buttonStatus.eliminaArticolo
+                                )}
                             >
                                 Elimina Articolo
                             </button>
@@ -1431,22 +1617,45 @@ function ModificaPKBPage() { //NOSONAR
                     <h1>Privacy by Design</h1>
                     <div className="modifica">
                         <h3>Modifica PbD Esistente</h3>
-                        <form ref={modificaPbDForm} onSubmit={handleModificaPbDSubmit}>
-                            <label htmlFor="modificaId">ID della PbD da modificare</label>
-                            <input type="text" id="modificaId" name="Id" required />
+
+                        <form
+                            className="formModifica"
+                            ref={modificaPbDForm}
+                            onSubmit={handleModificaPbDSubmit}
+                        >
+                            <div className="input">
+                            <label htmlFor="modificaId">
+                                ID della PbD da modificare
+                            </label>
+                            <input
+                                type="text"
+                                id="modificaId"
+                                name="Id"
+                                required
+                            />
                             <label htmlFor="modificaNome">Nuovo Nome</label>
-                            <input type="text" id="modificaNome" name="nome" required />
+                            <input
+                                type="text"
+                                id="modificaNome"
+                                name="nome"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.modificaPbD)}
+                                className={getButtonClass(
+                                    buttonStatus.modificaPbD
+                                )}
                             >
                                 Modifica PbD
                             </button>
@@ -1454,20 +1663,38 @@ function ModificaPKBPage() { //NOSONAR
                     </div>
                     <div className="modifica">
                         <h3>Inserisci nuova PbD</h3>
-                        <form ref={inserisciPbDForm} onSubmit={handleInserisciPbDSubmit}>
-                            <label htmlFor="inserisciNome">Nome della nuova PbD</label>
-                            <input type="text" id="inserisciNome" name="nome" required />
+
+                        <form
+                            className="formModifica"
+                            ref={inserisciPbDForm}
+                            onSubmit={handleInserisciPbDSubmit}
+                        >
+                            <div className="input">
+                            <label htmlFor="inserisciNome">
+                                Nome della nuova PbD
+                            </label>
+                            <input
+                                type="text"
+                                id="inserisciNome"
+                                name="nome"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.inserisciPbD)}
+                                className={getButtonClass(
+                                    buttonStatus.inserisciPbD
+                                )}
                             >
                                 Inserisci PbD
                             </button>
@@ -1475,20 +1702,38 @@ function ModificaPKBPage() { //NOSONAR
                     </div>
                     <div className="modifica">
                         <h3>Elimina PbD Esistente</h3>
-                        <form ref={eliminaPbDForm} onSubmit={handleEliminaPbDSubmit}>
-                            <label htmlFor="eliminaId">ID della PbD da eliminare</label>
-                            <input type="text" id="eliminaId" name="Id" required />
+
+                        <form
+                            className="formModifica"
+                            ref={eliminaPbDForm}
+                            onSubmit={handleEliminaPbDSubmit}
+                        >
+                            <div className="input">
+                            <label htmlFor="eliminaId">
+                                ID della PbD da eliminare
+                            </label>
+                            <input
+                                type="text"
+                                id="eliminaId"
+                                name="Id"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.eliminaPbD)}
+                                className={getButtonClass(
+                                    buttonStatus.eliminaPbD
+                                )}
                             >
                                 Elimina PbD
                             </button>
@@ -1502,24 +1747,43 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Modifica fase ISO Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={modificaISOForm}
                             onSubmit={handleModificaISOSubmit}
                         >
-                            <label htmlFor="modificaId">ID della fase ISO da modificare</label>
-                            <input type="text" id="modificaId" name="Id" required />
+                            <div className="input">
+                            <label htmlFor="modificaId">
+                                ID della fase ISO da modificare
+                            </label>
+                            <input
+                                type="text"
+                                id="modificaId"
+                                name="Id"
+                                required
+                            />
                             <label htmlFor="modificaNome">Nuovo Nome</label>
-                            <input type="text" id="modificaNome" name="nome" required />
+                            <input
+                                type="text"
+                                id="modificaNome"
+                                name="nome"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.modificaISO)}
+                                className={getButtonClass(
+                                    buttonStatus.modificaISO
+                                )}
                             >
                                 Modifica ISO
                             </button>
@@ -1528,24 +1792,46 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Inserisci nuova ISO</h3>
                         <form
+                            className="formModifica"
                             ref={inserisciISOForm}
                             onSubmit={handleInserisciISOSubmit}
                         >
-                            <label htmlFor="inserisciId">ID della nuova ISO</label>
-                            <input type="text" id="inserisciId" name="Id" required />
-                            <label htmlFor="inserisciNome">Nome della nuova ISO</label>
-                            <input type="text" id="inserisciNome" name="nome" required />
+                            <div className="input">
+
+                            <label htmlFor="inserisciId">
+                                ID della nuova ISO
+                            </label>
+                            <input
+                                type="text"
+                                id="inserisciId"
+                                name="Id"
+                                required
+                                />
+                            <label htmlFor="inserisciNome">
+                                Nome della nuova ISO
+                            </label>
+                            <input
+                                type="text"
+                                id="inserisciNome"
+                                name="nome"
+                                required
+                                />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                    />
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.inserisciISO)}
+                                className={getButtonClass(
+                                    buttonStatus.inserisciISO
+                                )}
                             >
                                 Inserisci ISO
                             </button>
@@ -1554,22 +1840,36 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Elimina ISO Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={eliminaISOForm}
                             onSubmit={handleEliminaISOSubmit}
                         >
-                            <label htmlFor="eliminaId">ID della ISO da eliminare</label>
-                            <input type="text" id="eliminaId" name="Id" required />
+                            <div className="input">
+                            <label htmlFor="eliminaId">
+                                ID della ISO da eliminare
+                            </label>
+                            <input
+                                type="text"
+                                id="eliminaId"
+                                name="Id"
+                                required
+                            />
                             <div className="notificaCk">
                                 <input
                                     type="checkbox"
                                     checked={notify}
                                     onChange={handleCheckboxChange}
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="notifica">
+                                    Vuoi inserire una notifica?
+                                </label>
+                            </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.eliminaISO)}
+                                className={getButtonClass(
+                                    buttonStatus.eliminaISO
+                                )}
                             >
                                 Elimina ISO
                             </button>
@@ -1583,24 +1883,43 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Modifica fase OWASP Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={modificaOWASPForm}
                             onSubmit={handleModificaOWASPSubmit}
                         >
-                            <label htmlFor="modificaId">ID della fase OWASP da modificare</label>
-                            <input type="text" id="modificaId" name="Id" required />
-                            <label htmlFor="modificaNome">Nuovo Nome</label>
-                            <input type="text" id="modificaNome" name="nome" required />
-                            <div className="notificaCk">
+                            <div className="input">
+                                <label htmlFor="modificaId">
+                                    ID della fase OWASP da modificare
+                                </label>
                                 <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
+                                    type="text"
+                                    id="modificaId"
+                                    name="Id"
+                                    required
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <label htmlFor="modificaNome">Nuovo Nome</label>
+                                <input
+                                    type="text"
+                                    id="modificaNome"
+                                    name="nome"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.modificaOWASP)}
+                                className={getButtonClass(
+                                    buttonStatus.modificaOWASP
+                                )}
                             >
                                 Modifica OWASP
                             </button>
@@ -1609,22 +1928,36 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Inserisci nuova OWASP</h3>
                         <form
+                            className="formModifica"
                             ref={inserisciOWASPForm}
                             onSubmit={handleInserisciOWASPSubmit}
                         >
-                            <label htmlFor="inserisciNome">Nome della nuova OWASP</label>
-                            <input type="text" id="inserisciNome" name="nome" required />
-                            <div className="notificaCk">
+                            <div className="input">
+                                <label htmlFor="inserisciNome">
+                                    Nome della nuova OWASP
+                                </label>
                                 <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
+                                    type="text"
+                                    id="inserisciNome"
+                                    name="nome"
+                                    required
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.inserisciOWASP)}
+                                className={getButtonClass(
+                                    buttonStatus.inserisciOWASP
+                                )}
                             >
                                 Inserisci OWASP
                             </button>
@@ -1633,22 +1966,36 @@ function ModificaPKBPage() { //NOSONAR
                     <div className="modifica">
                         <h3>Elimina OWASP Esistente</h3>
                         <form
+                            className="formModifica"
                             ref={eliminaOWASPForm}
                             onSubmit={handleEliminaOWASPSubmit}
                         >
-                            <label htmlFor="eliminaId">ID della OWASP da eliminare</label>
-                            <input type="text" id="eliminaId" name="Id" required />
-                            <div className="notificaCk">
+                            <div className="input">
+                                <label htmlFor="eliminaId">
+                                    ID della OWASP da eliminare
+                                </label>
                                 <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
+                                    type="text"
+                                    id="eliminaId"
+                                    name="Id"
+                                    required
                                 />
-                                <label htmlFor="notifica">Vuoi inserire una notifica?</label>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
-                                className={getButtonClass(buttonStatus.eliminaOWASP)}
+                                className={getButtonClass(
+                                    buttonStatus.eliminaOWASP
+                                )}
                             >
                                 Elimina OWASP
                             </button>

@@ -1,3 +1,14 @@
+.containerMod {
+    position: absolute;
+    top: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 97.3%;
+    padding: 20px;
+    gap: 5vh;
+    z-index: -1;
+}
 .modificaContainer {
     margin-top: 3vh;
     display: flex;
@@ -110,4 +121,30 @@
     transition: background-color 0.3s ease-in-out;
     background-color: #da373c; /* Rosso */
     animation: shake 0.3s linear;
+}
+
+.formModifica {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2vh;
+}
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    width: 100%;
+}
+.successBarDiv {
+    position: fixed;
+    width: 100%;
+    height: 1vh;
+    top: 10vh;
+}
+
+.successBar {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.016s linear;
 }

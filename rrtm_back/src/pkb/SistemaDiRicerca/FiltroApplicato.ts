@@ -21,14 +21,14 @@ class FiltroApplicato {
 
     constructor(id: number, tipoRicerca: string, nome?: string) {
         this.tipoRicerca = tipoRicerca;
-        const patternId = tipoRicerca.startsWith("pattern") ? id : 0;
-        const strategiaId = tipoRicerca.includes("strategia") ? id : 0;
-        const vulnerabilitaId = tipoRicerca.includes("vulnerabilita") ? id : 0;
-        const articoloId = tipoRicerca.includes("articolo") ? id : 0;
-        const PbDId = tipoRicerca.includes("PbD") ? id : 0;
-        const MVCId = tipoRicerca.includes("MVC") ? id : 0;
-        const ISOId = tipoRicerca.includes("ISO") ? id : 0;
-        const OWASPId = tipoRicerca.includes("OWASP") ? id : 0;
+        const patternId = tipoRicerca.endsWith("pattern") ? id : 0;
+        const strategiaId = tipoRicerca.endsWith("strategia") ? id : 0;
+        const vulnerabilitaId = tipoRicerca.endsWith("vulnerabilita") ? id : 0;
+        const articoloId = tipoRicerca.endsWith("articolo") ? id : 0;
+        const PbDId = tipoRicerca.endsWith("PbD") ? id : 0;
+        const MVCId = tipoRicerca.endsWith("MVC") ? id : 0;
+        const ISOId = tipoRicerca.endsWith("ISO") ? id : 0;
+        const OWASPId = tipoRicerca.endsWith("OWASP") ? id : 0;
 
         this.filtroPattern = new Pattern(patternId);
         this.filtroStrategia = new Strategia(strategiaId);

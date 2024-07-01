@@ -292,7 +292,7 @@ class PrincipioPbD {
     public static async getResult(
         filtro: FiltroApplicato,
         tipo: string
-    ): Promise<PrincipioPbD[]> {
+    ): Promise<PrincipioPbD[] | boolean> {
         let query: string;
         let queryParams: any[];
 
@@ -303,7 +303,7 @@ class PrincipioPbD {
             /* implementazione per gli altri filtri */
             return [];
         }
-        return new Promise<PrincipioPbD[]>((resolve, reject) => {
+        return new Promise<PrincipioPbD[] | boolean>((resolve, reject) => {
             connection.query(
                 query,
                 queryParams,
@@ -320,7 +320,8 @@ class PrincipioPbD {
                         });
                         resolve(pbds);
                     } else {
-                        reject(new Error("PbD not found"));
+                        console.error("PbD non trovata");
+                        resolve(false);
                     }
                 }
             );

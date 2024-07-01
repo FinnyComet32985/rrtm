@@ -278,7 +278,7 @@ class ArticoloGDPR {
     public static async getResult(
         filtro: FiltroApplicato,
         tipo: string
-    ): Promise<ArticoloGDPR[]> {
+    ): Promise<ArticoloGDPR[] | boolean> {
         let query: string;
         let queryParams: any[];
 
@@ -290,7 +290,7 @@ class ArticoloGDPR {
             return [];
         }
 
-        return new Promise<ArticoloGDPR[]>((resolve, reject) => {
+        return new Promise<ArticoloGDPR[] | boolean>((resolve, reject) => {
             connection.query(
                 query,
                 queryParams,
@@ -307,7 +307,8 @@ class ArticoloGDPR {
                         });
                         resolve(articoli);
                     } else {
-                        reject(new Error("Pattern not found"));
+                        console.error("Articolo non trovato");
+                        resolve(false);
                     }
                 }
             );

@@ -18,11 +18,13 @@ import NotifichePage from "./pages/InterfacciaUtenteLoggato/NotifichePage";
 import InserimentoNotifichePage from "./pages/InterfacciaAministratore/InserisciNotifichePage"
 import ModificaPKBPage from './pages/InterfacciaAministratore/ModificaPKBPage';
 import RegisterPage from './pages/loginPage/RegisterPage';
+import ResultFindPage from './pages/InterfacciaUtenteNonLoggato/ResultFindPage/ResultFindPage';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage/>} />
+        <Route path='/ResultFindPage/:name' element={<ResultFindPage/>}/>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path='/patternPage/:patternId' element={<PatternPage />} />

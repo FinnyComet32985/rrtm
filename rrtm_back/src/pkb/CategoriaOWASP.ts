@@ -228,7 +228,7 @@ class CategoriaOWASP {
     public static async getResult(
         filtro: FiltroApplicato,
         tipo: string
-    ): Promise<CategoriaOWASP[]> {
+    ): Promise<CategoriaOWASP[] | boolean> {
         let query: string;
         let queryParams: any[];
 
@@ -239,7 +239,7 @@ class CategoriaOWASP {
             /* implementazione per gli altri filtri */
             return [];
         }
-        return new Promise<CategoriaOWASP[]>((resolve, reject) => {
+        return new Promise<CategoriaOWASP[] | boolean>((resolve, reject) => {
             connection.query(
                 query,
                 queryParams,
@@ -256,7 +256,8 @@ class CategoriaOWASP {
                         });
                         resolve(owasps);
                     } else {
-                        reject(new Error("OWASP not found"));
+                        console.error("OWASP non trovata");
+                        resolve(false);
                     }
                 }
             );

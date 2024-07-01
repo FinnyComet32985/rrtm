@@ -272,7 +272,7 @@ class FaseISO {
     public static async getResult(
         filtro: FiltroApplicato,
         tipo: string
-    ): Promise<FaseISO[]> {
+    ): Promise<FaseISO[] | boolean> {
         let query: string;
         let queryParams: any[];
 
@@ -283,7 +283,7 @@ class FaseISO {
             /* implementazione per gli altri filtri */
             return [];
         }
-        return new Promise<FaseISO[]>((resolve, reject) => {
+        return new Promise<FaseISO[] | boolean>((resolve, reject) => {
             connection.query(
                 query,
                 queryParams,
@@ -297,7 +297,8 @@ class FaseISO {
                         });
                         resolve(isos);
                     } else {
-                        reject(new Error("ISO not found"));
+                        console.error("ISO non trovata");
+                        resolve(false);
                     }
                 }
             );

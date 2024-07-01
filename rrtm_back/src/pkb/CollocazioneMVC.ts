@@ -176,7 +176,7 @@ class CollocazioneMVC {
     public static async getResult(
         filtro: FiltroApplicato,
         tipo: string
-    ): Promise<CollocazioneMVC[]> {
+    ): Promise<CollocazioneMVC[] | boolean> {
         let query: string;
         let queryParams: any[];
 
@@ -187,7 +187,7 @@ class CollocazioneMVC {
             /* implementazione per gli altri filtri */
             return [];
         }
-        return new Promise<CollocazioneMVC[]>((resolve, reject) => {
+        return new Promise<CollocazioneMVC[] | boolean>((resolve, reject) => {
             connection.query(
                 query,
                 queryParams,
@@ -204,7 +204,8 @@ class CollocazioneMVC {
                         });
                         resolve(mvcs);
                     } else {
-                        reject(new Error("MVC not found"));
+                        console.error("MVC non trovata");
+                        resolve(false);
                     }
                 }
             );

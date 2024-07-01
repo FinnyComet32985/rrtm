@@ -322,7 +322,7 @@ class Vulnerabilita {
     public static async getResult(
         filtro: FiltroApplicato,
         tipo: string
-    ): Promise<Vulnerabilita[]> {
+    ): Promise<Vulnerabilita[] | boolean> {
         let query: string;
         let queryParams: any[];
 
@@ -335,7 +335,7 @@ class Vulnerabilita {
             return [];
         }
 
-        return new Promise<Vulnerabilita[]>((resolve, reject) => {
+        return new Promise<Vulnerabilita[] | boolean>((resolve, reject) => {
             connection.query(
                 query,
                 queryParams,
@@ -347,14 +347,17 @@ class Vulnerabilita {
                             (vulnerabilitaData: any) => {
                                 const vulnerabilita = new Vulnerabilita(
                                     vulnerabilitaData.Id,
-                                    vulnerabilitaData.titolo
+                                    vulnerabilitaData.titolo,
+                                    "",
+                                    vulnerabilitaData.cwe
                                 );
                                 return vulnerabilita;
                             }
                         );
                         resolve(vulnerabilita);
                     } else {
-                        reject(new Error("Vulnerabilita not found"));
+                        console.error("Vulnerabilita non trovata");
+                        resolve(false);
                     }
                 }
             );

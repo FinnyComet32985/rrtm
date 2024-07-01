@@ -52,6 +52,7 @@ class InterfacciaRicerca {
     public static async findStratPatt(idPattern: number): Promise<Strategia[]> {
         let filtro = new FiltroApplicato(idPattern, "strategia-pattern");
         await Pattern.updateFiltro(filtro, "strategia-pattern");
+        console.log(filtro);
         const strategieIds = filtro.filtroPattern.getStrategie();
         return new Promise(async (resolve, reject) => {
             //NOSONAR

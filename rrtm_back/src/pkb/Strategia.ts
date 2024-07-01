@@ -297,7 +297,7 @@ class Strategia {
     public static async getResult(
         filtro: FiltroApplicato,
         tipo: string
-    ): Promise<Strategia[]> {
+    ): Promise<Strategia[] | boolean> {
         let query: string;
         let queryParams: any[];
 
@@ -309,7 +309,7 @@ class Strategia {
             return [];
         }
 
-        return new Promise<Strategia[]>((resolve, reject) => {
+        return new Promise<Strategia[] | boolean>((resolve, reject) => {
             connection.query(
                 query,
                 queryParams,
@@ -326,7 +326,8 @@ class Strategia {
                         });
                         resolve(strategie);
                     } else {
-                        reject(new Error("Pattern not found"));
+                        console.error("Strategia non trovata");
+                        resolve(false);
                     }
                 }
             );

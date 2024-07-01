@@ -129,8 +129,7 @@ class Notifica {
     }
 
     private async sendEmail(to: string): Promise<void> {
-        const transporter = nodemailer.createTransport({
-            //NOSONAR
+        const transporter = nodemailer.createTransport({//NOSONAR
             host: "smtp.gmail.com",
             port: 587,
             secure: false,

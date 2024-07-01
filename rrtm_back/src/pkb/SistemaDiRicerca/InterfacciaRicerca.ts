@@ -27,7 +27,7 @@ class InterfacciaRicerca {
             const query = "SELECT Id FROM pattern";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -37,7 +37,7 @@ class InterfacciaRicerca {
                             const promises = patternIds.map((id: number) =>
                                 Pattern.getPatternDB(id)
                             );
-                            const patterns = await Promise.all(promises);
+                            const patterns = Promise.all(promises);
                             resolve(patterns);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -54,7 +54,7 @@ class InterfacciaRicerca {
         await Pattern.updateFiltro(filtro, "strategia-pattern");
         console.log(filtro);
         const strategieIds = filtro.filtroPattern.getStrategie();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(strategieIds) || strategieIds.length === 0) {
                 return resolve([]);
@@ -64,7 +64,7 @@ class InterfacciaRicerca {
                 const promises = strategieIds.map((id: number) =>
                     Strategia.getStrategiaDB(id)
                 );
-                const strategie = await Promise.all(promises);
+                const strategie = Promise.all(promises);
                 resolve(strategie);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -77,7 +77,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "vulnerabilita-pattern");
         await Pattern.updateFiltro(filtro, "vulnerabilita-pattern");
         const vulnerabilitaIds = filtro.filtroPattern.getVulnerabilita();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (
                 !Array.isArray(vulnerabilitaIds) ||
@@ -90,7 +90,7 @@ class InterfacciaRicerca {
                 const promises = vulnerabilitaIds.map((id: number) =>
                     Vulnerabilita.getVulnerabilitaDB(id)
                 );
-                const vulnerabilita = await Promise.all(promises);
+                const vulnerabilita = Promise.all(promises);
                 resolve(vulnerabilita);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -103,7 +103,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "articolo-pattern");
         await Pattern.updateFiltro(filtro, "articolo-pattern");
         const articoloIds = filtro.filtroPattern.getArticoli();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(articoloIds) || articoloIds.length === 0) {
                 return resolve([]);
@@ -113,7 +113,7 @@ class InterfacciaRicerca {
                 const promises = articoloIds.map((id: number) =>
                     ArticoloGDPR.getArticoloDB(id)
                 );
-                const articoli = await Promise.all(promises);
+                const articoli = Promise.all(promises);
                 resolve(articoli);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -126,7 +126,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "PbD-pattern");
         await Pattern.updateFiltro(filtro, "PbD-pattern");
         const principioIds = filtro.filtroPattern.getPbD();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(principioIds) || principioIds.length === 0) {
                 return resolve([]);
@@ -136,7 +136,7 @@ class InterfacciaRicerca {
                 const promises = principioIds.map((id: number) =>
                     PrincipioPbD.getPbDDB(id)
                 );
-                const PbD = await Promise.all(promises);
+                const PbD = Promise.all(promises);
                 resolve(PbD);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -149,7 +149,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "MVC-pattern");
         await Pattern.updateFiltro(filtro, "MVC-pattern");
         const mvcIds = filtro.filtroPattern.getMVC();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(mvcIds) || mvcIds.length === 0) {
                 return resolve([]);
@@ -159,7 +159,7 @@ class InterfacciaRicerca {
                 const promises = mvcIds.map((id: number) =>
                     CollocazioneMVC.getMVCDB(id)
                 );
-                const MVC = await Promise.all(promises);
+                const MVC = Promise.all(promises);
                 resolve(MVC);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -170,7 +170,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "ISO-pattern");
         await Pattern.updateFiltro(filtro, "ISO-pattern");
         const isoIds = filtro.filtroPattern.getISO();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(isoIds) || isoIds.length === 0) {
                 return resolve([]);
@@ -180,7 +180,7 @@ class InterfacciaRicerca {
                 const promises = isoIds.map((id: number) =>
                     FaseISO.getISODB(id)
                 );
-                const ISO = await Promise.all(promises);
+                const ISO = Promise.all(promises);
                 resolve(ISO);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -193,7 +193,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPattern, "OWASP-pattern");
         await Pattern.updateFiltro(filtro, "OWASP-pattern");
         const owaspIds = filtro.filtroPattern.getOWASP();
-        return new Promise(async (resolve, reject) => {
+        return new Promise( (resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(owaspIds) || owaspIds.length === 0) {
                 return resolve([]);
@@ -203,7 +203,7 @@ class InterfacciaRicerca {
                 const promises = owaspIds.map((id: number) =>
                     CategoriaOWASP.getOWASPDB(id)
                 );
-                const OWASP = await Promise.all(promises);
+                const OWASP = Promise.all(promises);
                 resolve(OWASP);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -223,12 +223,12 @@ class InterfacciaRicerca {
         return await Strategia.getResult(filtro, "nomeStrategia");
     }
     public static async showStrategie(): Promise<Strategia[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             const query = "SELECT Id FROM strategia";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -238,7 +238,7 @@ class InterfacciaRicerca {
                             const promises = strategiaIds.map((id: number) =>
                                 Strategia.getStrategiaDB(id)
                             );
-                            const strategie = await Promise.all(promises);
+                            const strategie = Promise.all(promises);
                             resolve(strategie);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -254,7 +254,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idStrategia, "pattern-strategia");
         await Strategia.updateFiltro(filtro, "pattern-strategia");
         const patternIds = filtro.filtroStrategia.getPatterns();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
@@ -264,7 +264,7 @@ class InterfacciaRicerca {
                 const promises = patternIds.map((id: number) =>
                     Pattern.getPatternDB(id)
                 );
-                const patterns = await Promise.all(promises);
+                const patterns = Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -277,7 +277,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idStrategia, "articolo-strategia");
         await Strategia.updateFiltro(filtro, "articolo-strategia");
         const articoloIds = filtro.filtroStrategia.getArticoli();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(articoloIds) || articoloIds.length === 0) {
                 return resolve([]);
@@ -287,7 +287,7 @@ class InterfacciaRicerca {
                 const promises = articoloIds.map((id: number) =>
                     ArticoloGDPR.getArticoloDB(id)
                 );
-                const articoli = await Promise.all(promises);
+                const articoli = Promise.all(promises);
                 resolve(articoli);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -300,7 +300,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idStrategia, "PbD-strategia");
         await Strategia.updateFiltro(filtro, "PbD-strategia");
         const PbDIds = filtro.filtroStrategia.getPbD();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(PbDIds) || PbDIds.length === 0) {
                 return resolve([]);
@@ -310,7 +310,7 @@ class InterfacciaRicerca {
                 const promises = PbDIds.map((id: number) =>
                     PrincipioPbD.getPbDDB(id)
                 );
-                const PbD = await Promise.all(promises);
+                const PbD = Promise.all(promises);
                 resolve(PbD);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -331,13 +331,13 @@ class InterfacciaRicerca {
         return await Vulnerabilita.getResult(filtro, "nomeVulnerabilita");
     }
     public static async showVulnerabilitaInserite(): Promise<Vulnerabilita[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             const query =
                 "SELECT Id FROM Vulnerabilita WHERE stato='Pubblicata'";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -348,7 +348,7 @@ class InterfacciaRicerca {
                                 (id: number) =>
                                     Vulnerabilita.getVulnerabilitaDB(id)
                             );
-                            const vulnerabilita = await Promise.all(promises);
+                            const vulnerabilita = Promise.all(promises);
                             resolve(vulnerabilita);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -369,7 +369,7 @@ class InterfacciaRicerca {
         );
         await Vulnerabilita.updateFiltro(filtro, "pattern-vulnerabilita");
         const patternIds = filtro.filtroVulnerabilita.getPatterns();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
@@ -379,7 +379,7 @@ class InterfacciaRicerca {
                 const promises = patternIds.map((id: number) =>
                     Pattern.getPatternDB(id)
                 );
-                const patterns = await Promise.all(promises);
+                const patterns = Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -395,7 +395,7 @@ class InterfacciaRicerca {
         );
         await Vulnerabilita.updateFiltro(filtro, "articolo-vulnerabilita");
         const articoliIds = filtro.filtroVulnerabilita.getArticoli();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(articoliIds) || articoliIds.length === 0) {
                 return resolve([]);
@@ -405,7 +405,7 @@ class InterfacciaRicerca {
                 const promises = articoliIds.map((id: number) =>
                     ArticoloGDPR.getArticoloDB(id)
                 );
-                const articoli = await Promise.all(promises);
+                const articoli = Promise.all(promises);
                 resolve(articoli);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -426,12 +426,12 @@ class InterfacciaRicerca {
         return await ArticoloGDPR.getResult(filtro, "nomeArticolo");
     }
     public static async showArticoli(): Promise<ArticoloGDPR[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             const query = "SELECT Id FROM articoloGDPR";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -441,7 +441,7 @@ class InterfacciaRicerca {
                             const promises = articoloIds.map((id: number) =>
                                 ArticoloGDPR.getArticoloDB(id)
                             );
-                            const articoli = await Promise.all(promises);
+                            const articoli = Promise.all(promises);
                             resolve(articoli);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -457,7 +457,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idArticolo, "pattern-articolo");
         await ArticoloGDPR.updateFiltro(filtro, "pattern-articolo");
         const patternIds = filtro.filtroArticolo.getPatterns();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
@@ -467,7 +467,7 @@ class InterfacciaRicerca {
                 const promises = patternIds.map((id: number) =>
                     Pattern.getPatternDB(id)
                 );
-                const patterns = await Promise.all(promises);
+                const patterns = Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -478,7 +478,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idArticolo, "strategia-articolo");
         await ArticoloGDPR.updateFiltro(filtro, "strategia-articolo");
         const strategiaIds = filtro.filtroArticolo.getStrategie();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(strategiaIds) || strategiaIds.length === 0) {
                 return resolve([]);
@@ -488,7 +488,7 @@ class InterfacciaRicerca {
                 const promises = strategiaIds.map((id: number) =>
                     Strategia.getStrategiaDB(id)
                 );
-                const strategie = await Promise.all(promises);
+                const strategie = Promise.all(promises);
                 resolve(strategie);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -501,7 +501,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idArticolo, "vulnerabilita-articolo");
         await ArticoloGDPR.updateFiltro(filtro, "vulnerabilita-articolo");
         const vulnerabilitaIds = filtro.filtroArticolo.getVulnerabilita();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (
                 !Array.isArray(vulnerabilitaIds) ||
@@ -514,7 +514,7 @@ class InterfacciaRicerca {
                 const promises = vulnerabilitaIds.map((id: number) =>
                     Vulnerabilita.getVulnerabilitaDB(id)
                 );
-                const vulnerabilita = await Promise.all(promises);
+                const vulnerabilita = Promise.all(promises);
                 resolve(vulnerabilita);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -533,12 +533,12 @@ class InterfacciaRicerca {
         return await PrincipioPbD.getResult(filtro, "nomePbD");
     }
     public static async showPbD(): Promise<PrincipioPbD[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             const query = "SELECT Id FROM principioPbD";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -546,7 +546,7 @@ class InterfacciaRicerca {
                             const promises = PbDIds.map((id: number) =>
                                 PrincipioPbD.getPbDDB(id)
                             );
-                            const principi = await Promise.all(promises);
+                            const principi = Promise.all(promises);
                             resolve(principi);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -562,7 +562,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPbD, "pattern-PbD");
         await PrincipioPbD.updateFiltro(filtro, "pattern-PbD");
         const patternIds = filtro.filtroPbD.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(patternIds) || patternIds.length === 0) {
                 return resolve([]);
@@ -572,7 +572,7 @@ class InterfacciaRicerca {
                 const promises = patternIds.map((id: number) =>
                     Pattern.getPatternDB(id)
                 );
-                const patterns = await Promise.all(promises);
+                const patterns = Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -583,7 +583,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPbD, "strategia-PbD");
         await PrincipioPbD.updateFiltro(filtro, "strategia-PbD");
         const strategiaIds = filtro.filtroPbD.getStrategie();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(strategiaIds) || strategiaIds.length === 0) {
                 return resolve([]);
@@ -593,7 +593,7 @@ class InterfacciaRicerca {
                 const promises = strategiaIds.map((id: number) =>
                     Strategia.getStrategiaDB(id)
                 );
-                const strategie = await Promise.all(promises);
+                const strategie = Promise.all(promises);
                 resolve(strategie);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -604,7 +604,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idPbD, "ISO-PbD");
         await PrincipioPbD.updateFiltro(filtro, "ISO-PbD");
         const isoIds = filtro.filtroPbD.getISO();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(isoIds) || isoIds.length === 0) {
                 return resolve([]);
@@ -614,7 +614,7 @@ class InterfacciaRicerca {
                 const promises = isoIds.map((id: number) =>
                     FaseISO.getISODB(id)
                 );
-                const iso = await Promise.all(promises);
+                const iso = Promise.all(promises);
                 resolve(iso);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -633,12 +633,12 @@ class InterfacciaRicerca {
         return await CollocazioneMVC.getResult(filtro, "nomeMVC");
     }
     public static async showMVC(): Promise<CollocazioneMVC[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             const query = "SELECT Id FROM collocazioneMVC";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -646,7 +646,7 @@ class InterfacciaRicerca {
                             const promises = MVCIds.map((id: number) =>
                                 CollocazioneMVC.getMVCDB(id)
                             );
-                            const MVC = await Promise.all(promises);
+                            const MVC = Promise.all(promises);
                             resolve(MVC);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -662,7 +662,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idMVC, "pattern-MVC");
         await CollocazioneMVC.updateFiltro(filtro, "pattern-MVC");
         const MVCIds = filtro.filtroMVC.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(MVCIds) || MVCIds.length === 0) {
                 return resolve([]);
@@ -672,7 +672,7 @@ class InterfacciaRicerca {
                 const promises = MVCIds.map((id: number) =>
                     Pattern.getPatternDB(id)
                 );
-                const patterns = await Promise.all(promises);
+                const patterns = Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -683,7 +683,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idMVC, "ISO-MVC");
         await CollocazioneMVC.updateFiltro(filtro, "ISO-MVC");
         const MVCIds = filtro.filtroMVC.getISO();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(MVCIds) || MVCIds.length === 0) {
                 return resolve([]);
@@ -693,7 +693,7 @@ class InterfacciaRicerca {
                 const promises = MVCIds.map((id: number) =>
                     FaseISO.getISODB(id)
                 );
-                const iso = await Promise.all(promises);
+                const iso = Promise.all(promises);
                 resolve(iso);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -712,12 +712,12 @@ class InterfacciaRicerca {
         return await FaseISO.getResult(filtro, "nomeISO");
     }
     public static async showISO(): Promise<FaseISO[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             const query = "SELECT Id FROM faseIso";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -725,7 +725,7 @@ class InterfacciaRicerca {
                             const promises = ISOIds.map((id: number) =>
                                 FaseISO.getISODB(id)
                             );
-                            const ISO = await Promise.all(promises);
+                            const ISO = Promise.all(promises);
                             resolve(ISO);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -741,7 +741,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idISO, "pattern-ISO");
         await FaseISO.updateFiltro(filtro, "pattern-ISO");
         const ISOIds = filtro.filtroISO.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(ISOIds) || ISOIds.length === 0) {
                 return resolve([]);
@@ -751,7 +751,7 @@ class InterfacciaRicerca {
                 const promises = ISOIds.map((id: number) =>
                     Pattern.getPatternDB(id)
                 );
-                const patterns = await Promise.all(promises);
+                const patterns = Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -762,7 +762,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idISO, "MVC-ISO");
         await FaseISO.updateFiltro(filtro, "MVC-ISO");
         const ISOIds = filtro.filtroISO.getMVC();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(ISOIds) || ISOIds.length === 0) {
                 return resolve([]);
@@ -772,7 +772,7 @@ class InterfacciaRicerca {
                 const promises = ISOIds.map((id: number) =>
                     CollocazioneMVC.getMVCDB(id)
                 );
-                const mvc = await Promise.all(promises);
+                const mvc = Promise.all(promises);
                 resolve(mvc);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -783,7 +783,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idISO, "PbD-ISO");
         await FaseISO.updateFiltro(filtro, "PbD-ISO");
         const pbdIds = filtro.filtroISO.getPbD();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(pbdIds) || pbdIds.length === 0) {
                 return resolve([]);
@@ -793,7 +793,7 @@ class InterfacciaRicerca {
                 const promises = pbdIds.map((id: number) =>
                     PrincipioPbD.getPbDDB(id)
                 );
-                const pbd = await Promise.all(promises);
+                const pbd = Promise.all(promises);
                 resolve(pbd);
             } catch (err) {
                 reject(err); //NOSONAR
@@ -812,12 +812,12 @@ class InterfacciaRicerca {
         return await CategoriaOWASP.getResult(filtro, "nomeOWASP");
     }
     public static async showOWASP(): Promise<CategoriaOWASP[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             const query = "SELECT Id FROM categoriaOWASP";
             connection.query(
                 query,
-                async (err: mysql.MysqlError | null, results: any) => {
+                (err: mysql.MysqlError | null, results: any) => {
                     if (err) return reject(err);
                     if (results.length > 0) {
                         try {
@@ -825,7 +825,7 @@ class InterfacciaRicerca {
                             const promises = OWASPIds.map((id: number) =>
                                 CategoriaOWASP.getOWASPDB(id)
                             );
-                            const OWASP = await Promise.all(promises);
+                            const OWASP = Promise.all(promises);
                             resolve(OWASP);
                         } catch (err) {
                             reject(err); //NOSONAR
@@ -841,7 +841,7 @@ class InterfacciaRicerca {
         let filtro = new FiltroApplicato(idOWASP, "pattern-OWASP");
         await CategoriaOWASP.updateFiltro(filtro, "pattern-OWASP");
         const OWASPIds = filtro.filtroOWASP.getPattern();
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             //NOSONAR
             if (!Array.isArray(OWASPIds) || OWASPIds.length === 0) {
                 return resolve([]);
@@ -851,7 +851,7 @@ class InterfacciaRicerca {
                 const promises = OWASPIds.map((id: number) =>
                     Pattern.getPatternDB(id)
                 );
-                const patterns = await Promise.all(promises);
+                const patterns = Promise.all(promises);
                 resolve(patterns);
             } catch (err) {
                 reject(err); //NOSONAR

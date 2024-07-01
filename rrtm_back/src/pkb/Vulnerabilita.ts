@@ -318,5 +318,47 @@ class Vulnerabilita {
             );
         });
     }
+
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<Vulnerabilita[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomeVulnerabilita") {
+            query =
+                "SELECT * FROM vulnerabilita WHERE stato='pubblicata' AND titolo LIKE ?";
+            queryParams = [`%${filtro.filtroVulnerabilita.getTitolo()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+
+        return new Promise<Vulnerabilita[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const vulnerabilita = results.map(
+                            (vulnerabilitaData: any) => {
+                                const vulnerabilita = new Vulnerabilita(
+                                    vulnerabilitaData.Id,
+                                    vulnerabilitaData.titolo
+                                );
+                                return vulnerabilita;
+                            }
+                        );
+                        resolve(vulnerabilita);
+                    } else {
+                        reject(new Error("Vulnerabilita not found"));
+                    }
+                }
+            );
+        });
+    }
 }
 export default Vulnerabilita;

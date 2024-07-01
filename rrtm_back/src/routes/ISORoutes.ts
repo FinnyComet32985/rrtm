@@ -26,6 +26,16 @@ router.get("/findISO/:id", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get("/findISOFromName/:name", async (req: Request, res: Response) => {
+    const name = req.params.name;
+    try {
+        const isos = await InterfacciaRicerca.findISOFromName(name);
+        res.json(isos);
+    } catch (error) {
+        console.error("Error fetching ISO:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 router.get("/findPattISO/:id", async (req: Request, res: Response) => {
     const id = parseFloat(req.params.id); // Converti l'ID in un numero
     if (isNaN(id)) {

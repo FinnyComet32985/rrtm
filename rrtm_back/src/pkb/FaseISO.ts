@@ -268,6 +268,41 @@ class FaseISO {
             );
         });
     }
+
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<FaseISO[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomeISO") {
+            query = "SELECT * FROM FaseISO WHERE nome LIKE ?";
+            queryParams = [`%${filtro.filtroISO.getNome()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+        return new Promise<FaseISO[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const isos = results.map((isoData: any) => {
+                            const isos = new FaseISO(isoData.Id, isoData.nome);
+                            return isos;
+                        });
+                        resolve(isos);
+                    } else {
+                        reject(new Error("ISO not found"));
+                    }
+                }
+            );
+        });
+    }
 }
 
 export default FaseISO;

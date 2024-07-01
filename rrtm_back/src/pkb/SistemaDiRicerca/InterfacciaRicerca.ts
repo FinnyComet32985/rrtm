@@ -218,7 +218,7 @@ class InterfacciaRicerca {
         );
     }
     public static async findStrategiaFromName(nome: string) {
-        let filtro = new FiltroApplicato(0, "nomeStartegia", nome);
+        let filtro = new FiltroApplicato(0, "nomeStrategia", nome);
         return await Strategia.getResult(filtro, "nomeStrategia");
     }
     public static async showStrategie(): Promise<Strategia[]> {
@@ -325,6 +325,10 @@ class InterfacciaRicerca {
             filtroVulnerabilita
         );
     }
+    public static async findVulnerabilitaFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomeVulnerabilita", nome);
+        return await Vulnerabilita.getResult(filtro, "nomeVulnerabilita");
+    }
     public static async showVulnerabilitaInserite(): Promise<Vulnerabilita[]> {
         return new Promise(async (resolve, reject) => {
             //NOSONAR
@@ -415,6 +419,10 @@ class InterfacciaRicerca {
         return filtroArticolo.filtroArticolo.getArticolobyFiltro(
             filtroArticolo
         );
+    }
+    public static async findArticoloFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomeArticolo", nome);
+        return await ArticoloGDPR.getResult(filtro, "nomeArticolo");
     }
     public static async showArticoli(): Promise<ArticoloGDPR[]> {
         return new Promise(async (resolve, reject) => {
@@ -519,6 +527,10 @@ class InterfacciaRicerca {
         await PrincipioPbD.updateFiltro(filtroPbD, "PbD");
         return filtroPbD.filtroPbD.getPbDbyFiltro(filtroPbD);
     }
+    public static async findPbDFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomePbD", nome);
+        return await PrincipioPbD.getResult(filtro, "nomePbD");
+    }
     public static async showPbD(): Promise<PrincipioPbD[]> {
         return new Promise(async (resolve, reject) => {
             //NOSONAR
@@ -615,6 +627,10 @@ class InterfacciaRicerca {
         await CollocazioneMVC.updateFiltro(filtroMVC, "MVC");
         return filtroMVC.filtroMVC.getMVCbyFiltro(filtroMVC);
     }
+    public static async findMVCFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomeMVC", nome);
+        return await CollocazioneMVC.getResult(filtro, "nomeMVC");
+    }
     public static async showMVC(): Promise<CollocazioneMVC[]> {
         return new Promise(async (resolve, reject) => {
             //NOSONAR
@@ -689,6 +705,10 @@ class InterfacciaRicerca {
         let filtroISO = new FiltroApplicato(Id, "ISO");
         await FaseISO.updateFiltro(filtroISO, "ISO");
         return filtroISO.filtroISO.getISObyFiltro(filtroISO);
+    }
+    public static async findISOFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomeISO", nome);
+        return await FaseISO.getResult(filtro, "nomeISO");
     }
     public static async showISO(): Promise<FaseISO[]> {
         return new Promise(async (resolve, reject) => {
@@ -785,6 +805,10 @@ class InterfacciaRicerca {
         let filtroOWASP = new FiltroApplicato(Id, "OWASP");
         await CategoriaOWASP.updateFiltro(filtroOWASP, "OWASP");
         return filtroOWASP.filtroOWASP.getOWASPbyFiltro(filtroOWASP);
+    }
+    public static async findOWASPFromName(nome: string) {
+        let filtro = new FiltroApplicato(0, "nomeOWASP", nome);
+        return await CategoriaOWASP.getResult(filtro, "nomeOWASP");
     }
     public static async showOWASP(): Promise<CategoriaOWASP[]> {
         return new Promise(async (resolve, reject) => {

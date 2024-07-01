@@ -274,5 +274,44 @@ class ArticoloGDPR {
             );
         });
     }
+
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<ArticoloGDPR[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomeArticolo") {
+            query = "SELECT * FROM articoloGDPR WHERE titolo LIKE ?";
+            queryParams = [`%${filtro.filtroArticolo.getTitolo()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+
+        return new Promise<ArticoloGDPR[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const articoli = results.map((articoloData: any) => {
+                            const articoli = new ArticoloGDPR(
+                                articoloData.Id,
+                                articoloData.titolo
+                            );
+                            return articoli;
+                        });
+                        resolve(articoli);
+                    } else {
+                        reject(new Error("Pattern not found"));
+                    }
+                }
+            );
+        });
+    }
 }
 export default ArticoloGDPR;

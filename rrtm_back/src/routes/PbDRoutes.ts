@@ -26,6 +26,16 @@ router.get("/findPbD/:id", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+router.get("/findPbDFromName/:name", async (req: Request, res: Response) => {
+    const name = req.params.name;
+    try {
+        const pbds = await InterfacciaRicerca.findPbDFromName(name);
+        res.json(pbds);
+    } catch (error) {
+        console.error("Error fetching PbD:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 router.get("/findPattPbD/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); // Converti l'ID in un numero
     if (isNaN(id)) {

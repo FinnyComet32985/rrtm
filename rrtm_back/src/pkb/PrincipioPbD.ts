@@ -288,6 +288,44 @@ class PrincipioPbD {
             );
         });
     }
+
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<PrincipioPbD[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomePbD") {
+            query = "SELECT * FROM PrincipioPbD WHERE nome LIKE ?";
+            queryParams = [`%${filtro.filtroPbD.getNome()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+        return new Promise<PrincipioPbD[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const pbds = results.map((pbdData: any) => {
+                            const pbds = new PrincipioPbD(
+                                pbdData.Id,
+                                pbdData.nome
+                            );
+                            return pbds;
+                        });
+                        resolve(pbds);
+                    } else {
+                        reject(new Error("PbD not found"));
+                    }
+                }
+            );
+        });
+    }
 }
 
 export default PrincipioPbD;

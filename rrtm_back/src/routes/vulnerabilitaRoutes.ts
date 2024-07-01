@@ -31,6 +31,22 @@ router.get("/findVulnerabilita/:id", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+router.get(
+    "/findVulnerabilitaFromName/:name",
+    async (req: Request, res: Response) => {
+        const name = req.params.name;
+        try {
+            const vulnerabilita =
+                await InterfacciaRicerca.findVulnerabilitaFromName(name);
+            res.json(vulnerabilita);
+        } catch (error) {
+            console.error("Error fetching vulnerabilita:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+);
+
 router.get("/findPattVuln/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id); // Converti l'ID in un numero
     if (isNaN(id)) {

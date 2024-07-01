@@ -172,6 +172,44 @@ class CollocazioneMVC {
             );
         });
     }
+
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<CollocazioneMVC[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomeMVC") {
+            query = "SELECT * FROM CollocazioneMVC WHERE nome LIKE ?";
+            queryParams = [`%${filtro.filtroMVC.getNome()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+        return new Promise<CollocazioneMVC[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const mvcs = results.map((mvcData: any) => {
+                            const mvcs = new CollocazioneMVC(
+                                mvcData.Id,
+                                mvcData.nome
+                            );
+                            return mvcs;
+                        });
+                        resolve(mvcs);
+                    } else {
+                        reject(new Error("MVC not found"));
+                    }
+                }
+            );
+        });
+    }
 }
 
 export default CollocazioneMVC;

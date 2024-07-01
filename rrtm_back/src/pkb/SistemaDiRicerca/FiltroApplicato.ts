@@ -29,19 +29,28 @@ class FiltroApplicato {
         const MVCId = tipoRicerca.endsWith("MVC") ? id : 0;
         const ISOId = tipoRicerca.endsWith("ISO") ? id : 0;
         const OWASPId = tipoRicerca.endsWith("OWASP") ? id : 0;
-        const nomeRicercato = tipoRicerca.includes("nome") ? nome : "";
+        const nomePattern = tipoRicerca.includes("nomePattern") ? nome : "";
+        const nomeStrategia = tipoRicerca.includes("nomeStrategia") ? nome : "";
+        const nomeVulnerabilita = tipoRicerca.includes("nomeVulnerabilita")
+            ? nome
+            : "";
+        const nomeArticolo = tipoRicerca.includes("nomeArticolo") ? nome : "";
+        const nomePbD = tipoRicerca.includes("nomePbD") ? nome : "";
+        const nomeMVC = tipoRicerca.includes("nomeMVC") ? nome : "";
+        const nomeISO = tipoRicerca.includes("nomeISO") ? nome : "";
+        const nomeOWASP = tipoRicerca.includes("nomeOWASP") ? nome : "";
 
-        this.filtroPattern = new Pattern(patternId, nomeRicercato);
-        this.filtroStrategia = new Strategia(strategiaId, nomeRicercato);
+        this.filtroPattern = new Pattern(patternId, nomePattern);
+        this.filtroStrategia = new Strategia(strategiaId, nomeStrategia);
         this.filtroVulnerabilita = new Vulnerabilita(
             vulnerabilitaId,
-            nomeRicercato
+            nomeVulnerabilita
         );
-        this.filtroArticolo = new ArticoloGDPR(articoloId, nomeRicercato);
-        this.filtroPbD = new PrincipioPbD(PbDId, nomeRicercato);
-        this.filtroMVC = new CollocazioneMVC(MVCId, nomeRicercato);
-        this.filtroISO = new FaseISO(ISOId, nomeRicercato);
-        this.filtroOWASP = new CategoriaOWASP(OWASPId, nomeRicercato);
+        this.filtroArticolo = new ArticoloGDPR(articoloId, nomeArticolo);
+        this.filtroPbD = new PrincipioPbD(PbDId, nomePbD);
+        this.filtroMVC = new CollocazioneMVC(MVCId, nomeMVC);
+        this.filtroISO = new FaseISO(ISOId, nomeISO);
+        this.filtroOWASP = new CategoriaOWASP(OWASPId, nomeOWASP);
     }
 }
 

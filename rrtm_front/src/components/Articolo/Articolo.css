@@ -8,9 +8,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
     width: auto;
     max-width: 75vh;
+    min-width: 25vh;
 }
 
 

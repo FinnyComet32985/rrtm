@@ -41,12 +41,12 @@ router.get(
     async (req: Request, res: Response) => {
         const name = req.params.name;
         try {
-            const patterns = await InterfacciaRicerca.findStrategiaFromName(
+            const strategie = await InterfacciaRicerca.findStrategiaFromName(
                 name
             );
-            res.json(patterns);
+            res.json(strategie);
         } catch (error) {
-            console.error("Error fetching patterns:", error);
+            console.error("Error fetching strategie:", error);
             res.status(500).json({ error: "Internal server error" });
         }
     }

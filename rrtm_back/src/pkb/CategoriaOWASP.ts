@@ -225,6 +225,43 @@ class CategoriaOWASP {
             );
         });
     }
+    public static async getResult(
+        filtro: FiltroApplicato,
+        tipo: string
+    ): Promise<CategoriaOWASP[]> {
+        let query: string;
+        let queryParams: any[];
+
+        if (tipo === "nomeOWASP") {
+            query = "SELECT * FROM CategoriaOWASP WHERE nome LIKE ?";
+            queryParams = [`%${filtro.filtroOWASP.getNome()}%`];
+        } else {
+            /* implementazione per gli altri filtri */
+            return [];
+        }
+        return new Promise<CategoriaOWASP[]>((resolve, reject) => {
+            connection.query(
+                query,
+                queryParams,
+                async (err: mysql.MysqlError | null, results: any) => {
+                    // NOSONAR
+                    if (err) return reject(err);
+                    if (results.length > 0) {
+                        const owasps = results.map((owaspData: any) => {
+                            const owasps = new CategoriaOWASP(
+                                owaspData.Id,
+                                owaspData.nome
+                            );
+                            return owasps;
+                        });
+                        resolve(owasps);
+                    } else {
+                        reject(new Error("OWASP not found"));
+                    }
+                }
+            );
+        });
+    }
 }
 
 export default CategoriaOWASP;

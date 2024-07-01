@@ -19,7 +19,7 @@ class FiltroApplicato {
     filtroOWASP: CategoriaOWASP;
     tipoRicerca: string;
 
-    constructor(id: number, tipoRicerca: string, nome?: string) {
+    constructor(id: number, tipoRicerca: string, nome?: string) { //NOSONAR
         this.tipoRicerca = tipoRicerca;
         const patternId = tipoRicerca.endsWith("pattern") ? id : 0;
         const strategiaId = tipoRicerca.endsWith("strategia") ? id : 0;

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./InserimentoFeedbackPage.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../loginPage/AuthContext";
+import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 function InserimentoFeedbackPage() {
     const [feedbacks, setFeedbacks] = useState([]);
     const [showAllFeedback, setShowAllFeedback] = useState(false);
@@ -12,10 +12,12 @@ function InserimentoFeedbackPage() {
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
-    const {logout} = useAuth();
+    const { logout } = useAuth();
     const getFeedback = useCallback(async () => {
         const handleUnauthorized = () => {
-            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            alert(
+                "C'è stato un problema di autenticazione. Riesegui il login."
+            );
             logout();
             navigate("/login");
         };
@@ -63,7 +65,7 @@ function InserimentoFeedbackPage() {
 
         // Se ci sono errori, non inviare il form
         if (newErrors.titolo || newErrors.descrizione) {
-            setButtonStatus('error');
+            setButtonStatus("error");
             // Forza il ricaricamento degli stili per l'animazione
             setTimeout(() => {
                 setErrors({ titolo: false, descrizione: false });
@@ -73,25 +75,28 @@ function InserimentoFeedbackPage() {
         }
 
         try {
-            const response = await fetch("http://localhost:1337/api/inserisciFeedback", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ ...formData, usernameUt: username }),
-            });
+            const response = await fetch(
+                "http://localhost:1337/api/inserisciFeedback",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ ...formData, usernameUt: username }),
+                }
+            );
             const result = await response.text();
             if (result === "true") {
-                setButtonStatus('success');
+                setButtonStatus("success");
                 getFeedback(); // Ricarica i feedback dopo l'inserimento
                 setFormData({ titolo: "", descrizione: "" }); // Reset form data
             } else {
-                setButtonStatus('error');
+                setButtonStatus("error");
             }
         } catch (error) {
             console.error("Errore durante l'inserimento:", error);
-            setButtonStatus('error');
+            setButtonStatus("error");
         }
 
         // Ripristina il pulsante allo stato iniziale dopo 2 secondi
@@ -126,7 +131,9 @@ function InserimentoFeedbackPage() {
                                 </div>
                             ))
                     ) : (
-                        <p style={{color: "white"}}>Nessun feedback trovato.</p>
+                        <p style={{ color: "white" }}>
+                            Nessun feedback trovato.
+                        </p>
                     )}
                     {feedbacks.length > 3 && (
                         <div className="buttonDivFeedback">

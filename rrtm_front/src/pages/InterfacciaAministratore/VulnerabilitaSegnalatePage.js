@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import Header from "../../components/Header/Header";
 import "./VulnerabilitaSegnalatePage.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../loginPage/AuthContext";
+import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 
 function VulnerabilitaSegnalatePage() {
     const token = localStorage.getItem("token");
@@ -26,7 +26,7 @@ function VulnerabilitaSegnalatePage() {
     const navNotifica = () => {
         setProgress(100);
         const interval = setInterval(() => {
-            setProgress(prevProgress => {
+            setProgress((prevProgress) => {
                 const newProgress = prevProgress - 0.8; // Riduce progressivamente la larghezza
                 if (newProgress <= 0) {
                     clearInterval(interval);
@@ -35,7 +35,7 @@ function VulnerabilitaSegnalatePage() {
                 return newProgress;
             });
         }, 16);
-    }; 
+    };
     const getVulnerabilita = useCallback(async () => {
         const handleUnauthorized = (error) => {
             console.error(error);
@@ -119,7 +119,10 @@ function VulnerabilitaSegnalatePage() {
         <div>
             <Header />
             <div className="successBarDiv">
-                <div className="successBar" style={{ width: `${progress}%` }}></div>
+                <div
+                    className="successBar"
+                    style={{ width: `${progress}%` }}
+                ></div>
             </div>
             <div className="containerMod">
                 <div className="visioneVulnerabilitaUt">
@@ -149,11 +152,13 @@ function VulnerabilitaSegnalatePage() {
                 <div className="pubblicaVuln">
                     <h1>Pubblica una Vulnerabilita Segnalata</h1>
                     <form
-                    className="modificaContainer"
+                        className="modificaContainer"
                         ref={pubblicaVulnSegnForm}
                         onSubmit={handlePubblicaVulnerabilitaSubmit}
                     >
-                        <label htmlFor="Id">Id della Vulnerabilita da pubblicare</label>
+                        <label htmlFor="Id">
+                            Id della Vulnerabilita da pubblicare
+                        </label>
                         <input type="text" name="Id" required></input>
                         <label htmlFor="cwe">
                             Nuovo numero della CWE di cui si pubblicare

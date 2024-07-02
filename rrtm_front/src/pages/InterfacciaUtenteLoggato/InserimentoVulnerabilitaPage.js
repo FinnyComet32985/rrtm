@@ -1,27 +1,29 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./InserimentoVulnerabilitaPage.css";
-import { useAuth } from "../loginPage/AuthContext";
+import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function InserimentoVulnerabilitaPage() {
     const [vulnerabilities, setVulnerabilities] = useState([]);
     const [showAllVulnerabilita, setShowAllVulnerabilita] = useState(false);
     const [buttonStatus, setButtonStatus] = useState(null); // null, 'success', 'error'
-    const [formData, setFormData] = useState({ titolo: ""});
-    const [errors, setErrors] = useState({ titolo: false}); // Stato degli errori sugli input
+    const [formData, setFormData] = useState({ titolo: "" });
+    const [errors, setErrors] = useState({ titolo: false }); // Stato degli errori sugli input
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
-const navigate = useNavigate();
-const {logout} = useAuth();
-    
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
     const getVulnerabilita = useCallback(async () => {
         const handleUnauthorized = () => {
-            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            alert(
+                "C'è stato un problema di autenticazione. Riesegui il login."
+            );
             logout();
             navigate("/login");
         };
-    
+
         try {
             const response = await fetch(
                 `http://localhost:1337/api/findVulnSegnUt/${username}`,
@@ -42,7 +44,10 @@ const {logout} = useAuth();
             const json = await response.json();
             setVulnerabilities(json);
         } catch (error) {
-            console.error("Errore durante il recupero delle vulnerabilita:", error);
+            console.error(
+                "Errore durante il recupero delle vulnerabilita:",
+                error
+            );
         }
     }, [username, token, navigate, logout]);
 
@@ -59,41 +64,44 @@ const {logout} = useAuth();
 
         // Controlla se i campi sono vuoti
         const newErrors = {
-            titolo: !formData.titolo
+            titolo: !formData.titolo,
         };
         setErrors(newErrors);
 
         // Se ci sono errori, non inviare il form
         if (newErrors.titolo) {
-            setButtonStatus('error');
+            setButtonStatus("error");
             // Forza il ricaricamento degli stili per l'animazione
             setTimeout(() => {
-                setErrors({ titolo: false});
+                setErrors({ titolo: false });
                 setButtonStatus(null);
             }, 2000); // Reset button status and errors after 2 seconds
             return;
         }
 
         try {
-            const response = await fetch("http://localhost:1337/api/segnalaVulnerabilita", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ ...formData, usernameUt: username }),
-            });
+            const response = await fetch(
+                "http://localhost:1337/api/segnalaVulnerabilita",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ ...formData, usernameUt: username }),
+                }
+            );
             const result = await response.text();
             if (result === "true") {
-                setButtonStatus('success');
+                setButtonStatus("success");
                 getVulnerabilita(); // Ricarica i feedback dopo l'inserimento
-                setFormData({ titolo: ""}); // Reset form data
+                setFormData({ titolo: "" }); // Reset form data
             } else {
-                setButtonStatus('error');
+                setButtonStatus("error");
             }
         } catch (error) {
             console.error("Errore durante l'inserimento:", error);
-            setButtonStatus('error');
+            setButtonStatus("error");
         }
 
         // Ripristina il pulsante allo stato iniziale dopo 2 secondi
@@ -113,19 +121,31 @@ const {logout} = useAuth();
             <Header />
             <div className="container">
                 <div className="visioneVulnerabilitaUt">
-                    <h1 className="AllVulnerabilitaUtTitle">Vulnerabilita Segnalate</h1>
+                    <h1 className="AllVulnerabilitaUtTitle">
+                        Vulnerabilita Segnalate
+                    </h1>
                     {vulnerabilities.length > 0 ? (
                         vulnerabilities
-                            .slice(0, showAllVulnerabilita ? vulnerabilities.length : 3)
+                            .slice(
+                                0,
+                                showAllVulnerabilita
+                                    ? vulnerabilities.length
+                                    : 3
+                            )
                             .map((vulnerabilita) => (
-                                <div key={vulnerabilita.Id} className="vulnerabilitaUt">
+                                <div
+                                    key={vulnerabilita.Id}
+                                    className="vulnerabilitaUt"
+                                >
                                     <h3 className="titoloVulnerabilitaUt">
                                         {vulnerabilita.titolo}
                                     </h3>
                                 </div>
                             ))
                     ) : (
-                        <p style={{color: "white"}}>Nessuna vulnerabilità trovata.</p>
+                        <p style={{ color: "white" }}>
+                            Nessuna vulnerabilità trovata.
+                        </p>
                     )}
                     {vulnerabilities.length > 3 && (
                         <div className="buttonDivVulnerabilita">
@@ -137,7 +157,10 @@ const {logout} = useAuth();
                         </div>
                     )}
                 </div>
-                <form className="inserisciVulnerabilita" onSubmit={handleInserisci}>
+                <form
+                    className="inserisciVulnerabilita"
+                    onSubmit={handleInserisci}
+                >
                     <h1>Inserisci Vulnerabilita</h1>
                     <div>
                         <label htmlFor="titolo">Titolo</label>

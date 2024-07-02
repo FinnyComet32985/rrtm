@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./NotifichePage.css";
-import { useAuth } from "../loginPage/AuthContext";
+import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function NotifichePage() {
@@ -9,8 +9,8 @@ function NotifichePage() {
     const [notifiche, setNotifiche] = useState([]);
     const storedNotPref = localStorage.getItem("notifiche");
     const [consenso, setConsenso] = useState(storedNotPref === "1");
-const navigate = useNavigate();
-const {logout} = useAuth();
+    const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const handleCheckboxChange = async (e) => {
         const isChecked = e.target.checked;
@@ -29,7 +29,9 @@ const {logout} = useAuth();
                     },
                 }
             );
-            isChecked ? localStorage.setItem("notifiche", "1") : localStorage.setItem("notifiche", "0");
+            isChecked
+                ? localStorage.setItem("notifiche", "1")
+                : localStorage.setItem("notifiche", "0");
             if (!response.ok) {
                 throw new Error("Errore nella risposta della rete");
             }
@@ -45,7 +47,9 @@ const {logout} = useAuth();
 
     const getNotifiche = useCallback(async () => {
         const handleUnauthorized = () => {
-            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            alert(
+                "C'è stato un problema di autenticazione. Riesegui il login."
+            );
             logout();
             navigate("/login");
         };

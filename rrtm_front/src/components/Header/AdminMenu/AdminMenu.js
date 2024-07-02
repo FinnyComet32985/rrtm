@@ -6,14 +6,14 @@ import { ReactComponent as WeaknessIcon } from "../../../assets/header/bug-outli
 import { ReactComponent as FeedbackIcon } from "../../../assets/header/chatbox-ellipses-outline.svg";
 import "./AdminMenu.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../pages/loginPage/AuthContext";
+import { useAuth } from "../../../pages/InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import defaultUserImage from "../../../assets/header/person-circle-outline.svg";
 
 function AdminMenu() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const { user, logout } = useAuth();
-    
+
     // Function to handle clicks outside the menu
     const handleClickOutside = (event) => {
         if (!event.target.closest(".adminProfile")) {
@@ -44,13 +44,13 @@ function AdminMenu() {
     };
     const handleVulnerabilita = () => {
         navigate("/visualizzaVulnerabilitaUt");
-    }
+    };
     const handleFeedback = () => {
         navigate("/visualizzaFeedback");
-    }
+    };
     const handleModifica = () => {
         navigate("/ModificaPKBPage");
-    }
+    };
 
     return (
         <div>
@@ -73,7 +73,10 @@ function AdminMenu() {
                         <FeedbackIcon className="feedbackIcon" />
                         <h3>Visualizza Feedback</h3>
                     </button>
-                    <button id="visioneVulnerabilita" onClick={handleVulnerabilita}>
+                    <button
+                        id="visioneVulnerabilita"
+                        onClick={handleVulnerabilita}
+                    >
                         <WeaknessIcon className="weaknessIcon" />
                         <h3>Visualizza Vulnerabilità</h3>
                     </button>

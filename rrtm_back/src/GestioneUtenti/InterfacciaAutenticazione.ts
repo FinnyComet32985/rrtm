@@ -151,12 +151,14 @@ class InterfacciaAutenticazione {
                         }
                     } catch (loginError) {
                         if (loginError instanceof Error) {
-                            reject({ //NOSONAR
+                            reject({
+                                //NOSONAR
                                 success: false,
                                 error: loginError.message,
                             }); // Gestione dell'errore di login
                         } else {
-                            reject({ //NOSONAR
+                            reject({
+                                //NOSONAR
                                 success: false,
                                 error: "Unknown login error",
                             });
@@ -211,12 +213,14 @@ class InterfacciaAutenticazione {
                         }
                     } catch (loginError) {
                         if (loginError instanceof Error) {
-                            reject({//NOSONAR
+                            reject({
+                                //NOSONAR
                                 success: false,
                                 error: loginError.message,
                             }); // Gestione dell'errore di login
                         } else {
-                            reject({//NOSONAR
+                            reject({
+                                //NOSONAR
                                 success: false,
                                 error: "Unknown login error",
                             });

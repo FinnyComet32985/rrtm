@@ -2,7 +2,7 @@ import Header from "../../components/Header/Header";
 import "./InserisciNotifichePage.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../loginPage/AuthContext";
+import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 
 function InserisciNotifichePage() {
     const token = localStorage.getItem("token");

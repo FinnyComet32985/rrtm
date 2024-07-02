@@ -88,7 +88,7 @@ class Pattern {
             this.categoriaOWASP = categoriaOWASP;
         }
     }
-    // get Pattern by ID
+    // get Pattern by Filtro
     getPatternbyFiltro(filtro: FiltroApplicato) {
         const retPattern = new Pattern(
             filtro.filtroPattern.getId(),

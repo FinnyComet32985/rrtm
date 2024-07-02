@@ -1,17 +1,19 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header/Header";
 import "./VisualizzaFeedbackPage.css";
-import { useAuth } from "../loginPage/AuthContext";
+import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import { useNavigate } from "react-router-dom";
 function VisualizzaFeedbackPage() {
     const [feedbacks, setFeedbacks] = useState([]);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
-    const {logout} = useAuth();
+    const { logout } = useAuth();
 
     const getFeedback = useCallback(async () => {
         const handleUnauthorized = () => {
-            alert("C'è stato un problema di autenticazione. Riesegui il login.");
+            alert(
+                "C'è stato un problema di autenticazione. Riesegui il login."
+            );
             logout();
             navigate("/login");
         };
@@ -51,17 +53,19 @@ function VisualizzaFeedbackPage() {
                     <h1 className="AllFeedbackTitle">Feedback Inseriti</h1>
                     {feedbacks.length > 0 ? (
                         feedbacks.map((feedback) => (
-                                <div key={feedback.Id} className="feedback">
-                                    <h3 className="titoloFeedback">
-                                        {feedback.titolo}
-                                    </h3>
-                                    <p className="descrizioneFeedback">
-                                        {feedback.descrizione}
-                                    </p>
-                                </div>
-                            ))
+                            <div key={feedback.Id} className="feedback">
+                                <h3 className="titoloFeedback">
+                                    {feedback.titolo}
+                                </h3>
+                                <p className="descrizioneFeedback">
+                                    {feedback.descrizione}
+                                </p>
+                            </div>
+                        ))
                     ) : (
-                        <p style={{color: "white"}}>Nessun feedback trovato.</p>
+                        <p style={{ color: "white" }}>
+                            Nessun feedback trovato.
+                        </p>
                     )}
                 </div>
             </div>

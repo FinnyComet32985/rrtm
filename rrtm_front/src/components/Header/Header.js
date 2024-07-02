@@ -1,8 +1,8 @@
 import React from "react";
 import "./Header.css";
 import UserMenu from "./UserMenu/UserMenu";
-import AdminMenu from "./AdminMenu/AdminMenu"; // Import del componente del menu amministratore
-import { useAuth } from "../../pages/loginPage/AuthContext"; // Import del context per l'autenticazione
+import AdminMenu from "./AdminMenu/AdminMenu";
+import { useAuth } from "../../pages/InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import { useNavigate } from "react-router-dom";
 import defaultUserImage from "../../assets/header/person-circle-outline.svg";
 import { useState } from "react";
@@ -18,12 +18,12 @@ function Header() {
     };
 
     const handleDefaultImageClick = () => {
-            navigate("/login"); // Reindirizza alla pagina di login se l'utente non è autenticato
+        navigate("/login"); // Reindirizza alla pagina di login se l'utente non è autenticato
     };
 
     const handleFind = () => {
         navigate(`/ResultFindPage/${formData}`);
-    }
+    };
     const handleChange = (e) => {
         setFormData(e.target.value); // Aggiorna direttamente formData con il valore dell'input
     };
@@ -35,18 +35,15 @@ function Header() {
             </h1>
             <div className="finder">
                 <form onSubmit={handleFind}>
-                <input
-                            type="text"
-                            id="find"
-                            name="find"
-                            value={formData}
-                            onChange={handleChange}
-                        />
-                        <button
-                        type="submit"
-                        className="findButton"
-                    >
-                        <FindIcon className="findIco"/>
+                    <input
+                        type="text"
+                        id="find"
+                        name="find"
+                        value={formData}
+                        onChange={handleChange}
+                    />
+                    <button type="submit" className="findButton">
+                        <FindIcon className="findIco" />
                     </button>
                 </form>
             </div>

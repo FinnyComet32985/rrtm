@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
-import { useAuth } from "../loginPage/AuthContext";
+import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import "./ModificaPKBPage.css";
 
 function ModificaPKBPage() {
@@ -45,7 +45,7 @@ function ModificaPKBPage() {
     const navNotifica = () => {
         setProgress(100);
         const interval = setInterval(() => {
-            setProgress(prevProgress => {
+            setProgress((prevProgress) => {
                 const newProgress = prevProgress - 0.8; // Riduce progressivamente la larghezza
                 if (newProgress <= 0) {
                     clearInterval(interval);
@@ -54,7 +54,7 @@ function ModificaPKBPage() {
                 return newProgress;
             });
         }, 16);
-    }; 
+    };
     const resetButtonStatus = () => {
         setTimeout(() => {
             setButtonStatus({
@@ -87,7 +87,7 @@ function ModificaPKBPage() {
                 inserisciOWASP: "wating",
                 eliminaOWASP: "wating",
             });
-        }, 2000); 
+        }, 2000);
     };
 
     // Pattern
@@ -1082,7 +1082,10 @@ function ModificaPKBPage() {
         <div>
             <Header />
             <div className="successBarDiv">
-                <div className="successBar" style={{ width: `${progress}%` }}></div>
+                <div
+                    className="successBar"
+                    style={{ width: `${progress}%` }}
+                ></div>
             </div>
             <div className="containerMod">
                 {/* Pattern */}
@@ -1096,55 +1099,64 @@ function ModificaPKBPage() {
                             onSubmit={handleModificaPatternSubmit}
                         >
                             <div className="input">
-                            <label>
-                                Id del pattern da modificare
-                                <input
-                                    type="text"
-                                    name="Id"
-                                    required
-                                ></input>{" "}
-                            </label>
-                            <label>
-                                Nuovo Titolo
-                                <input
-                                    type="text"
-                                    name="titolo"
-                                    required
-                                ></input>{" "}
-                            </label>
-                            <label>
-                                Nuovo Sommario
-                                <input type="text" name="sommario"></input>{" "}
-                            </label>
-                            <label>
-                                Nuovo Contesto
-                                <input type="text" name="contesto"></input>{" "}
-                            </label>
-                            <label>
-                                Nuovo Problema
-                                <input type="text" name="problema"></input>{" "}
-                            </label>
-                            <label>
-                                Nuova Soluzione
-                                <input
-                                    type="text"
-                                    name="soluzione"
-                                ></input>{" "}
-                            </label>
-                            <label>
-                                Nuovo Esempio
-                                <input type="text" name="esempio"></input>
-                            </label>{" "}
-                            {/* NOSONAR */}
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label>vuoi inserire una notifica?</label>{" "}
+                                <label>
+                                    Id del pattern da modificare
+                                    <input
+                                        type="text"
+                                        name="Id"
+                                        required
+                                    ></input>{" "}
+                                </label>
+                                <label>
+                                    Nuovo Titolo
+                                    <input
+                                        type="text"
+                                        name="titolo"
+                                        required
+                                    ></input>{" "}
+                                </label>
+                                <label>
+                                    Nuovo Sommario
+                                    <input
+                                        type="text"
+                                        name="sommario"
+                                    ></input>{" "}
+                                </label>
+                                <label>
+                                    Nuovo Contesto
+                                    <input
+                                        type="text"
+                                        name="contesto"
+                                    ></input>{" "}
+                                </label>
+                                <label>
+                                    Nuovo Problema
+                                    <input
+                                        type="text"
+                                        name="problema"
+                                    ></input>{" "}
+                                </label>
+                                <label>
+                                    Nuova Soluzione
+                                    <input
+                                        type="text"
+                                        name="soluzione"
+                                    ></input>{" "}
+                                </label>
+                                <label>
+                                    Nuovo Esempio
+                                    <input type="text" name="esempio"></input>
+                                </label>{" "}
                                 {/* NOSONAR */}
-                            </div>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label>vuoi inserire una notifica?</label>{" "}
+                                    {/* NOSONAR */}
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1169,40 +1181,44 @@ function ModificaPKBPage() {
                             onSubmit={handleInserisciPatternSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="titolo">
-                                Titolo del nuovo Pattern
-                            </label>
-                            <input type="text" name="titolo" required></input>
-                            <label htmlFor="sommario">
-                                Sommario del nuovo Pattern
-                            </label>
-                            <input type="text" name="sommario"></input>
-                            <label htmlFor="contesto">
-                                Contesto del nuovo Pattern
-                            </label>
-                            <input type="text" name="contesto"></input>
-                            <label htmlFor="problema">
-                                Problema del nuovo Pattern
-                            </label>
-                            <input type="text" name="problema"></input>
-                            <label htmlFor="soluzione">
-                                Soluzione del nuovo Pattern
-                            </label>
-                            <input type="text" name="soluzione"></input>
-                            <label htmlFor="esempio">
-                                Esempio del nuovo Pattern
-                            </label>
-                            <input type="text" name="esempio"></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="titolo">
+                                    Titolo del nuovo Pattern
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    name="titolo"
+                                    required
+                                ></input>
+                                <label htmlFor="sommario">
+                                    Sommario del nuovo Pattern
+                                </label>
+                                <input type="text" name="sommario"></input>
+                                <label htmlFor="contesto">
+                                    Contesto del nuovo Pattern
+                                </label>
+                                <input type="text" name="contesto"></input>
+                                <label htmlFor="problema">
+                                    Problema del nuovo Pattern
+                                </label>
+                                <input type="text" name="problema"></input>
+                                <label htmlFor="soluzione">
+                                    Soluzione del nuovo Pattern
+                                </label>
+                                <input type="text" name="soluzione"></input>
+                                <label htmlFor="esempio">
+                                    Esempio del nuovo Pattern
+                                </label>
+                                <input type="text" name="esempio"></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1222,24 +1238,24 @@ function ModificaPKBPage() {
                             onSubmit={handleEliminaPatternSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="patternId">
-                                Id del pattern da eliminare
-                            </label>
-                            <input
-                                type="text"
-                                name="patternId"
-                                required
-                            ></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="patternId">
+                                    Id del pattern da eliminare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    name="patternId"
+                                    required
+                                ></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1263,22 +1279,22 @@ function ModificaPKBPage() {
                             onSubmit={handleModificaStrategiaSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="Id">
-                                Id della strategia da modificare
-                            </label>
-                            <input type="text" name="Id" required></input>
-                            <label htmlFor="nome">Nuovo Nome</label>
-                            <input type="text" name="nome" required></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="Id">
+                                    Id della strategia da modificare
                                 </label>
-                            </div>
+                                <input type="text" name="Id" required></input>
+                                <label htmlFor="nome">Nuovo Nome</label>
+                                <input type="text" name="nome" required></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1298,20 +1314,20 @@ function ModificaPKBPage() {
                             onSubmit={handleInserisciStrategiaSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="nome">
-                                Nome della nuova Strategia
-                            </label>
-                            <input type="text" name="nome" required></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="nome">
+                                    Nome della nuova Strategia
                                 </label>
-                            </div>
+                                <input type="text" name="nome" required></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1331,24 +1347,24 @@ function ModificaPKBPage() {
                             onSubmit={handleEliminaStrategiaSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="strategyId">
-                                Id della strategia da eliminare
-                            </label>
-                            <input
-                                type="text"
-                                name="strategyId"
-                                required
-                            ></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="strategyId">
+                                    Id della strategia da eliminare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    name="strategyId"
+                                    required
+                                ></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1372,24 +1388,28 @@ function ModificaPKBPage() {
                             onSubmit={handleModificaVulnerabilitaSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="Id">
-                                Id della Vulnerabilita da modificare
-                            </label>
-                            <input type="text" name="Id" required></input>
-                            <label htmlFor="cwe">Nuovo numero CWE</label>
-                            <input type="text" name="cwe" required></input>
-                            <label htmlFor="titolo">Nuovo Titolo</label>
-                            <input type="text" name="titolo" required></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="Id">
+                                    Id della Vulnerabilita da modificare
                                 </label>
-                            </div>
+                                <input type="text" name="Id" required></input>
+                                <label htmlFor="cwe">Nuovo numero CWE</label>
+                                <input type="text" name="cwe" required></input>
+                                <label htmlFor="titolo">Nuovo Titolo</label>
+                                <input
+                                    type="text"
+                                    name="titolo"
+                                    required
+                                ></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1409,24 +1429,28 @@ function ModificaPKBPage() {
                             onSubmit={handleInserisciVulnerabilitaSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="cwe">
-                                Numero CWE della nuova Vulnerabilita
-                            </label>
-                            <input type="text" name="cwe" required></input>
-                            <label htmlFor="titolo">
-                                Titolo della nuova Vulnerabilita
-                            </label>
-                            <input type="text" name="titolo" required></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="cwe">
+                                    Numero CWE della nuova Vulnerabilita
                                 </label>
-                            </div>
+                                <input type="text" name="cwe" required></input>
+                                <label htmlFor="titolo">
+                                    Titolo della nuova Vulnerabilita
+                                </label>
+                                <input
+                                    type="text"
+                                    name="titolo"
+                                    required
+                                ></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1446,24 +1470,24 @@ function ModificaPKBPage() {
                             onSubmit={handleEliminaVulnerabilitaSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="vulnerabilityId">
-                                Id della vulnerabilita da eliminare
-                            </label>
-                            <input
-                                type="text"
-                                name="vulnerabilityId"
-                                required
-                            ></input>
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                ></input>
-                                <label htmlFor="notifica">
-                                    vuoi inserire una notifica?
+                                <label htmlFor="vulnerabilityId">
+                                    Id della vulnerabilita da eliminare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    name="vulnerabilityId"
+                                    required
+                                ></input>
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    ></input>
+                                    <label htmlFor="notifica">
+                                        vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1488,32 +1512,34 @@ function ModificaPKBPage() {
                             onSubmit={handleModificaArticoloSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="modificaId">
-                                ID dell'articolo da modificare
-                            </label>
-                            <input
-                                type="text"
-                                id="modificaId"
-                                name="Id"
-                                required
-                            />
-                            <label htmlFor="modificaTitolo">Nuovo Titolo</label>
-                            <input
-                                type="text"
-                                id="modificaTitolo"
-                                name="titolo"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="modificaId">
+                                    ID dell'articolo da modificare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="modificaId"
+                                    name="Id"
+                                    required
+                                />
+                                <label htmlFor="modificaTitolo">
+                                    Nuovo Titolo
+                                </label>
+                                <input
+                                    type="text"
+                                    id="modificaTitolo"
+                                    name="titolo"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1533,34 +1559,34 @@ function ModificaPKBPage() {
                             onSubmit={handleInserisciArticoloSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="inserisciId">
-                                ID del nuovo Articolo
-                            </label>
-                            <input
-                                type="text"
-                                id="inserisciId"
-                                name="Id"
-                                required
-                            />
-                            <label htmlFor="inserisciTitolo">
-                                Titolo del nuovo Articolo
-                            </label>
-                            <input
-                                type="text"
-                                id="inserisciTitolo"
-                                name="titolo"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="inserisciId">
+                                    ID del nuovo Articolo
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="inserisciId"
+                                    name="Id"
+                                    required
+                                />
+                                <label htmlFor="inserisciTitolo">
+                                    Titolo del nuovo Articolo
+                                </label>
+                                <input
+                                    type="text"
+                                    id="inserisciTitolo"
+                                    name="titolo"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1580,25 +1606,25 @@ function ModificaPKBPage() {
                             onSubmit={handleEliminaArticoloSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="eliminaId">
-                                ID dell'articolo da eliminare
-                            </label>
-                            <input
-                                type="text"
-                                id="eliminaId"
-                                name="Id"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="eliminaId">
+                                    ID dell'articolo da eliminare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="eliminaId"
+                                    name="Id"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1624,32 +1650,32 @@ function ModificaPKBPage() {
                             onSubmit={handleModificaPbDSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="modificaId">
-                                ID della PbD da modificare
-                            </label>
-                            <input
-                                type="text"
-                                id="modificaId"
-                                name="Id"
-                                required
-                            />
-                            <label htmlFor="modificaNome">Nuovo Nome</label>
-                            <input
-                                type="text"
-                                id="modificaNome"
-                                name="nome"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="modificaId">
+                                    ID della PbD da modificare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="modificaId"
+                                    name="Id"
+                                    required
+                                />
+                                <label htmlFor="modificaNome">Nuovo Nome</label>
+                                <input
+                                    type="text"
+                                    id="modificaNome"
+                                    name="nome"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1670,25 +1696,25 @@ function ModificaPKBPage() {
                             onSubmit={handleInserisciPbDSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="inserisciNome">
-                                Nome della nuova PbD
-                            </label>
-                            <input
-                                type="text"
-                                id="inserisciNome"
-                                name="nome"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="inserisciNome">
+                                    Nome della nuova PbD
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="inserisciNome"
+                                    name="nome"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1709,25 +1735,25 @@ function ModificaPKBPage() {
                             onSubmit={handleEliminaPbDSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="eliminaId">
-                                ID della PbD da eliminare
-                            </label>
-                            <input
-                                type="text"
-                                id="eliminaId"
-                                name="Id"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="eliminaId">
+                                    ID della PbD da eliminare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="eliminaId"
+                                    name="Id"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1752,32 +1778,32 @@ function ModificaPKBPage() {
                             onSubmit={handleModificaISOSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="modificaId">
-                                ID della fase ISO da modificare
-                            </label>
-                            <input
-                                type="text"
-                                id="modificaId"
-                                name="Id"
-                                required
-                            />
-                            <label htmlFor="modificaNome">Nuovo Nome</label>
-                            <input
-                                type="text"
-                                id="modificaNome"
-                                name="nome"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="modificaId">
+                                    ID della fase ISO da modificare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="modificaId"
+                                    name="Id"
+                                    required
+                                />
+                                <label htmlFor="modificaNome">Nuovo Nome</label>
+                                <input
+                                    type="text"
+                                    id="modificaNome"
+                                    name="nome"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1797,35 +1823,34 @@ function ModificaPKBPage() {
                             onSubmit={handleInserisciISOSubmit}
                         >
                             <div className="input">
-
-                            <label htmlFor="inserisciId">
-                                ID della nuova ISO
-                            </label>
-                            <input
-                                type="text"
-                                id="inserisciId"
-                                name="Id"
-                                required
-                                />
-                            <label htmlFor="inserisciNome">
-                                Nome della nuova ISO
-                            </label>
-                            <input
-                                type="text"
-                                id="inserisciNome"
-                                name="nome"
-                                required
-                                />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                    />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="inserisciId">
+                                    ID della nuova ISO
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="inserisciId"
+                                    name="Id"
+                                    required
+                                />
+                                <label htmlFor="inserisciNome">
+                                    Nome della nuova ISO
+                                </label>
+                                <input
+                                    type="text"
+                                    id="inserisciNome"
+                                    name="nome"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"
@@ -1845,25 +1870,25 @@ function ModificaPKBPage() {
                             onSubmit={handleEliminaISOSubmit}
                         >
                             <div className="input">
-                            <label htmlFor="eliminaId">
-                                ID della ISO da eliminare
-                            </label>
-                            <input
-                                type="text"
-                                id="eliminaId"
-                                name="Id"
-                                required
-                            />
-                            <div className="notificaCk">
-                                <input
-                                    type="checkbox"
-                                    checked={notify}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <label htmlFor="notifica">
-                                    Vuoi inserire una notifica?
+                                <label htmlFor="eliminaId">
+                                    ID della ISO da eliminare
                                 </label>
-                            </div>
+                                <input
+                                    type="text"
+                                    id="eliminaId"
+                                    name="Id"
+                                    required
+                                />
+                                <div className="notificaCk">
+                                    <input
+                                        type="checkbox"
+                                        checked={notify}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <label htmlFor="notifica">
+                                        Vuoi inserire una notifica?
+                                    </label>
+                                </div>
                             </div>
                             <button
                                 type="submit"

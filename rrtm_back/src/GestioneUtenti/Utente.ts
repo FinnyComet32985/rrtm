@@ -7,7 +7,7 @@ class Utente {
     private email: string;
     private nome: string;
     private cognome: string;
-    private notifiche: boolean;
+    private preferenzaNotifiche: boolean;
 
     constructor(token: string, username: string, password: string) {
         this.token = token;
@@ -16,7 +16,7 @@ class Utente {
         this.email = "";
         this.nome = "";
         this.cognome = "";
-        this.notifiche = false;
+        this.preferenzaNotifiche = false;
     }
     public getToken() {
         return this.token;
@@ -42,7 +42,7 @@ class Utente {
                         this.email = results[0].email;
                         this.nome = results[0].nome;
                         this.cognome = results[0].cognome;
-                        this.notifiche = results[0].notPref;
+                        this.preferenzaNotifiche = results[0].notPref;
                         resolve();
                     } else {
                         reject(new Error("User not found"));
@@ -55,7 +55,7 @@ class Utente {
         return this.username;
     }
     public getNotifiche() {
-        return this.notifiche;
+        return this.preferenzaNotifiche;
     }
 }
 export default Utente;

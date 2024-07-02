@@ -6,14 +6,14 @@ import { ReactComponent as WeaknessIcon } from "../../../assets/header/bug-outli
 import { ReactComponent as FeedbackIcon } from "../../../assets/header/chatbox-ellipses-outline.svg";
 import "./UserMenu.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../pages/loginPage/AuthContext";
+import { useAuth } from "../../../pages/InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import defaultUserImage from "../../../assets/header/person-circle-outline.svg";
 
 function UserMenu() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const { user, logout } = useAuth();
-    
+
     // Function to handle clicks outside the menu
     const handleClickOutside = (event) => {
         if (!event.target.closest(".userProfile")) {
@@ -44,13 +44,13 @@ function UserMenu() {
     };
     const handleFeedback = () => {
         navigate("/inserimentoFeedbackUt");
-    }
+    };
     const handleVulnerabilita = () => {
         navigate("/inserimentoVulnerabilitaUt");
-    }
+    };
     const handleNotifiche = () => {
         navigate("/NotifichePage");
-    }
+    };
 
     return (
         <div>
@@ -73,7 +73,10 @@ function UserMenu() {
                         <FeedbackIcon className="feedbackIcon" />
                         <h3>Inserisci Feedback</h3>
                     </button>
-                    <button id="segnalazioneVulnerabilita" onClick={handleVulnerabilita}>
+                    <button
+                        id="segnalazioneVulnerabilita"
+                        onClick={handleVulnerabilita}
+                    >
                         <WeaknessIcon className="weaknessIcon" />
                         <h3>Segnala Vulnerabilità</h3>
                     </button>

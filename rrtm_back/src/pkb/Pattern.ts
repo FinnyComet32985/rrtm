@@ -321,8 +321,7 @@ class Pattern {
             connection.query(
                 query,
                 [Id],
-                async (err: mysql.MysqlError | null, results: any) => {
-                    //NOSONAR
+                async (err: mysql.MysqlError | null, results: any) => { //NOSONAR
                     if (err) return reject(err);
                     if (results.length > 0) {
                         const patternData = results[0];

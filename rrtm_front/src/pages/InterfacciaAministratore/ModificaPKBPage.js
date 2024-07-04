@@ -5,7 +5,7 @@ import { useAuth } from "../InterfacciaUtenteNonLoggato/loginPage/AuthContext";
 import "./ModificaPKBPage.css";
 
 function ModificaPKBPage() {
-    //NOSONAR
+    //
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const { logout } = useAuth();
@@ -1147,7 +1147,7 @@ function ModificaPKBPage() {
                                     Nuovo Esempio
                                     <input type="text" name="esempio"></input>
                                 </label>{" "}
-                                {/* NOSONAR */}
+                                {/*  */}
                                 <div className="notificaCk">
                                     <input
                                         type="checkbox"
@@ -1155,7 +1155,7 @@ function ModificaPKBPage() {
                                         onChange={handleCheckboxChange}
                                     ></input>
                                     <label>vuoi inserire una notifica?</label>{" "}
-                                    {/* NOSONAR */}
+                                    {/*  */}
                                 </div>
                             </div>
                             <button
@@ -1164,7 +1164,7 @@ function ModificaPKBPage() {
                                     buttonStatus.modificaPattern === "success"
                                         ? "success"
                                         : buttonStatus.modificaPattern ===
-                                          "error" /* NOSONAR */
+                                          "error" /*  */
                                         ? "error"
                                         : "button"
                                 }

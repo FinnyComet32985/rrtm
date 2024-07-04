@@ -16,7 +16,7 @@ class ModificaPKB {
     private cwe: number;
     private statoVul: string;
 
-    constructor( //NOSONAR
+    constructor( //
         Id: number,
         titolo?: string,
         nome?: string,

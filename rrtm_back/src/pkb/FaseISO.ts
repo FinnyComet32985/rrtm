@@ -288,7 +288,7 @@ class FaseISO {
                 query,
                 queryParams,
                 async (err: mysql.MysqlError | null, results: any) => {
-                    // NOSONAR
+                    // 
                     if (err) return reject(err);
                     if (results.length > 0) {
                         const isos = results.map((isoData: any) => {

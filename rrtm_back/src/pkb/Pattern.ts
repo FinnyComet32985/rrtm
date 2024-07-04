@@ -18,7 +18,7 @@ class Pattern {
     private faseISO: number[];
     private categoriaOWASP: number[];
     constructor(
-        //NOSONAR
+        //
         Id: number,
         titolo?: string,
         sommario?: string,
@@ -321,7 +321,7 @@ class Pattern {
             connection.query(
                 query,
                 [Id],
-                async (err: mysql.MysqlError | null, results: any) => { //NOSONAR
+                async (err: mysql.MysqlError | null, results: any) => { //
                     if (err) return reject(err);
                     if (results.length > 0) {
                         const patternData = results[0];
@@ -561,7 +561,7 @@ class Pattern {
                 query,
                 queryParams,
                 async (err: mysql.MysqlError | null, results: any) => {
-                    // NOSONAR
+                    // 
                     if (err) return reject(err);
                     if (results.length > 0) {
                         const patterns = results.map((patternData: any) => {

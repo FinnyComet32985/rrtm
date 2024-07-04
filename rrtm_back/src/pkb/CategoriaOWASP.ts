@@ -244,7 +244,7 @@ class CategoriaOWASP {
                 query,
                 queryParams,
                 async (err: mysql.MysqlError | null, results: any) => {
-                    // NOSONAR
+                    // 
                     if (err) return reject(err);
                     if (results.length > 0) {
                         const owasps = results.map((owaspData: any) => {

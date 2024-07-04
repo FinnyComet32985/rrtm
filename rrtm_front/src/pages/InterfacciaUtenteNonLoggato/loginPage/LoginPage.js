@@ -37,10 +37,10 @@ function LoginPage() {
     return (
         <div className="log-page">
             <div className="log-container">
-                <h2 onClick={handleTitleClick}>RRTM</h2> {/* NOSONAR */}
+                <h2 onClick={handleTitleClick}>RRTM</h2> {/*  */}
                 <form className="login" onSubmit={handleSubmit}>
                     <div>
-                        <label>Username:</label> {/* NOSONAR */}
+                        <label>Username:</label> {/*  */}
                         <input
                             type="text"
                             value={username}
@@ -49,7 +49,7 @@ function LoginPage() {
                         />
                     </div>
                     <div>
-                        <label>Password:</label> {/* NOSONAR */}
+                        <label>Password:</label> {/*  */}
                         <input
                             type="password"
                             value={password}

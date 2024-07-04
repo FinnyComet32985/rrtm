@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import Header from "../../../components/Header/Header";
 import "./PatternPage.css";
 
-function PatternPage() { //NOSONAR
+function PatternPage() { //
     let { patternId } = useParams();
     const navigate = useNavigate();
     const [strategieExpanded, setStrategieExpanded] = useState(false);

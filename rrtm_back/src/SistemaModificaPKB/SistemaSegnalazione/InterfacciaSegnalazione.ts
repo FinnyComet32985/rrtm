@@ -46,7 +46,7 @@ class InterfacciaSegnalazione {
                             const vulnerabilita = await Promise.all(promises);
                             resolve(vulnerabilita);
                         } catch (err) {
-                            reject(err);//NOSONAR
+                            reject(err);//
                         }
                     } else {
                         reject(new Error("no vulnerabilita found"));
@@ -77,7 +77,7 @@ class InterfacciaSegnalazione {
                             const feedback = await Promise.all(promises);
                             resolve(feedback);
                         } catch (err) {
-                            reject(err);//NOSONAR
+                            reject(err);//
                         }
                     } else {
                         reject(new Error("no feedback found"));
@@ -120,7 +120,7 @@ class InterfacciaSegnalazione {
                             const notifiche = await Promise.all(promises);
                             resolve(notifiche);
                         } catch (err) {
-                            reject(err);//NOSONAR
+                            reject(err);//
                         }
                     } else {
                         reject(new Error("No articoli found"));

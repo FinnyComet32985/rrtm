@@ -180,7 +180,7 @@ class InterfacciaModifica {
                             const feedback = await Promise.all(promises);
                             resolve(feedback);
                         } catch (err) {
-                            reject(err); //NOSONAR
+                            reject(err); //
                         }
                     } else {
                         reject(new Error("No feedback found"));
@@ -209,7 +209,7 @@ class InterfacciaModifica {
                             const vuln = await Promise.all(promises);
                             resolve(vuln);
                         } catch (err) {
-                            reject(err); //NOSONAR
+                            reject(err); //
                         }
                     } else {
                         reject(new Error("No vulnerabilita segnalate found"));

@@ -19,6 +19,7 @@ import InserimentoNotifichePage from "./pages/InterfacciaAministratore/Inserisci
 import ModificaPKBPage from "./pages/InterfacciaAministratore/ModificaPKBPage";
 import RegisterPage from "./pages/InterfacciaUtenteNonLoggato/loginPage/RegisterPage";
 import ResultFindPage from "./pages/InterfacciaUtenteNonLoggato/ResultFindPage/ResultFindPage";
+import RegisterAdmin from "./pages/RegisterAdmin";
 function App() {
     return (
         <Router>
@@ -30,6 +31,7 @@ function App() {
                 />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/registerAdmin" element={<RegisterAdmin />} />
                 <Route
                     path="/patternPage/:patternId"
                     element={<PatternPage />}

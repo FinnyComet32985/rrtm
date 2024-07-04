@@ -113,13 +113,13 @@ router.post("/creaAmministratore", async (req: Request, res: Response) => {
         if (ammCreated.success) {
             if ("token" in ammCreated) {
                 return res.status(201).json({
-                    message: "User created and logged in successfully",
+                    message: "Administrator created and logged in successfully",
                     token: ammCreated.token,
                     tipo: ammCreated.tipo,
                 });
             } else {
                 return res.status(500).json({
-                    message: "User created but login failed",
+                    message: "Administrator created but login failed",
                 });
             }
         } else {
@@ -180,7 +180,7 @@ router.post(
             return res.status(400).json({ message: "Missing token" });
         } else {
             const result = InterfacciaGestioneUtente.aggiungiConsenso(token);
-            if (!await result) {
+            if (!(await result)) {
                 return res.status(500).json({ message: "unnkown error" });
             }
             return res
@@ -199,7 +199,7 @@ router.post(
             return res.status(400).json({ message: "Missing token" });
         } else {
             const result = InterfacciaGestioneUtente.rimuoviConsenso(token);
-            if (!await result) {
+            if (!(await result)) {
                 return res.status(500).json({ message: "unnkown error" });
             }
             return res

@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Istruzioni esecuzione programma
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Prerequisito fondamentale
+> 
+> 
+> Per l’esecuzione del programma è necessario avere installato node js e mysql
+> 
 
-## Available Scripts
+Per poter eseguire il programma bisogna:
 
-In the project directory, you can run:
+1. scaricare la cartella rrtm_git
+2. aprire mysql nel terminale e accedere con l’utente root
+    1. eseguire il file script `rrtm.sql` per la creazione del database
+    2. creare l’utente per far accedere il server ai dati usando il comando 
+    
+    ```sql
+    CREATE USER 'rrtm'@'localhost' IDENTIFIED WITH mysql_native_password BY 'rrtm';
+    GRANT ALL PRIVILEGES ON rrtm.* TO 'rrtm'@'localhost';
+    ```
+    
+3. aprire il terminale e posizionarsi nella directory ./rrtm_git
+4. eseguire il programma attraverso il comando `npm run start`
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> Osservazioni
+> 
+> 
+> La creazione degli amministratori è una funzione accessibile solo nella sezione delle impostazioni dell’interfaccia amministratore. Ma, dato che non è ancora stata implementata, è temporaneamente disponibile all’url: [http://localhost:3000/registerAdmin](http://localhost:3000/registerAdmin)
+> 
+> La pagina di login è unica sia per gli amministratori che per gli utenti.
+> 
+> > Attenzione a non creare un utente e un amministratore con lo stesso unsername perchè in quel caso il login farà prevalere sempre l’utente
+> > 
+> 
+> > Attenzione all’inserimeto di più utenti o più amministratori perchè la loro mail deve essere univoca (nella rispettiva tabella)
+> >
